@@ -3,6 +3,11 @@
     height: 100%;
     margin: 10;
 }
+h3 {
+    background: lightgreen;
+    margin-left:10px; 
+    margin-right:10px;
+}
 .footer {
     background: lightgreen;
     position: fixed;
