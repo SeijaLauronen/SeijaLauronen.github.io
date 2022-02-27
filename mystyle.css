@@ -96,6 +96,9 @@ imgX {
 .dancenavigation-up {
     font-style:italic;
 }
+.videolink {
+    text-align: center;
+}
 
 /* https://www.w3schools.com/css/css3_mediaqueries.asp */
 @media screen and (max-width: 480px) {
@@ -115,6 +118,7 @@ imgX {
     .pari {
         display:block;
     }
+    
   }
 
 
