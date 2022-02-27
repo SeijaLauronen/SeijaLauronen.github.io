@@ -13,7 +13,7 @@ h3 {
     width: 100%;
 }
 #tanssibody {
-    background-image:url("kuvat/helma.jpg");
+    background-image:url("kuvat/helmat.jpg");
     /*background-repeat: no-repeat;*/
     background-repeat: repeat-y;
     background-size: cover; 
@@ -89,12 +89,17 @@ imgX {
 
 
 /* https://www.w3schools.com/css/css3_mediaqueries.asp */
-@media screen and (min-width: 480px) {
+@media screen and (max-width: 480px) {
     .dancenavigation {
       font-size:40%;
     }
   }
 
+  @media screen and (min-width: 480px) {
+    .dancenavigation {
+      font-size:50%;
+    }
+  }
 
 
 
