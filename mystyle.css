@@ -123,10 +123,19 @@ imgX {
 @media (min-width: 576px) {
     .dancenavigation {
     font-size: xx-small;
-    }
-    
 
+    }
  }
+
+ @media screen and (max-width: 576px) {
+    .dancenavigation {
+      font-size:40%;
+
+    }
+    .pari {
+        /*display:none;*/
+    }
+  }
 
 
 /* Medium devices (tablets, 768px and up) */
