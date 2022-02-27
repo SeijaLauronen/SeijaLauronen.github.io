@@ -93,14 +93,18 @@ imgX {
     width: 100%;
 }
 
+.dancenavigation-up {
+    font-style:italic;
+}
 
 /* https://www.w3schools.com/css/css3_mediaqueries.asp */
 @media screen and (max-width: 480px) {
     .dancenavigation {
       font-size:40%;
+      margin-right: 2px;
     }
     .pari {
-        display:none;
+        /*display:none;*/
     }
   }
 
