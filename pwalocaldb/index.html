@@ -19,7 +19,7 @@
       <!-- https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605 -->
   <div class="container">
     <h1 class="title">LocalDB testi</h1>
-    <button id="do-stuff">Do stuff del some, list </button> <br>
+    <button id="do-stuff">Do stuff : list </button> <br>
     <textarea id="resultset"></textarea>
   
   </div>
@@ -34,7 +34,7 @@
     buttonDoStuff.addEventListener('click',doStuff)
 
     function doStuff(){
-      console.log('del toimii')
+      console.log('list toimii')
 
       //db.collection('users').doc({ id: 1 }).delete()
 
@@ -53,7 +53,7 @@
       })
       */
 
-
+/*
       db.collection('users')
         .doc({ name: 'Bill' })
         .delete()
@@ -76,6 +76,20 @@
       .catch(error => {
         console.log('There was an error, do something else.')
       })
+      */
+
+      db.collection('users').get().then(users => {
+              //resultset.value =users[0].name
+
+              let listOfNames ="";
+              users.forEach(element => {
+                listOfNames+=element.name
+                
+              });
+
+              resultset.value =listOfNames
+              //console.log(users)
+            })
 
 
 
