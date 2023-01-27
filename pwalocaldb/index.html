@@ -19,7 +19,7 @@
       <!-- https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605 -->
   <div class="container">
     <h1 class="title">LocalDB testi</h1>
-    <button id="do-stuff">Do stuff add </button> <br>
+    <button id="do-stuff">Do stuff del some, list </button> <br>
     <textarea id="resultset"></textarea>
   
   </div>
@@ -34,11 +34,11 @@
     buttonDoStuff.addEventListener('click',doStuff)
 
     function doStuff(){
-      console.log('add toimii')
+      console.log('del toimii')
 
       //db.collection('users').doc({ id: 1 }).delete()
 
-      
+      /*
       db.collection('users').add({
       id: 3,
       name: 'Kalle',
@@ -51,19 +51,36 @@
       name: 'Bill',
       age: 47
       })
-      
-      db.collection('users').get().then(users => {
-        //resultset.value =users[0].name
+      */
 
-        let listOfNames ="";
-        users.forEach(element => {
-          listOfNames+=element.name
-          
-        });
 
-        resultset.value =listOfNames
-        //console.log(users)
+      db.collection('users')
+        .doc({ name: 'Bill' })
+        .delete()
+        .then(response => {
+          console.log('Delete successful, now do something.')
+
+          db.collection('users').get().then(users => {
+              //resultset.value =users[0].name
+
+              let listOfNames ="";
+              users.forEach(element => {
+                listOfNames+=element.name
+                
+              });
+
+              resultset.value =listOfNames
+              //console.log(users)
+            })
       })
+      .catch(error => {
+        console.log('There was an error, do something else.')
+      })
+
+
+
+      
+      
 
 
 /*
