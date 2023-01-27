@@ -18,9 +18,83 @@
 <body class="fullscreen">
       <!-- https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605 -->
   <div class="container">
-    <h1 class="title">Hello World! Seijan eka PWA</h1>
+    <h1 class="title">LocalDB testi</h1>
+    <button id="do-stuff">Do stuff add </button> <br>
+    <textarea id="resultset"></textarea>
+  
   </div>
   <script src="js/main.js"></script>
+  <script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
+
+  <script>
+    //https://github.com/dannyconnell/localbase/blob/master/README.md
+    let db = new Localbase('db')
+
+    let buttonDoStuff=document.getElementById('do-stuff')
+    buttonDoStuff.addEventListener('click',doStuff)
+
+    function doStuff(){
+      console.log('add toimii')
+
+      //db.collection('users').doc({ id: 1 }).delete()
+
+      
+      db.collection('users').add({
+      id: 3,
+      name: 'Kalle',
+      age: 22
+      })
+
+     
+      db.collection('users').add({
+      id: 4,
+      name: 'Bill',
+      age: 47
+      })
+      
+      db.collection('users').get().then(users => {
+        //resultset.value =users[0].name
+
+        let listOfNames ="";
+        users.forEach(element => {
+          listOfNames+=element.name
+          
+        });
+
+        resultset.value =listOfNames
+        //console.log(users)
+      })
+
+
+/*
+      db.collection('users').doc({ id: 1 }).update({
+        name: 'William'
+      })
+      */
+      // eipä tämä toiminutkaan:
+      /*
+      db.collection('users')
+      .set([
+        {
+          id: 1,
+          name: 'Billy',
+          age: 44
+        },
+        {
+          id: 2, 
+          name: 'Paul',
+          age: 28
+        }
+      ])
+      */
+
+      
+
+
+
+    }
+  </script>
+
 </body>
 
 </html>
