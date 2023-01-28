@@ -19,8 +19,24 @@
       <!-- https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605 -->
   <div class="container">
     <h1 class="title">LocalDB testi</h1>
-    <button id="do-stuff">Do stuff : upd,list, cache </button> <br>
-    <textarea id="resultset"></textarea>
+    <button id="do-stuff">Do stuff : upd,list, cache </button> <br><br>
+    
+    <label for personId>Id:</label>
+    <input id="personId" placeholder="1..9"><br><br>
+    <label for personName>Nimi:</label>
+    <input id="personName"><br><br>
+
+    <p>Valitse toiminto:</p>
+    <input type="radio" id="addPerson" name="action" value="addP" checked>
+    <label for="addPerson"> Lisää</label><br>
+    <input type="radio" id="changePerson" name="action" value="changeP">
+    <label for="changePerson">Muuta</label><br>
+    <input type="radio" id="delPerson" name="action" value="delP">
+    <label for="delPerson"> Poista</label><br>
+
+
+    <label for="resultset"> Lista:</label><br>
+    <textarea id="resultset"></textarea> <br>
   
   </div>
   <script src="js/main.js"></script>
@@ -32,6 +48,7 @@
 
     let buttonDoStuff=document.getElementById('do-stuff')
     buttonDoStuff.addEventListener('click',doStuff)
+    
 
     function doStuff(){
       console.log('list toimii')
@@ -78,31 +95,139 @@
       })
       */
 
-        db.collection('users')
-        .doc({ id: 3 })
-        .update({
-          name: 'Matti'
-        })
-        .then(response => {
-          console.log('Update successful, now do something.')
-          db.collection('users').get().then(users => {
-              //resultset.value =users[0].name
+        let inputId=document.getElementById("personId").value
+        let inputName=document.getElementById("personName").value
 
-              let listOfNames ="";
-              users.forEach(element => {
-                listOfNames+=element.name
-                
-              });
 
-              resultset.value =listOfNames
-              //console.log(users)
-            })
+        var toDos = document.getElementsByName('action');
+        var actionToDo;
+        for(var i = 0; i < toDos.length; i++){
+            if(toDos[i].checked){
+              actionToDo = toDos[i].value;
+            }
+        }
+        
+        let isInputOK = true;
+        let intInputId=parseInt(inputId)
+        if (inputId== ""){
+          isInputOK = false
+        }
+        
+        if (isInputOK) {
+                if (actionToDo == "addP") {
+                        db.collection('users')
+                        .add({
+                          id: intInputId,
+                          name: inputName,
+                          age: 33
+                        })
+                        .then(response => {
+                          console.log('Update successful, now do something.')
+                          listaa()
+                          /*
+                          db.collection('users').get().then(users => {
+                              //resultset.value =users[0].name
 
-        })
-        .catch(error => {
-          console.log('There was an error, do something else.')
-        })
+                              let listOfNames ="";
+                              users.forEach(element => {
+                                listOfNames+=element.name
+                                
+                              });
 
+                              resultset.value =listOfNames
+                              //console.log(users)
+                            })
+                            */
+
+                        })
+                        .catch(error => {
+                          console.log('There was an error, do something else.')
+                          alert ("Ei onnistu add")
+                        })
+              }
+
+
+                if (actionToDo == "changeP") {
+                        db.collection('users')
+                        .doc({ id: intInputId })
+                        .update({
+                          name: inputName
+                        })
+                        .then(response => {
+                          console.log('Update successful, now do something.')
+                          listaa()
+                          /*
+                          db.collection('users').get().then(users => {
+                              //resultset.value =users[0].name
+
+                              let listOfNames ="";
+                              users.forEach(element => {
+                                listOfNames+=element.name
+                                
+                              });
+
+                              resultset.value =listOfNames
+                              //console.log(users)
+                            })
+                            */
+
+                        })
+                        .catch(error => {
+                          console.log('There was an error, do something else.')
+                          alert ("Ei onnistu upd")
+                        })
+              }
+
+              if (actionToDo == "delP") {
+                        db.collection('users')
+                        .doc({ id: intInputId })
+                        .delete()
+                        .then(response => {
+                          console.log('Update successful, now do something.')
+                          listaa()
+                          /*
+                          db.collection('users').get().then(users => {
+                              //resultset.value =users[0].name
+
+                              let listOfNames ="";
+                              users.forEach(element => {
+                                listOfNames+=element.name
+                                
+                              });
+
+                              resultset.value =listOfNames
+                              //console.log(users)
+                            })
+                            */
+
+                        })
+                        .catch(error => {
+                          console.log('There was an error, do something else.')
+                          alert ("Ei onnistu del")
+                        })
+              }
+            }
+            else {
+              alert( "Anna id")
+              listaa()
+            }
+
+      function listaa(){
+        db.collection('users').get().then(users => {
+                      //resultset.value =users[0].name
+
+                      let listOfNames ="";
+                      users.forEach(element => {
+                        listOfNames+=element.id + ":"
+                        listOfNames+=element.name + ", "
+                        
+                      });
+
+                      resultset.value =listOfNames
+                      //console.log(users)
+                    })
+
+      }
 
 
 
@@ -156,6 +281,8 @@
 
 
     }
+
+    //listaa()
   </script>
 
 </body>
