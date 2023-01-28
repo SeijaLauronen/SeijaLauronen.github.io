@@ -19,7 +19,7 @@
       <!-- https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605 -->
   <div class="container">
     <h1 class="title">LocalDB testi</h1>
-    <button id="do-stuff">Do stuff : list </button> <br>
+    <button id="do-stuff">Do stuff : upd,list, cache </button> <br>
     <textarea id="resultset"></textarea>
   
   </div>
@@ -78,6 +78,38 @@
       })
       */
 
+        db.collection('users')
+        .doc({ id: 3 })
+        .update({
+          name: 'Matti'
+        })
+        .then(response => {
+          console.log('Update successful, now do something.')
+          db.collection('users').get().then(users => {
+              //resultset.value =users[0].name
+
+              let listOfNames ="";
+              users.forEach(element => {
+                listOfNames+=element.name
+                
+              });
+
+              resultset.value =listOfNames
+              //console.log(users)
+            })
+
+        })
+        .catch(error => {
+          console.log('There was an error, do something else.')
+        })
+
+
+
+
+
+
+/*
+        // just get
       db.collection('users').get().then(users => {
               //resultset.value =users[0].name
 
@@ -91,7 +123,7 @@
               //console.log(users)
             })
 
-
+*/
 
       
       
