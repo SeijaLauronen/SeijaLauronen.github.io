@@ -1,4 +1,4 @@
-var cacheName = 'hello-pwa';
+const cacheName = 'hello-pwa-4'; // tänne kun laittaa aina versionumeron, niin tulee uusi versio näkyviin!
 var filesToCache = [
   '/',
   '/index.html',
@@ -16,6 +16,24 @@ self.addEventListener('install', function(e) {
     })
   );
 });
+
+// vanha cahe pois, kun uusi versio tehty
+//https://www.youtube.com/watch?v=g9LfyCZjeKI&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=17
+self.addEventListener('activate', evt => {
+  evt.waitUntil(
+    caches.keys().then(keys=>{
+     // console.log(keys);
+    return Promise.all(keys
+     .filter(key => key !== cacheName)
+     .map(key =>  caches.delete(key))
+    )
+
+    })
+  );
+});
+
+
+
 
 /* Serve cached content when offline */
 // kts https://www.youtube.com/watch?v=0mAw9Na6hyM&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=16
