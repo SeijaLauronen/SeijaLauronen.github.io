@@ -1,4 +1,4 @@
-const cacheName = 'hello-pwa-6'; // tänne kun laittaa aina versionumeron, niin tulee uusi versio näkyviin!
+const cacheName = 'hello-pwa-9'; // tänne kun laittaa aina versionumeron, niin tulee uusi versio näkyviin!
 var filesToCache = [
   '/',
   '/index.html',
@@ -17,7 +17,8 @@ self.addEventListener('install', function(e) {
   );
 });
 
-// vanha cahe pois, kun uusi versio tehty
+// vanha cache pois, kun uusi versio tehty
+// Ei tämä taida toimia??
 //https://www.youtube.com/watch?v=g9LfyCZjeKI&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=17
 self.addEventListener('activate', evt => {
   evt.waitUntil(
@@ -25,7 +26,7 @@ self.addEventListener('activate', evt => {
      // console.log(keys);
     return Promise.all(keys
      .filter(key => key !== cacheName)
-     .map(key =>  caches.delete(key))
+     .map(key => caches.delete(key))
     )
 
     })

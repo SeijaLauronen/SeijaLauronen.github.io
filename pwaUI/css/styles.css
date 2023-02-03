@@ -16,6 +16,7 @@ nav a{
 }
 nav a span{
   font-weight: bold;
+  margin-left: 50px; /*oma*/
 }
 nav .sidenav-trigger{
   margin: 0;
