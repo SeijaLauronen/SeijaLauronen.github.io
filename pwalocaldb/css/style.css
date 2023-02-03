@@ -17,6 +17,10 @@ body {
     margin: auto;
     text-align: center;
   }
+
+  .taulukko {
+    border: black;
+  }
   
   .title {
     font-size: 3rem;
