@@ -1,4 +1,4 @@
-const cacheName = 'hello-pwa-5'; // tänne kun laittaa aina versionumeron, niin tulee uusi versio näkyviin!
+const cacheName = 'hello-pwa-6'; // tänne kun laittaa aina versionumeron, niin tulee uusi versio näkyviin!
 var filesToCache = [
   '/',
   '/index.html',
