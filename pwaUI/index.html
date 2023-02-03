@@ -17,6 +17,14 @@
         <meta name="msapplication-TileImage" content="images/hello-icon-144.png">  
         <meta name="msapplication-TileColor" content="#FFFFFF">
 -->
+<!-- 
+  PWA Tutorial for Beginners #2- Setting up a Project 
+  https://www.youtube.com/watch?v=JQaL5YiSuqE&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=4
+
+
+-->
+
+<!--  https://materializecss.com/getting-started.html  -->
 
 <head>
   <meta charset="UTF-8">
@@ -42,16 +50,22 @@
 <body class="grey-lighten-4">
 
     <!-- top nav -->
+    <!-- muutan tämän aukeamaan oikealta -->
     <nav class="z-depth-0">
       <div class="nav-wrapper container">
+        
         <a href="/"><span>Lista</span></a>
-        <span class="right grey-text text-darken-1">
+<!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
+        <span class="grey-text text-darken-1">
           <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
         </span>
+
       </div>
     </nav>
 
     <!-- side nav -->
+    <!-- noita sivuja ei vielä tehty, ja voi olla, että niistäkin pitää ottaa edestä pois tuo kauttaviiva sitten -->
+    <!-- muutan tämän aukeamaan vasemmalta ui.js:stä-->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">KESKEN</a></li>
     <li><a href="/" class="waves-effect">Home</a></li>
