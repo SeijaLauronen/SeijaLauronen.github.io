@@ -25,6 +25,27 @@
   https://web.dev/add-manifest/
   https://developer.mozilla.org/en-US/docs/Web/Manifest
     Laitoin manifestiin myös id-kentän ja scope-kentän, toin pois, ei toiminut
+  PWA Tutorial for Beginners #4 - Android Emulator, kohta 2:40 ja 3:20, jos ongelmia. Ei kokeiltu.
+ 5:20 kohdassa localhost osoite emulaattorissa 10.0.2.2.5500
+  https://www.youtube.com/watch?v=1VVKhnHNBeQ&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=4
+  PWA Tutorial for Beginners #5 - iOS Support 
+  https://www.youtube.com/watch?v=jy6hX48pRHw&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=5
+PWA Tutorial for Beginners #6 - Intro to Service Workers - teoriaa
+https://www.youtube.com/watch?v=hxiggHZOGlQ&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=6
+PWA Tutorial for Beginners #7 - Service Worker Life-cycle
+https://www.youtube.com/watch?v=NhQfvZoRb2Q&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=7
+sw.js pitää olla sovelluksen juuressa, että sen skouppi ulottuu kaikkiin alihakemistoihin
+muutettu sw korvaa uuden vasta kun sitä on muutettu ja vanhaa käyttävät sivut on suljettu
+PWA Tutorial for Beginners #8 - Registering a Service Worker
+https://www.youtube.com/watch?v=6s697AJdlB8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=8
+app.js (main.js) rekisteröi sw.js:n ja tämä taas pitää linkata jokaiselle html-sivulle
+ huom hieman eri koodi app.js:ssä (tutoriaalin) ja tässä...
+ sw toimii vain https-osotteilla ja localhostilla
+ PWA Tutorial for Beginners #9 - The Install Event
+ https://www.youtube.com/watch?v=JnCEXQo_TiI&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=9
+ PWA Tutorial for Beginners #10 - The 'Activate' Event
+ https://www.youtube.com/watch?v=AmWj52zw9R8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=10
+ 
 
 -->
 
@@ -43,6 +64,7 @@
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <link rel="manifest" href="manifest.json">
   <!-- ios support -->
+  <!-- apple ja safari ei lue manifestista ikonia ja teemaväriä, vaan täältä nuo 2 ekaa riviä-->
   <!-- tätä ei vielä ole, ja osoittaa kansioon, jota ei ole -->
   <link rel="apple-touch-icon" href="/img/icons/icon-96x96.png">
   <!-- TODO muuta värit, alimmainen kai vaikuttaa -->
@@ -362,6 +384,7 @@
     </div>
   </form>
 </div>
+<script src="js/main.js"></script>
 <script src="js/ui.js"></script>
 
 </body>

@@ -62,6 +62,7 @@ nav .sidenav-trigger{
 /* form-styles */
 .add-btn{
   background: var(--title) !important;
+  bottom: 10px; /* seija */
 }
 input{
   box-shadow: none !important;
