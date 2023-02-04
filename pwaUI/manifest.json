@@ -26,9 +26,12 @@
         "sizes": "512x512",
         "type": "image/png"
       }],
+    "id": "apuri",
+    "scope": "/pwaUI/",
     "lang": "en-US",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "white",
-    "theme_color": "white"
+    "theme_color": "white",
+    "orientation": "portrait-primary"
   }
