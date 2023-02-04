@@ -45,7 +45,14 @@ app.js (main.js) rekisteröi sw.js:n ja tämä taas pitää linkata jokaiselle h
  https://www.youtube.com/watch?v=JnCEXQo_TiI&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=9
  PWA Tutorial for Beginners #10 - The 'Activate' Event
  https://www.youtube.com/watch?v=AmWj52zw9R8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=10
- 
+ PWA Tutorial for Beginners #11 - Lighthouse Audit
+ https://www.youtube.com/watch?v=egmwY9n6qWY&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=11
+ PWA Tutorial for Beginners #12 - Fetch Events
+ https://www.youtube.com/watch?v=C0vh57N7vM4&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=12
+ PWA Tutorial for Beginners #13 - The Install Banner
+ https://www.youtube.com/watch?v=9whdWJ4q7jE&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=13
+
+
 
 -->
 
@@ -69,8 +76,8 @@ app.js (main.js) rekisteröi sw.js:n ja tämä taas pitää linkata jokaiselle h
   <link rel="apple-touch-icon" href="/img/icons/icon-96x96.png">
   <!-- TODO muuta värit, alimmainen kai vaikuttaa -->
   <meta name="apple-mobile-web-app-status-bar" content="#FFE1C4">
-  <!-- <meta name="theme-color" content="#FFE1C4"> -->
-  <meta name="theme-color" content="#d2fffa">
+  <!-- <meta name="theme-color" content="#FFE1C4">  tämä vaaditaan ja se ylikirjoittaa manifestissa olevan -->
+  <meta name="theme-color" content="#7568cc">
 </head>
 
 
@@ -101,12 +108,14 @@ app.js (main.js) rekisteröi sw.js:n ja tämä taas pitää linkata jokaiselle h
     <!-- muutan tämän aukeamaan vasemmalta ui.js:stä-->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">KESKEN</a></li>
-    <li><a href="/" class="waves-effect">Home</a></li>
+    <li><a href="index.html" class="waves-effect">Home</a></li>
+    <!--
     <li><a href="/pages/about.html" class="waves-effect">About</a></li>
     <li><div class="divider"></div></li>
     <li><a href="/pages/contact.html" class="waves-effect">
       <i class="material-icons">mail_outline</i>Contact</a>
     </li>
+    -->
   </ul>
 
 <!-- recipes -->
