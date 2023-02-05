@@ -1,9 +1,12 @@
-const staticCacheName = 'pwaui-static-4';
+const staticCacheName = 'pwaui-static-5';
 const dynamicCacheName = 'pwaui-dynamic-1';
-// nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemsitoon?!
+// nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
+// Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
+// myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
 const assets = [
   '/',
   'index.html',
+  'index.html?',
   'js/main.js',
   'js/ui.js',
   'js/materialize.min.js',
