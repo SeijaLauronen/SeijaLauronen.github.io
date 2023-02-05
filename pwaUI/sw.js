@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-5';
-const dynamicCacheName = 'pwaui-dynamic-1';
+const staticCacheName = 'pwaui-static-7';
+const dynamicCacheName = 'pwaui-dynamic-7';
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -13,7 +13,8 @@ const assets = [
   'css/styles.css',
   'css/materialize.min.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
-  'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'
+  'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
+  'pages/fallback.html'
 ];
 
 
@@ -39,7 +40,7 @@ self.addEventListener('activate', evt => {
     caches.keys().then(keys => {
       //console.log(keys);
       return Promise.all(keys
-        .filter(key => key !== staticCacheName)
+        .filter(key => key !== staticCacheName && key !== dynamicCacheName)
         .map(key => caches.delete(key))
       );
     })
@@ -52,13 +53,22 @@ self.addEventListener('activate', evt => {
 self.addEventListener('fetch', evt => {
   //console.log('fetch event', evt);
   evt.respondWith(
-    caches.match(evt.request).then(cacheRes => {
-      return cacheRes || fetch(evt.request).then(fetchRes => {
-        return caches.open(dynamicCacheName).then(cache => {
-          cache.put(evt.request.url, fetchRes.clone());
-          return fetchRes;
-        })
-      });
-    })
+    caches
+    .match(evt.request)
+    .then(cacheRes => {
+      return cacheRes || 
+        fetch(evt.request)
+        .then(fetchRes => {
+          return caches.open(dynamicCacheName).then(cache => {
+            //Seija oma, ei laiteta cacheen, jos ei ollut ok!!
+            if (!fetchRes.clone().ok) {                
+                return (caches.match('/pages/fallback.html'))
+            } else {
+                cache.put(evt.request.url, fetchRes.clone());
+                return fetchRes;
+            }
+          })
+        });
+    }).catch(() => caches.match('/pages/fallback.html'))
   );
 });
