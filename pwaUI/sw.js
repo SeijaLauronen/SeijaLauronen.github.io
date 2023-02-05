@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-11';
-const dynamicCacheName = 'pwaui-dynamic-11';
+const staticCacheName = 'pwaui-static-15';
+const dynamicCacheName = 'pwaui-dynamic-15';
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -63,14 +63,14 @@ self.addEventListener('fetch', evt => {
             //Seija oma, ei laiteta cacheen, jos ei ollut ok!!
             //Jostain syystä tämä iffailu esti myös static cacheen laiton, niin ei näkynyt mm ikoneja
             // jos laittaskin deleten tuonne catchiin?
-            //if (!fetchRes.clone().ok) {                
-            //    return (caches.match('../pages/fallback.html'))
-            //} else {
+            if (fetchRes.clone().status == 404) {                
+                return (caches.match('/pages/fallback.html'))
+            } else {
                 cache.put(evt.request.url, fetchRes.clone());
                 return fetchRes;
-            //}
+            }
           })
         });
-    }).catch(() => caches.match('../pages/fallback.html'))
+    }).catch(() => caches.match('/pages/fallback.html'))
   );
 });
