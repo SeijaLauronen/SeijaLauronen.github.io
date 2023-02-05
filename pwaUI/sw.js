@@ -1,4 +1,5 @@
 const staticCacheName = 'pwaui-static-3';
+const dynamicCacheName = 'pwaui-dynamic-1';
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemsitoon?!
 const assets = [
   '/',
@@ -42,12 +43,19 @@ self.addEventListener('activate', evt => {
   );
 });
 
+//https://www.youtube.com/watch?v=ChXgikdQJR8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=18
+//responsea ei voi käyttää/ottaa kiinni useampaan kertaan, siksi otetaan siitä kopio cachetta varten!
 // fetch event
 self.addEventListener('fetch', evt => {
   //console.log('fetch event', evt);
   evt.respondWith(
     caches.match(evt.request).then(cacheRes => {
-      return cacheRes || fetch(evt.request);
+      return cacheRes || fetch(evt.request).then(fetchRes => {
+        return caches.open(dynamicCacheName).then(cache => {
+          cache.put(evt.request.url, fetchRes.clone());
+          return fetchRes;
+        })
+      });
     })
   );
 });
