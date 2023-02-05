@@ -1,4 +1,4 @@
-const staticCacheName = 'pwaui-static-3';
+const staticCacheName = 'pwaui-static-4';
 const dynamicCacheName = 'pwaui-dynamic-1';
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemsitoon?!
 const assets = [
