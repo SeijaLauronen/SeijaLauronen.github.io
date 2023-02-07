@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-23';
-const dynamicCacheName = 'pwaui-dynamic-23'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const staticCacheName = 'pwaui-static-25';
+const dynamicCacheName = 'pwaui-dynamic-25'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -14,7 +14,7 @@ const assets = [
   'css/materialize.min.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
-  'https://seijalauronen.github.io/pwaUI/pages/fallback.html'
+  'fallback.html'
 ];
 
 
@@ -48,6 +48,7 @@ self.addEventListener('activate', evt => {
 
 // lesson 17:Sta tämä, ilman dynamic cachea
 // fetch event
+/*
 self.addEventListener('fetch', evt => {
   //console.log('fetch event', evt);
   evt.respondWith(
@@ -56,13 +57,60 @@ self.addEventListener('fetch', evt => {
     })
   );
 });
+*/
 
+/* 
+//hakee vain staattisesta cachesta
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request);
+    })
+  );
+});
+*/
 
+/*
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request).then(fetchRes => {
+        return caches.open(dynamicCacheName).then(cache => {
+          cache.put(evt.request.url, fetchRes.clone());
+          return fetchRes;
+        })
+      });
+    })
+  );
+});
+*/
 
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request).then(fetchRes => {
+        return caches.open(dynamicCacheName).then(cache => {
+          cache.put(evt.request.url, fetchRes.clone());
+          return fetchRes;
+        })
+      });
+    }).catch(() => caches.match('fallback.html'))
+  );
+});
+
+/*
 //https://www.youtube.com/watch?v=ChXgikdQJR8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=18
 //responsea ei voi käyttää/ottaa kiinni useampaan kertaan, siksi otetaan siitä kopio cachetta varten!
 // fetch event
 // jostain syystä saitilla ei tule nyt ollenkaan static cahea, tulee vain dynamic...
+//service worker not registered 
+//TypeError: Failed to register a ServiceWorker for scope ('http://127.0.0.1:5500/pages/') with script ('http://127.0.0.1:5500/pages/sw.js'): A bad HTTP response code (404) was received when fetching the script.
 self.addEventListener('fetch', evt => {
   console.log('fetch event', evt);
   evt.respondWith(
@@ -72,25 +120,24 @@ self.addEventListener('fetch', evt => {
       return cacheRes || 
         fetch(evt.request)
         .then(fetchRes => { //tähän tarjoisi asyncia
-          return caches.open(dynamicCacheName).then(cache => {
-            //Seija oma, ei laiteta cacheen, jos ei ollut ok!!
-            //Jostain syystä tämä iffailu esti myös static cacheen laiton, niin ei näkynyt mm ikoneja
-            // jos laittaskin deleten tuonne catchiin?
-            if (fetchRes.clone().status == 404) {                
-             //   return (caches.match('pwaUI/pages/fallback.html'))
-                return (caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html'))
-            } else {
-                cache.put(evt.request.url, fetchRes.clone()); //alkuperänen rivi
-                return fetchRes;  //alkuperänen rivi
-            }
-          })
+          const cache = caches.open(dynamicCacheName);
+          //Seija oma, ei laiteta cacheen, jos ei ollut ok!!
+          //Jostain syystä tämä iffailu esti myös static cacheen laiton, niin ei näkynyt mm ikoneja
+          // jos laittaskin deleten tuonne catchiin?
+          //if (fetchRes.clone().status == 404) {
+            //   return (caches.match('pwaUI/pages/fallback.html'))
+           // return (caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html'));
+          //} else {
+            cache.put(evt.request.url, fetchRes.clone()); //alkuperänen rivi
+            return fetchRes; //alkuperänen rivi
+          //}
         });
     //}).catch(() => caches.match('/pwaUI/pages/fallback.html')) //https://seijalauronen.github.io/pwaUI/pages/fallback.html
-  }).catch(() => caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html')) 
+  })
   );
   });
 
-
+*/
 
 
 
