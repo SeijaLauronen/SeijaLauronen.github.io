@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-20';
-const dynamicCacheName = 'pwaui-dynamic-20'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const staticCacheName = 'pwaui-static-21';
+const dynamicCacheName = 'pwaui-dynamic-21'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -14,16 +14,13 @@ const assets = [
   'css/materialize.min.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
-  'pages/fallback.html',
-  'https://seijalauronen.github.io/pwaUI/pages/fallback.html'
+  'pages/fallback.html'
 ];
-
-
 
 
 // install event
 self.addEventListener('install', evt => {
-  //console.log('service worker installed');
+  console.log('service worker installed');
   // install voi kestää liian vähän aikaa, että chaetus kerkeäisi tapahtua, siksi odotetaan cachetus
   evt.waitUntil(
     caches.open(staticCacheName).then((cache) => {
