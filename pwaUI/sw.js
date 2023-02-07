@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-22';
-const dynamicCacheName = 'pwaui-dynamic-22'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const staticCacheName = 'pwaui-static-23';
+const dynamicCacheName = 'pwaui-dynamic-23'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -14,7 +14,7 @@ const assets = [
   'css/materialize.min.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
-  'pages/fallback.html'
+  'https://seijalauronen.github.io/pwaUI/pages/fallback.html'
 ];
 
 
@@ -77,8 +77,8 @@ self.addEventListener('fetch', evt => {
             //Jostain syystä tämä iffailu esti myös static cacheen laiton, niin ei näkynyt mm ikoneja
             // jos laittaskin deleten tuonne catchiin?
             if (fetchRes.clone().status == 404) {                
-                return (caches.match('pwaUI/pages/fallback.html'))
-            //    return (caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html'))
+             //   return (caches.match('pwaUI/pages/fallback.html'))
+                return (caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html'))
             } else {
                 cache.put(evt.request.url, fetchRes.clone()); //alkuperänen rivi
                 return fetchRes;  //alkuperänen rivi
@@ -86,7 +86,7 @@ self.addEventListener('fetch', evt => {
           })
         });
     //}).catch(() => caches.match('/pwaUI/pages/fallback.html')) //https://seijalauronen.github.io/pwaUI/pages/fallback.html
-  }).catch(() => caches.match('pwaUI/pages/fallback.html')) 
+  }).catch(() => caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html')) 
   );
   });
 
