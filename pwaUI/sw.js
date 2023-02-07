@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-18';
-const dynamicCacheName = 'pwaui-dynamic-18';
+const staticCacheName = 'pwaui-static-20';
+const dynamicCacheName = 'pwaui-dynamic-20'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -48,9 +48,27 @@ self.addEventListener('activate', evt => {
   );
 });
 
+
+// lesson 17:Sta tämä, ilman dynamic cachea
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request);
+    })
+  );
+});
+
+
+
+
+
+/*
 //https://www.youtube.com/watch?v=ChXgikdQJR8&list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7&index=18
 //responsea ei voi käyttää/ottaa kiinni useampaan kertaan, siksi otetaan siitä kopio cachetta varten!
 // fetch event
+// jostain syystä saitilla ei tule nyt ollenkaan static cahea, tulee vain dynamic...
 self.addEventListener('fetch', evt => {
   //console.log('fetch event', evt);
   evt.respondWith(
@@ -76,4 +94,9 @@ self.addEventListener('fetch', evt => {
     //}).catch(() => caches.match('/pwaUI/pages/fallback.html')) //https://seijalauronen.github.io/pwaUI/pages/fallback.html
   }).catch(() => caches.match('https://seijalauronen.github.io/pwaUI/pages/fallback.html')) 
   );
-});
+  });
+*/
+
+
+
+
