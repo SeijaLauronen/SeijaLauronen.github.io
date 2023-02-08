@@ -1,5 +1,5 @@
-const staticCacheName = 'pwaui-static-26';
-const dynamicCacheName = 'pwaui-dynamic-26'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const staticCacheName = 'pwaui-static-27';
+const dynamicCacheName = 'pwaui-dynamic-27'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not fount, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dunaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -97,7 +97,11 @@ self.addEventListener('fetch', evt => {
     caches.match(evt.request).then(cacheRes => {
       return cacheRes || fetch(evt.request).then(fetchRes => {
         return caches.open(dynamicCacheName).then(cache => {
-          cache.put(evt.request.url, fetchRes.clone());
+          if (fetchRes.clone().status == 404) { //oma iffi
+            return (caches.match('fallback.html')) //alkup
+          } else {
+            cache.put(evt.request.url, fetchRes.clone()); //alkup
+          }
           return fetchRes;
         })
       });
