@@ -1,13 +1,76 @@
+// https://github.com/dannyconnell/localbase
 
 function listaa(){
     //alert("listaan");
-    db.collection('users').get().then(users => {
+    //db.collection('users').get().then(users => {
+        // voidaan järjestää data, voidaan tuoda myös avaimet
+    //db.collection('users').orderBy('name', 'desc').get({keys: true}).then(users => {
+    db.collection('users').orderBy('name', 'asc').get().then(users => {
                   users.forEach(element => {
                     renderList(element, element.id);
                     //console.log(element.id, element.name);
                   });
                 })
   }
+
+ function getCategoryId() {
+    alert('get');
+/*
+    db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(document => {
+        console.log(document)
+     
+      })
+*/
+
+
+    db.collection('dbsettings').doc({skey : 'categoryId'}).get()
+    .then(document=>{
+        alert(document.value);
+        return document.value;
+    })
+    .catch(error => {
+        
+        //if(error.includes('ReferenceError')) {
+        //    console.log('initialisoidaan')
+        //    initCategoryId();
+        //} else {
+          
+        console.log('There was an error, do something else.', error)
+        alert ('Get: Ei onnistu dbsettings categoryId haku',error)
+        initCategoryId();
+        //}
+    })
+   
+    
+ } 
+
+
+ function initCategoryId() {
+    alert('init');
+    db.collection('dbsettings').add(
+        {
+            skey: 'categoryId',
+            value: 1
+        }
+    )
+    .catch(error => {
+        console.log('There was an init error, do something else.', error)
+        alert ("Ei onnistu dbsettings categoryId init")
+    })
+ } 
+
+ function setCategoryId() {
+    db.collection('dbsettings').doc({skey : 'categoryId'}).set(
+        {
+            skey: 'categoryId',
+            value: 1
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.')
+        alert ("Ei onnistu dbsettings categoryId laitto")
+    })
+ } 
 
   const form = document.querySelector('form');
   form.addEventListener('submit', evt => {

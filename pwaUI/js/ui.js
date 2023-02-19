@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const renderList = (data, id) => {
     const html =`
     <div class="card-panel recipe category white row" data-id="${data.id}">
-    <img src="img/dish.png" alt="recipe thumb">
+    
     <div class="recipe-details">
       <div class="recipe-title">${data.id}</div>
       <div class="recipe-ingredients">${data.name}</div>
