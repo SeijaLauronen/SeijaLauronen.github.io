@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const renderList = (data, id) => {
     const html =`
-    <div class="card-panel recipe white row" data-id="${data.id}">
+    <div class="card-panel recipe category white row" data-id="${data.id}">
     <img src="img/dish.png" alt="recipe thumb">
     <div class="recipe-details">
       <div class="recipe-title">${data.id}</div>
@@ -26,7 +26,14 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     categoryList.innerHTML += html;
   }
+
   function reloadCategories(){
     categoryList.innerHTML ="";
     listaa();
   }
+
+  const removeCategory = (categoryId) => {
+    const categoryIdStr = "'" + categoryId.toString() + "'"; // Vaati hipsut toimiakseen, kun on on id stringinä
+    const category = document.querySelector(`.category[data-id=${categoryIdStr}]`);
+    category.remove();
+  };
