@@ -9,11 +9,17 @@ function listaa(){
                     listOfNames+=element.id + ":"
                     listOfNames+=element.name + ", "
                     //addItemToTable(element.id,element.name);
+
+                    renderList(element, element.id);
+
                   });
 
                   //resultset.value =listOfNames
                   console.log(listOfNames);
                   
+                  
+
+
                 })
 
   }
