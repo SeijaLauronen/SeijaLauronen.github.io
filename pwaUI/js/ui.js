@@ -26,3 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     categoryList.innerHTML += html;
   }
+  function reloadCategories(){
+    categoryList.innerHTML ="";
+    listaa();
+  }
