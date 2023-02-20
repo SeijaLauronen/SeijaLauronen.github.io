@@ -154,7 +154,7 @@ Muutenkin id-käsittely pitää muuttaa järkevämmäksi
         <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
         <!-- miten tämän saa keskelle!!!! -->
         
-        <a href="index.html"><span>Pääsivu v47</span></a> 
+        <a href="index.html"><span>Pääsivu v85</span></a> 
         <a href="about.html"><span>About</span></a> 
         
         <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
@@ -183,7 +183,7 @@ Muutenkin id-käsittely pitää muuttaa järkevämmäksi
 
 <!-- recipes -->
 <div class="categories container grey-text text-darken-1">
-
+<p id="hidden-nextCategoryId">1</p>
 
 </div>
 
@@ -232,8 +232,20 @@ Muutenkin id-käsittely pitää muuttaa järkevämmäksi
 
   //setCategoryId();
 
-  let tmp = getCategoryId();
-  alert('tmp:',tmp); //ei se taida tuoda sitä tähän...joku async juttu varmaan....
+  /*
+  const getId = () => {
+    getCategoryId()
+    .then(result => {
+      alert("resultti: ",result);
+    }) ;
+  };
+
+  getId();
+*/
+
+
+  //let tmp = getCategoryId();
+  //alert('tmp:',tmp); //ei se taida tuoda sitä tähän...joku async juttu varmaan....
 
 </script>
 

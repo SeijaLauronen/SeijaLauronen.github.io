@@ -8,7 +8,7 @@ function listaa(){
     db.collection('users').orderBy('name', 'asc').get().then(users => {
                   users.forEach(element => {
                     renderList(element, element.id);
-                    //console.log(element.id, element.name);
+                    console.log("elem:",element.id, element.name);
                   });
                 })
   }
@@ -59,11 +59,11 @@ function listaa(){
     })
  } 
 
- function setCategoryId() {
+ function setCategoryId(kid) {
     db.collection('dbsettings').doc({skey : 'categoryId'}).set(
         {
             skey: 'categoryId',
-            value: 1
+            value: kid
         }
     )
     .catch(error => {
@@ -74,30 +74,46 @@ function listaa(){
 
   const form = document.querySelector('form');
   form.addEventListener('submit', evt => {
-    try {
+    evt.preventDefault();
         //let categoryID=parseInt(form.title.value); // toDo tämä paremmin
-        let categoryID=form.title.value // TODO pidetään toistaseks sitten vaan tekstinä
+        //let categoryID=form.title.value // TODO pidetään toistaseks sitten vaan tekstinä
+        db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
 
-        evt.preventDefault();
+            let kid = 1;
+            if(setting != null) {
+                kid = setting.value + 1;
+            }
+            
             const category = {
-                id:categoryID,
+                id:kid,
                 name:form.ingredients.value
             }
 
-            db.collection('users').add(category)
-            .then( reload =>
-                {  // oma koodi, että lista päivittyy näytöllä
+            console.log(category);
+
+            db.collection('users')
+                .add(category)
+                .then( reload => {
+                    // oma koodi, että lista päivittyy näytöllä
                     reloadCategories();
-                }
-            )
-            .catch(err =>console.log(err));
-            
-            form.title.value ="";
-            form.ingredients.value = "";
-            }
-    catch (e){
+                })
+                .then( updnextCatId =>
+                    {  
+                        if(setting == null){
+                            initCategoryId();
+                        } else {
+                            setCategoryId(category.id);
+                        }
+                    }
+                )
+                .catch(err =>console.log(err));
+
+                form.title.value ="";
+                form.ingredients.value = "";
+        }) 
+    .catch( e =>
             console.log("Virhe lisäyksessä",e)
-    }
+    );
         
   });
 
@@ -105,7 +121,7 @@ function listaa(){
   categoryContainer.addEventListener('click', evt => {
     console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
     if(evt.target.tagName === 'I') {
-        const categoryId = evt.target.getAttribute('data-id');
+        const categoryId = parseInt(evt.target.getAttribute('data-id')); //menee stringinä attribuuttiin
 
         db.collection('users')
                         .doc({ id: categoryId })

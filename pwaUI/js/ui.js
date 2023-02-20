@@ -13,14 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const renderList = (data, id) => {
     const html =`
-    <div class="card-panel recipe category white row" data-id="${data.id}">
+    <div class="card-panel recipe category white row" data-id="${id}">
     
     <div class="recipe-details">
-      <div class="recipe-title">${data.id}</div>
-      <div class="recipe-ingredients">${data.name}</div>
+      <div 
+         <span class="recipe-title">${id}</span>
+         <span class="recipe-ingredients">${data.name}</span>
+      </div>
     </div>
     <div class="recipe-delete">
-      <i class="material-icons" data-id="${data.id}">delete_outline</i>
+      <i class="material-icons" data-id="${id}">delete_outline</i>
     </div>
   </div>
     `;
