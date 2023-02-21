@@ -137,3 +137,22 @@ function listaa(){
                         })
     }
   })
+
+  //ei nämä ihan toimi niinkuin pitää, mutta aikansa kun rämplää, niin poistuu...
+  const deletedbButton = document.querySelector('#deletedb');
+  deletedbButton.addEventListener('click', evt => {
+    evt.preventDefault();
+    alert('deletessä');
+    db.delete()
+    //    .then(listaa()
+    //);
+  });
+
+  const deleteusersButton = document.querySelector('#deleteusers');
+  deleteusersButton.addEventListener('click', evt => {
+    evt.preventDefault();
+    alert('delete users');
+    db.collection('users').delete()
+        //.then(listaa()
+    //);
+  });
