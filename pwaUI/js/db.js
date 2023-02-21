@@ -3,7 +3,7 @@
 function listaa(){
     //alert("listaan");
     //db.collection('users').get().then(users => {
-        // voidaan järjestää data, voidaan tuoda myös avaimet
+        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
     //db.collection('users').orderBy('name', 'desc').get({keys: true}).then(users => {
     db.collection('users').orderBy('name', 'asc').get().then(users => {
                   users.forEach(element => {
@@ -13,19 +13,32 @@ function listaa(){
                 })
   }
 
+
+  function listCategories(){
+    //alert("listaan");
+    //db.collection('users').get().then(users => {
+        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
+    //db.collection('users').orderBy('name', 'desc').get({keys: true}).then(users => {
+    db.collection('category').orderBy('name', 'asc').get().then(categories => {
+        categories.forEach(element => {
+            //renderList(element, element.id);
+            //console.log("elem:",element.id, element.name);
+         });
+        })
+  }
+
+
  function getCategoryId() {
-    alert('get');
+    //alert('get');
 /*
     db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(document => {
         console.log(document)
      
       })
 */
-
-
     db.collection('dbsettings').doc({skey : 'categoryId'}).get()
     .then(document=>{
-        alert(document.value);
+        //alert(document.value);
         return document.value;
     })
     .catch(error => {
@@ -35,8 +48,8 @@ function listaa(){
         //    initCategoryId();
         //} else {
           
-        console.log('There was an error, do something else.', error)
-        alert ('Get: Ei onnistu dbsettings categoryId haku',error)
+        console.log('getCategoryId: There was an error', error);
+       // alert ('Get: Ei onnistu dbsettings categoryId haku',error)
         initCategoryId();
         //}
     })
@@ -44,9 +57,9 @@ function listaa(){
     
  } 
 
-
  function initCategoryId() {
-    alert('init');
+    //alert('init');
+    console.log('initCategoryId')
     db.collection('dbsettings').add(
         {
             skey: 'categoryId',
@@ -55,7 +68,6 @@ function listaa(){
     )
     .catch(error => {
         console.log('There was an init error, do something else.', error)
-        alert ("Ei onnistu dbsettings categoryId init")
     })
  } 
 
@@ -142,17 +154,28 @@ function listaa(){
   const deletedbButton = document.querySelector('#deletedb');
   deletedbButton.addEventListener('click', evt => {
     evt.preventDefault();
-    alert('deletessä');
+    //alert('deletessä');
     db.delete()
-    //    .then(listaa()
-    //);
+        .then( x=> {
+            //alert('deleted db');
+            //reloadCategories()
+            console.log("db deleted");
+            emptyCategories();
+        }
+    );
   });
 
   const deleteusersButton = document.querySelector('#deleteusers');
   deleteusersButton.addEventListener('click', evt => {
     evt.preventDefault();
-    alert('delete users');
+    //alert('delete users');
     db.collection('users').delete()
-        //.then(listaa()
-    //);
+        .then( x=>
+           { 
+            console.log("users deleted");
+            //alert('deleted users');
+            //reloadCategories();
+            emptyCategories();
+           }
+    );
   });

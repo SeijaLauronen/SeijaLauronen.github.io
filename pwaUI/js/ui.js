@@ -29,9 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
     categoryList.innerHTML += html;
   }
 
+
   function reloadCategories(){
     categoryList.innerHTML ="";
     listaa();
+  }
+
+  function emptyCategories(){
+    categoryList.innerHTML ="";
   }
 
   const removeCategory = (categoryId) => {
