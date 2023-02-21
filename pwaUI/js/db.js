@@ -132,7 +132,7 @@ function listaa(){
   const categoryContainer = document.querySelector('.categories');
   categoryContainer.addEventListener('click', evt => {
     console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
-    if(evt.target.tagName === 'I') {
+    if(evt.target.tagName === 'I' && evt.target.innerText === 'delete') {
         const categoryId = parseInt(evt.target.getAttribute('data-id')); //menee stringinä attribuuttiin
 
         db.collection('users')
@@ -147,8 +147,15 @@ function listaa(){
                           console.log('There was an error, do something else.', error)
                           alert ("Ei onnistu del", error)
                         })
+    } else if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+        const categoryId = parseInt(evt.target.getAttribute('data-id'));
+        console.log('categoryId:', categoryId);
     }
   })
+
+
+
+
 
   //ei nämä ihan toimi niinkuin pitää, mutta aikansa kun rämplää, niin poistuu...
   const deletedbButton = document.querySelector('#deletedb');
