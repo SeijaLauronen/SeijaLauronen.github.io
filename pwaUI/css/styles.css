@@ -49,6 +49,7 @@ nav .sidenav-trigger{
   grid-area: image;
   max-width: 60px;
 }
+/* suurentaa tekstikenttää tarvittaessa*/
 .recipe-details{
   grid-area: details;
   margin-top: 2px;
@@ -95,7 +96,7 @@ nav .sidenav-trigger{
 /* form-styles */
 .add-btn{
   background: var(--title) !important;
-  bottom: 10px; /* seija */
+  bottom: 0px; /* seija */
 }
 input{
   box-shadow: none !important;
@@ -106,9 +107,9 @@ input{
   box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
 }
 form .input-field{
-  margin-top: 30px;
+  margin-top: 10px;
 }
-/* seija, ylikirjoittaako tämä alkuperäisen.. */
+/* seija, ylikirjoittaako tämä alkuperäisen.. kyllä */
 @media only screen and (min-width: 0) {
   html {
       font-size:16px
@@ -132,8 +133,57 @@ form .input-field{
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(0, 38, 255);
+  background-color: indigo;
   color: white;
   text-align: center;
   z-index: 99;
+  padding-top: 0;
+}
+
+.low{
+  height: auto!important;
+  margin: 0 0 0 0!important;
+  padding: 0 0 0 0!important;
+  background-color:beige!important;  
+  border-bottom:none!important;
+  box-shadow: none!important;
+}
+
+.lowrow{
+  height: auto!important;
+  margin: 0 0 0 0!important;
+  padding: 0 0 0 0!important; 
+  border-bottom:none!important;
+  box-shadow: none!important;
+}
+
+
+
+/* https://materializecss.com/text-inputs.html */
+ /* label color */
+.low label {
+  color: #000;
+}
+/* label focus color */
+.low input[type=text]:focus + label {
+  color: #000;
+}
+/* label underline focus color */
+.low input[type=text]:focus {
+  border-bottom: none;
+  box-shadow: none;
+}
+/* valid color */
+.low input[type=text].valid {
+  border-bottom: none;
+  box-shadow: none;
+}
+/* invalid color */
+.low input[type=text].invalid {
+  border-bottom: none;
+  box-shadow: none;
+}
+/* icon prefix focus color */
+.low.prefix.active {
+  color: #000;
 }

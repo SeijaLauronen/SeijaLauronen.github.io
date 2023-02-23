@@ -51,3 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const category = document.querySelector(`.category[data-id=${categoryIdStr}]`);
     category.remove();
   };
+
+
+
