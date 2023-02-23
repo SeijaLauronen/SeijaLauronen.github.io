@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="recipe-ingredients flow-text">${data.name}
       </div>
     </div>
-
     <div class="category-edit sidenav-trigger" data-target="side-form"">
       <i class="material-icons" data-id="${id}">edit</i>
     </div>
@@ -27,14 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="recipe-delete">
       <i class="material-icons" data-id="${id}">delete</i>
     </div>
-
-
     <div class="category-go">
     <a href="about.html?categoryId=${id}">
     <i class="material-icons data-id="${id}">arrow_right_alt</i>
     </a> 
   </div>
-
   </div>
     `;
     categoryList.innerHTML += html;
