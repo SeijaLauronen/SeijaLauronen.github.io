@@ -151,13 +151,59 @@ function listaa(){
         const categoryId = parseInt(evt.target.getAttribute('data-id'));
         console.log('categoryId:', categoryId);
     }
+  });
+
+
+  const addCategoryButton = document.querySelector('#addCategoryBtn');
+  const inputCategory = document.querySelector('#categoryinput');
+  addCategoryButton.addEventListener('click',evt => {
+    evt.preventDefault();
+    db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
+
+        let kid = 1;
+        if(setting != null) {
+            kid = setting.value + 1;
+        }
+        
+        const category = {
+            id:kid,
+            name:inputCategory.value
+        }
+
+        console.log(category);
+
+        db.collection('users')
+            .add(category)
+            .then( reload => {
+                // oma koodi, että lista päivittyy näytöllä
+                reloadCategories();
+            })
+            .then( updnextCatId =>
+                {  
+                    if(setting == null){
+                        initCategoryId();
+                    } else {
+                        setCategoryId(category.id);
+                    }
+                }
+            )
+            .catch(err =>console.log(err));
+
+            form.title.value ="";
+            form.ingredients.value = "";
+    }) 
+.catch( e =>
+        console.log("AddBtn Virhe lisäyksessä",e)
+);
+
+
+
+
+
+
+
   })
 
-
-
-
-
-  //ei nämä ihan toimi niinkuin pitää, mutta aikansa kun rämplää, niin poistuu...
   const deletedbButton = document.querySelector('#deletedb');
   deletedbButton.addEventListener('click', evt => {
     evt.preventDefault();
