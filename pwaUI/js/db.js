@@ -188,9 +188,7 @@ function listaa(){
                 }
             )
             .catch(err =>console.log(err));
-
-            form.title.value ="";
-            form.ingredients.value = "";
+            inputCategory.value = "";
     }) 
 .catch( e =>
         console.log("AddBtn Virhe lisäyksessä",e)

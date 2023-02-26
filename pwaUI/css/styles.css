@@ -33,8 +33,10 @@ nav .sidenav-trigger{
 
 /* categories styles */
 .categories{
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 10px;
+  margin-bottom: 60px;
+  padding-top:2px;
+  padding:2px;
 }
 .card-panel.recipe{
   border-radius: 8px;
@@ -52,7 +54,7 @@ nav .sidenav-trigger{
 /* suurentaa tekstikenttää tarvittaessa*/
 .recipe-details{
   grid-area: details;
-  margin-top: 2px;
+  margin-top: 1px;
   height: auto; /* SSL */
   overflow-wrap: anywhere; /*SSL */
 }
