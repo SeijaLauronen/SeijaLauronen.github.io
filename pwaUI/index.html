@@ -42,7 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
         <!-- miten tämän saa keskelle!!!! -->
         
-        <a href="index.html"><span>Pääsivu v159</span></a> 
+        <a href="index.html"><span>Pääsivu v164</span></a> 
         <a href="about.html"><span>About</span></a> 
         
         <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
@@ -70,8 +70,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     <li><div class="divider"></div></li>
     <li><a class="subheader">Asetukset</a></li>
 
-    <li><a> <button class="btn-small" id="deleteusers">Poista users</button> </a></li>
-    <li><a> <button class="btn-small" id="deletedb">Poista kaikki tiedot</button> </a></li>
+    <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
+    <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
+    <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
     
   </ul>
 
@@ -82,10 +83,10 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
       
 
-      <!-- add recipe side nav -->
+      <!-- add category side nav -->
       <div id="side-form" class="sidenav side-form">
 
-        <form class="add-recipe container section">
+        <form class="add-category container section">
           <h6 >Uusi tuote listalle</h6>
           <div class="divider"></div>
           <div class="input-field input1">
@@ -116,7 +117,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
     <div class="row lowrow">
     <div class="col s11">
-      <input placeholder="Kategorian nimi" id="categoryinput" type="text" class="validate low">
+      <input placeholder="Uuden kategorian nimi" id="categoryinput" type="text" class="validate low">
     </div>
 
       <div class="right col s1">
@@ -143,9 +144,11 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 <script>
   //import Localbase from 'localbase'; // mihinkäs tätä tarvitaankaan?
   //let db = new Localbase('db') //tämä oli esimerkissä
-  const db = new Localbase('db'); //laitoin näin
+  const dbold = new Localbase('db'); //laitoin näin
   //db.config.debug = false; //logitus pois päältä
-  listaa();
+  // listaa();
+
+  const db = new Localbase('helperdb');
   listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
   
 </script>

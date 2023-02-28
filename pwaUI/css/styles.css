@@ -38,7 +38,7 @@ nav .sidenav-trigger{
   padding-top:2px;
   padding:2px;
 }
-.card-panel.recipe{
+.card-panel.category{
   border-radius: 8px;
   padding: 2px;
   margin: 5px;
@@ -47,25 +47,26 @@ nav .sidenav-trigger{
   grid-template-columns: 2fr 6fr 2fr 1fr;
   grid-template-areas: "delete details edit go";
   position: relative;
+  min-height: 35px;
 }
-.recipe img{
+.category img{
   grid-area: image;
   max-width: 60px;
 }
 /* suurentaa tekstikenttää tarvittaessa*/
-.recipe-details{
+.category-details{
   grid-area: details;
   margin-top: 1px;
   height: auto; /* SSL */
   overflow-wrap: anywhere; /*SSL */
 }
-.recipe-delete{
+.category-delete{
   grid-area: delete;
   position: absolute;
   bottom: 0px;
   left: 0px;
 }
-.recipe-delete i{
+.category-delete i{
   font-size: 20px;
 }
 
@@ -89,10 +90,10 @@ nav .sidenav-trigger{
   font-size: 20px;
 }
 
-.recipe-title{
+.category-title{
   font-weight: bold;
 }
-.recipe-ingredients{
+.category-ingredients{
   font-size: 1.2em;
 }
 

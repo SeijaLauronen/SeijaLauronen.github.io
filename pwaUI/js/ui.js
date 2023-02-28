@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const menus = document.querySelectorAll('.side-menu');
     M.Sidenav.init(menus, {edge: 'left'});
     //alert("left");
-    // add recipe form
+    // add category form
     const forms = document.querySelectorAll('.side-form');
     M.Sidenav.init(forms, {edge: 'right'});
     //alert("right");
@@ -13,17 +13,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const renderList = (data, id) => {
     const html =`
-    <div class="card-panel recipe category white row" data-id="${id}">
+    <div class="card-panel category category white row" data-id="${id}">
     
-    <div class="recipe-details">
-      <div class="recipe-ingredients flow-text">${data.name}
+    <div class="category-details">
+      <div class="category-ingredients flow-text">${data.name}
       </div>
     </div>
     <div class="category-edit sidenav-trigger" data-target="side-form"">
       <i class="material-icons" data-id="${id}">edit</i>
     </div>
     
-    <div class="recipe-delete">
+    <div class="category-delete">
       <i class="material-icons" data-id="${id}">delete</i>
     </div>
     <div class="category-go">
@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function reloadCategories(){
     categoryList.innerHTML ="";
-    listaa();
+    //listaa();
+    listCategories();
   }
 
   function emptyCategories(){

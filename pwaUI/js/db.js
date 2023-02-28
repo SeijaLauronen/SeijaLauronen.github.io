@@ -2,11 +2,11 @@
 
 function listaa(){
     //alert("listaan");
-    //db.collection('users').get().then(users => {
+    //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
-    //db.collection('users').orderBy('name', 'desc').get({keys: true}).then(users => {
-    db.collection('users').orderBy('name', 'asc').get().then(users => {
-                  users.forEach(element => {
+    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
+    db.collection('category').orderBy('name', 'asc').get().then(category => {
+                  category.forEach(element => {
                     renderList(element, element.id);
                     console.log("elem:",element.id, element.name);
                   });
@@ -16,12 +16,12 @@ function listaa(){
 
   function listCategories(){
     //alert("listaan");
-    //db.collection('users').get().then(users => {
+    //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
-    //db.collection('users').orderBy('name', 'desc').get({keys: true}).then(users => {
+    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
         categories.forEach(element => {
-            //renderList(element, element.id);
+            renderList(element, element.id);
             //console.log("elem:",element.id, element.name);
          });
         })
@@ -103,7 +103,7 @@ function listaa(){
 
             console.log(category);
 
-            db.collection('users')
+            db.collection('category')
                 .add(category)
                 .then( reload => {
                     // oma koodi, että lista päivittyy näytöllä
@@ -135,7 +135,7 @@ function listaa(){
     if(evt.target.tagName === 'I' && evt.target.innerText === 'delete') {
         const categoryId = parseInt(evt.target.getAttribute('data-id')); //menee stringinä attribuuttiin
 
-        db.collection('users')
+        db.collection('category')
                         .doc({ id: categoryId })
                         .delete()
                         .then(response => {
@@ -172,7 +172,7 @@ function listaa(){
 
         console.log(category);
 
-        db.collection('users')
+        db.collection('category')
             .add(category)
             .then( reload => {
                 // oma koodi, että lista päivittyy näytöllä
@@ -202,6 +202,21 @@ function listaa(){
 
   })
 
+  const deletedboldButton = document.querySelector('#deletedbold');
+  deletedboldButton.addEventListener('click', evt => {
+    evt.preventDefault();
+    //alert('deletessä');
+    dbold.delete()
+        .then( x=> {
+            //alert('deleted db');
+            //reloadCategories()
+            console.log("dbold deleted");
+            emptyCategories();
+        }
+    );
+  });
+
+
   const deletedbButton = document.querySelector('#deletedb');
   deletedbButton.addEventListener('click', evt => {
     evt.preventDefault();
@@ -216,15 +231,17 @@ function listaa(){
     );
   });
 
-  const deleteusersButton = document.querySelector('#deleteusers');
-  deleteusersButton.addEventListener('click', evt => {
+
+
+  const deletecategoryButton = document.querySelector('#deletecategory');
+  deletecategoryButton.addEventListener('click', evt => {
     evt.preventDefault();
-    //alert('delete users');
-    db.collection('users').delete()
+    //alert('delete category');
+    db.collection('category').delete()
         .then( x=>
            { 
-            console.log("users deleted");
-            //alert('deleted users');
+            console.log("category deleted");
+            //alert('deleted category');
             //reloadCategories();
             emptyCategories();
            }
