@@ -193,3 +193,11 @@ form .input-field{
 .low.prefix.active {
   color: #000;
 }
+
+.col.nospaceright{
+  padding-right: 0!important;
+}
+
+.col.nospaceleft{
+  padding-left: 0!important;
+}
