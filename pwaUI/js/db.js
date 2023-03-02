@@ -86,6 +86,37 @@ function listaa(){
 
   const form = document.querySelector('form');
   form.addEventListener('submit', evt => {
+    //evt.preventDefault();
+    console.log('submit');
+    console.log(form.categoryId.value);
+    console.log(form.input1.value);
+    const categoryId = parseInt(form.categoryId.value);
+    const categoryName = form.input1.value;
+    console.log('submit2');
+    console.log(categoryName);
+    console.log(categoryId);
+
+    db.collection('category').doc({id : categoryId}).set(
+        {
+            id: categoryId,
+            name: categoryName
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.', error)
+        alert ("Ei onnistu kategorian muuttaminen laitto")
+    })
+
+
+
+
+
+
+
+
+  });
+
+  form.addEventListener('XXsubmit', evt => {
     evt.preventDefault();
         //let categoryID=parseInt(form.title.value); // toDo tämä paremmin
         //let categoryID=form.title.value // TODO pidetään toistaseks sitten vaan tekstinä
@@ -149,7 +180,13 @@ function listaa(){
                         })
     } else if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
         const categoryId = parseInt(evt.target.getAttribute('data-id'));
+        //const categoryName = document.querySelectorAll('category-name[name-id="' + categoryId + '"]');
+        const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
         console.log('categoryId:', categoryId);
+        console.log('categoryName:', categoryName);
+        form.input1.value=categoryName;
+        form.categoryId.value = categoryId;
+
     }
   });
 

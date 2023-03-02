@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="card-panel category category white row" data-id="${id}">
     
     <div class="category-details">
-      <div class="category-ingredients flow-text">${data.name}
+      <div class="category-name flow-text" name-id="${id}">${data.name}
       </div>
     </div>
     <div class="category-edit sidenav-trigger" data-target="side-form"">
