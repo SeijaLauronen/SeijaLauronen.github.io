@@ -146,24 +146,40 @@ form .input-field{
   padding-top: 0;
 }
 
+
 .low{
   height: 30px!important;
   margin: 0 0 0 0!important;
-  padding: 0 0 0 0!important;
-  background-color:beige!important;  
+  padding: 0 0 0 5px!important;
+  background-color:white!important;  
   border-bottom:none!important;
   box-shadow: none!important;
 }
 
 .lowrow{
   height: auto!important;
-  margin: 0 0 1px 0!important;
-  padding: 0 0 0 0!important; 
+  margin: 5px 0 0 0!important;
+  padding: 5px 0 0 0!important; 
   border-bottom:none!important;
   box-shadow: none!important;
 }
 
+.container {
+  width:100%;
+}
 
+form.add-category.container.section {
+  width: 90%;
+}
+
+.input {
+  border: 2px solid #eee!important;
+  border-radius: 15px!important;
+}
+
+.menuicon {
+  padding-left: 10px;
+}
 
 /* https://materializecss.com/text-inputs.html */
  /* label color */

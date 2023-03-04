@@ -87,32 +87,44 @@ function listaa(){
   const form = document.querySelector('form');
   form.addEventListener('submit', evt => {
     //evt.preventDefault();
-    console.log('submit');
-    console.log(form.categoryId.value);
-    console.log(form.input1.value);
+    //console.log('submit');
+    //console.log(evt);
+    console.log(evt.submitter.id);
+    //console.log(form.categoryId.value);
+    //console.log(form.input1.value);
     const categoryId = parseInt(form.categoryId.value);
     const categoryName = form.input1.value;
-    console.log('submit2');
-    console.log(categoryName);
-    console.log(categoryId);
+    if (evt.submitter.id == "changeCategory") {
+        evt.preventDefault();
+        console.log('submit2');
+        console.log(categoryName);
+        console.log(categoryId);
 
-    db.collection('category').doc({id : categoryId}).set(
-        {
-            id: categoryId,
-            name: categoryName
-        }
-    )
-    .catch(error => {
-        console.log('There was an error, do something else.', error)
-        alert ("Ei onnistu kategorian muuttaminen laitto")
-    })
+        db.collection('category').doc({id : categoryId}).set(
+            {
+                id: categoryId,
+                name: categoryName
+            }
+        )
+        .catch(error => {
+            console.log('There was an error, do something else.', error)
+            alert ("Ei onnistu kategorian muuttaminen laitto")
+        })
+    }
 
-
-
-
-
-
-
+    if (evt.submitter.id == "delCategory") {
+        db.collection('category')
+            .doc({ id: categoryId })
+            .delete()
+            .then(response => {
+                console.log('Delete successful, now do something.');
+                removeCategory(categoryId); // Poistaa ui:sta
+            })
+            .catch(error => {
+                console.log('There was an error, do something else.', error)
+                alert ("Ei onnistu delete sumbitterillä", error)
+            })
+    }
 
   });
 
