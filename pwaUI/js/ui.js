@@ -23,12 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <i class="material-icons" data-id="${id}">edit</i>
     </div>
     
-    <div class="category-delete">
-      <i class="material-icons" data-id="${id}">delete</i>
-    </div>
     <div class="category-go">
     <a href="about.html?categoryId=${id}">
-    <i class="material-icons data-id="${id}">arrow_right_alt</i>
+    <i class="material-icons data-id="${id}">arrow_forward</i>
     </a> 
   </div>
   </div>

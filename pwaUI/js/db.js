@@ -86,6 +86,7 @@ function listaa(){
 
   const form = document.querySelector('form');
   form.addEventListener('submit', evt => {
+    //TODO muutoksen jälkeen ei muutos näy listalla
     //evt.preventDefault();
     //console.log('submit');
     //console.log(evt);
@@ -95,7 +96,7 @@ function listaa(){
     const categoryId = parseInt(form.categoryId.value);
     const categoryName = form.input1.value;
     if (evt.submitter.id == "changeCategory") {
-        evt.preventDefault();
+        //evt.preventDefault();
         console.log('submit2');
         console.log(categoryName);
         console.log(categoryId);
@@ -128,53 +129,12 @@ function listaa(){
 
   });
 
-  form.addEventListener('XXsubmit', evt => {
-    evt.preventDefault();
-        //let categoryID=parseInt(form.title.value); // toDo tämä paremmin
-        //let categoryID=form.title.value // TODO pidetään toistaseks sitten vaan tekstinä
-        db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
-
-            let kid = 1;
-            if(setting != null) {
-                kid = setting.value + 1;
-            }
-            
-            const category = {
-                id:kid,
-                name:form.ingredients.value
-            }
-
-            console.log(category);
-
-            db.collection('category')
-                .add(category)
-                .then( reload => {
-                    // oma koodi, että lista päivittyy näytöllä
-                    reloadCategories();
-                })
-                .then( updnextCatId =>
-                    {  
-                        if(setting == null){
-                            initCategoryId();
-                        } else {
-                            setCategoryId(category.id);
-                        }
-                    }
-                )
-                .catch(err =>console.log(err));
-
-                form.title.value ="";
-                form.ingredients.value = "";
-        }) 
-    .catch( e =>
-            console.log("Virhe lisäyksessä",e)
-    );
-        
-  });
+  
 
   const categoryContainer = document.querySelector('.categories');
   categoryContainer.addEventListener('click', evt => {
     console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+   /*
     if(evt.target.tagName === 'I' && evt.target.innerText === 'delete') {
         const categoryId = parseInt(evt.target.getAttribute('data-id')); //menee stringinä attribuuttiin
 
@@ -190,7 +150,10 @@ function listaa(){
                           console.log('There was an error, do something else.', error)
                           alert ("Ei onnistu del", error)
                         })
-    } else if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+    } else
+    */
+
+     if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
         const categoryId = parseInt(evt.target.getAttribute('data-id'));
         //const categoryName = document.querySelectorAll('category-name[name-id="' + categoryId + '"]');
         const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
@@ -209,6 +172,12 @@ function listaa(){
     evt.preventDefault();
     db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
 
+        let cname=inputCategory.value;
+       console.log('cname:'+cname + "XX")
+        if (cname=="") {
+            cname ='Uusi kategoria';
+        }
+
         let kid = 1;
         if(setting != null) {
             kid = setting.value + 1;
@@ -216,7 +185,7 @@ function listaa(){
         
         const category = {
             id:kid,
-            name:inputCategory.value
+            name:cname
         }
 
         console.log(category);
