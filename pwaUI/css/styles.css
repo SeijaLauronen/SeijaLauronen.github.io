@@ -11,7 +11,7 @@ nav{
   border-bottom: 10px solid var(--secondary);
 }
 nav a{
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   color: var(--title);
 }
 nav a span{
@@ -34,7 +34,7 @@ nav .sidenav-trigger{
 /* categories styles */
 .categories{
   margin-top: 60px;
-  margin-bottom: 75px;
+  margin-bottom: 80px;
   padding-top:2px;
   padding:2px;
 }
@@ -168,13 +168,13 @@ form .input-field{
   width:100%;
 }
 
-form.add-category.container.section {
+div.edit-category.container.section {
   width: 90%;
 }
 
 #categoryinput {
   border: 2px solid #eee!important;
-  border-radius: 15px!important;
+  border-radius: 10px!important;
 }
 
 .menuicon {
@@ -216,4 +216,15 @@ form.add-category.container.section {
 
 .col.nospaceleft{
   padding-left: 0!important;
+}
+
+.form-header {
+  background-color: var(--primary);
+}
+.formclose {
+  margin-top: 8px;
+}
+.footer-text{
+  font-size: xx-small;
+
 }

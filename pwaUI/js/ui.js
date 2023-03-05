@@ -7,8 +7,26 @@ document.addEventListener('DOMContentLoaded', function() {
     //alert("left");
     // add category form
     const forms = document.querySelectorAll('.side-form');
-    M.Sidenav.init(forms, {edge: 'right'});
+    var instances = M.Sidenav.init(forms, {edge: 'right'}); //tähän lisätty var instances eteen
     //alert("right");
+
+
+    //var elems = document.querySelectorAll(".sidenav");
+    //var options = {};
+    //var instances = M.Sidenav.init(elems, options);
+  
+    document
+      .querySelector(".formclose")
+      .addEventListener("click", function() {
+        var elem = document.querySelector(".side-form");
+        var instance = M.Sidenav.getInstance(elem);
+  
+        if (instance.isOpen) {
+          console.log("Is open: I need to close it");
+          instance.close();
+        } 
+      });
+
   });
 
   const renderList = (data, id) => {
@@ -50,5 +68,47 @@ document.addEventListener('DOMContentLoaded', function() {
     category.remove();
   };
 
+  // formclose
+  /*
+  const formclose = document.querySelector('.formclose');
+  var catform = document.querySelectorAll('.side-form');
+  formclose.addEventListener('click',evt => {
+    alert('formclose');
+    console.log(evt);
+    console.log('catform:', catform);
+    //var instance = M.Sidenav.getInstance(forms);
+    //console.log('instance:', instance);
+    //instance.close();
+    //catform.forms.M.
+  });
+  */
+
+
+  /* 
+  Pitää varmaan tehdä tuonne ylös?
+  https://stackoverflow.com/questions/54595661/materialize-fixed-sidebar-close
+  document.addEventListener("DOMContentLoaded", function() {
+  var elems = document.querySelectorAll(".sidenav");
+  var options = {};
+  var instances = M.Sidenav.init(elems, options);
+
+  document
+    .querySelector("#toggle_sidenav")
+    .addEventListener("click", function() {
+      var elem = document.querySelector(".sidenav");
+      var instance = M.Sidenav.getInstance(elem);
+
+      if (instance.isOpen) {
+        console.log("Is open: I need to close it");
+        instance.close();
+      } else {
+        console.log("Is closed: I need to open it");
+        instance.open();
+      }
+    });
+});
+  
+  
+  */
 
 

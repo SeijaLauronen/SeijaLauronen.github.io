@@ -42,7 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
         <!-- miten tämän saa keskelle!!!! -->
         
-        <a href="index.html"><span>Kategoriat v220</span></a> 
+        <a href="index.html"><span>Kategoriat v238</span></a> 
         <a href="about.html"><span>About</span></a> 
         
         <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
@@ -86,45 +86,44 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       <!-- add category side nav -->
       <div id="side-form" class="sidenav side-form">
 
-        <form class="add-category container section">
-          <div class="row">
-            <div class="col s11">
+        <form>
+          <div class="row form-header">
+            <div class="col s10">
               <h6>Kategorian tiedot</h6>
             </div>
-            <div class="col s1">
+            <div class="col s2 formclose">
               <i class="material-icons">close</i>
             </div>
           </div>
 
-          <br><br>
-          <div class="divider"></div>
-          <div>       
-            <input id="categoryId" type="text" hidden>  
-          </div>  
-          <div class="input-field input1">
-            <input placeholder="Kategorian nimi" id="input1" type="text" class="validate">
-          </div>
-          
-          <div class="center">
+          <div class="edit-category container section">
+            
+
             <!--
-            https://materializecss.com/sidenav.html
-            todo close
-          
-          -->
+            <br><br>
+            <div class="divider"></div>
+            -->
 
-            <button class="btn-small del-btn" type="submit" id="cancel" >
-              <i class="material-icons">cancel</i>
-            </button>
+            <div>                  
+              <input id="categoryId" type="text" hidden>  
+            </div>  
 
-            <button class="btn-small del-btn" type="submit" id="delCategory" >
-              <i class="material-icons">delete</i>
-            </button>
-
+            <div class="input-field input1">
+              <input placeholder="Kategorian nimi" id="input1" type="text" class="validate">
+            </div>
             
-            <button class="btn-small del-btn" type="submit" id="changeCategory" >
-              <i class="material-icons">check</i>
-            </button>
-            
+            <div class="center">
+
+              <button class="btn-small del-btn" type="submit" id="delCategory" >
+                <i class="material-icons">delete</i>
+              </button>
+
+              
+              <button class="btn-small" type="submit" id="changeCategory" >
+                <i class="material-icons">check</i>
+              </button>
+              
+            </div>
 
           </div>
         </form>
@@ -148,10 +147,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       </div>
     </div>
     <div class="row deep-purple accent-4 lowrow">
-      <i class="material-icons">home</i>
-      <i class="material-icons">list</i>
+      <div class="col s3">
+        <i class="material-icons">home</i>
+        <!-- <span class ="footer-text">Kategoriat</span> -->
+      </div>
+      <div class="col s3">
+        <i class="material-icons">list</i>
+        <!-- <span class ="footer-text">Tuotteet</span> -->
+      </div>
     </div>
-
   </div>
 </footer>
 
