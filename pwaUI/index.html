@@ -42,8 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
         <!-- miten tämän saa keskelle!!!! -->
         
-        <a href="index.html"><span>Kategoriat v244</span></a> 
-        <a href="about.html"><span>About</span></a> 
+        <a href="index.html"><span>Kategoriat</span></a>         
         
         <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
         <!-- taiskin johtua tuosta yllä olevasta href linkistä -->
@@ -56,28 +55,28 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
     
     <!-- side nav -->
-    <!-- noita sivuja ei vielä tehty, ja voi olla, että niistäkin pitää ottaa edestä pois tuo kauttaviiva sitten -->
-    <!-- muutan tämän aukeamaan vasemmalta ui.js:stä-->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">KESKEN</a></li>
-    <li><a href="index.html" class="waves-effect">Home</a></li>
-    
-    <li><a href="about.html" class="waves-effect">About</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contact</a>
-    </li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Asetukset</a></li>
+    <!-- muutettu tämä aukeamaan vasemmalta ui.js:stä-->
+    <ul id="side-menu" class="sidenav side-menu">
+      <li><a class="subheader">Apuri</a></li>
+      <li><a href="index.html" class="waves-effect">Home</a></li>
+      
+      <li><a href="about.html" class="waves-effect">About</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="contact.html" class="waves-effect">
+        <i class="material-icons">mail_outline</i>Contact</a>
+      </li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Asetukset</a></li>
 
-    <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
-    <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
-    <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Tietoja</a></li>
-    <li><div id="browserinfo"></div></li>
+      <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
+      <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
+      <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Tietoja</a></li>
+      <li><a>Ohjelmaversio: 245</a></li>
+      <li><a><div id="browserinfo"></div></a></li>
 
-  </ul>
+    </ul>
 
       <!-- categories -->
       <div class="categories container green lighten-5">
