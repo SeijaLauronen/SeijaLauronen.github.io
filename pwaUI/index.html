@@ -42,7 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
         <!-- miten tämän saa keskelle!!!! -->
         
-        <a href="index.html"><span>Kategoriat v238</span></a> 
+        <a href="index.html"><span>Kategoriat v244</span></a> 
         <a href="about.html"><span>About</span></a> 
         
         <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
@@ -73,7 +73,10 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
     <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
     <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
-    
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Tietoja</a></li>
+    <li><div id="browserinfo"></div></li>
+
   </ul>
 
       <!-- categories -->
@@ -114,12 +117,12 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
             
             <div class="center">
 
-              <button class="btn-small del-btn" type="submit" id="delCategory" >
+              <button class="btn-small del-btn red left" type="submit" id="delCategory" >
                 <i class="material-icons">delete</i>
               </button>
 
               
-              <button class="btn-small" type="submit" id="changeCategory" >
+              <button class="btn-small right" type="submit" id="changeCategory" >
                 <i class="material-icons">check</i>
               </button>
               
