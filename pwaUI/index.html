@@ -31,9 +31,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 </head>
 
 
-
+<!-- -------------------------------------- BODY --------------------------------------------------------------------- -->
 <body class="green lighten-5">
-
+    <!-- ------------------------------------ TOPMENU----------------------------------------------------------------------- -->
     <!-- top nav -->
     <!-- muutan tämän aukeamaan oikealta -->
     <nav class="z-depth-0 stay-top">
@@ -53,7 +53,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       </div>
     </nav>
 
-    
+    <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
     <!-- side nav -->
     <!-- muutettu tämä aukeamaan vasemmalta ui.js:stä-->
     <ul id="side-menu" class="sidenav side-menu">
@@ -77,153 +77,107 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       <li><a><div id="browserinfo"></div></a></li>
 
     </ul>
+    <!-- --------------------------------------CATEGORYLIST--------------------------------------------------------------------- -->
+    <!-- categories -->
+    <div class="categories container green lighten-5">
 
-      <!-- categories -->
-      <div class="categories container green lighten-5">
-
-      </div>
-
+    </div>
       
+    <!-- -------------------------------------- FORM  --------------------------------------------------------------------- -->
+    <!-- add category side nav form -->
+    <div id="side-form" class="sidenav side-form">
 
-      <!-- add category side nav -->
-      <div id="side-form" class="sidenav side-form">
+      <form>
+        <div class="row form-header">
+          <div class="col s10">
+            <h6>Kategorian tiedot</h6>
+          </div>
+          <div class="col s2 formclose">
+            <i class="material-icons">close</i>
+          </div>
+        </div>
 
-        <form>
-          <div class="row form-header">
-            <div class="col s10">
-              <h6>Kategorian tiedot</h6>
-            </div>
-            <div class="col s2 formclose">
-              <i class="material-icons">close</i>
-            </div>
+        <div class="edit-category container section">
+          
+
+          <!--
+          <br><br>
+          <div class="divider"></div>
+          -->
+
+          <div>                  
+            <input id="categoryId" type="text" hidden>  
+          </div>  
+
+          <div class="input-field input1">
+            <input placeholder="Kategorian nimi" id="input1" type="text" class="validate">
+          </div>
+          
+          <div class="center">
+
+            <button class="btn-small left default-button-handler" type="submit" id="defaultActionCategory" >
+              <i class="material-icons">check</i>
+            </button>
+
+            <button class="btn-small del-btn red left" type="submit" id="delCategory" >
+              <i class="material-icons">delete</i>
+            </button>
+
+            <button class="btn-small right" type="submit" id="updateCategory" >
+              <i class="material-icons">check</i>
+            </button>
+            
           </div>
 
-          <div class="edit-category container section">
-            
+        </div>
+      </form>
 
-            <!--
-            <br><br>
-            <div class="divider"></div>
-            -->
+    </div>
+    <!-- ------------------------------------- FOOTER ---------------------------------------------------------------------- -->
+    <footer class="footer page-footer green lighten-5">
+      <div class="container">
 
-            <div>                  
-              <input id="categoryId" type="text" hidden>  
-            </div>  
+        <div class="row lowrow">
+        <div class="col s10 nospaceright">
+          <input placeholder="Uusi kategoria" id="categoryinput" type="text" class="validate low">
+        </div>
 
-            <div class="input-field input1">
-              <input placeholder="Kategorian nimi" id="input1" type="text" class="validate">
-            </div>
-            
-            <div class="center">
-
-              <button class="btn-small left default-button-handler" type="submit" id="defaultActionCategory" >
-                <i class="material-icons">check</i>
-              </button>
-
-              <button class="btn-small del-btn red left" type="submit" id="delCategory" >
-                <i class="material-icons">delete</i>
-              </button>
-
-              <button class="btn-small right" type="submit" id="updateCategory" >
-                <i class="material-icons">check</i>
-              </button>
-              
-            </div>
-
+          <div class="col s2 nospaceleft">
+            <a class="btn-small add-btn" id="addCategoryBtn" data-target="side-form">
+              <i class="material-icons">add</i>
+            </a>
           </div>
-        </form>
-
+        </div>
+        <div class="row deep-purple accent-4 lowrow">
+          <div class="col s3">
+            <i class="material-icons">home</i>
+            <!-- <span class ="footer-text">Kategoriat</span> -->
+          </div>
+          <div class="col s3">
+            <i class="material-icons">list</i>
+            <!-- <span class ="footer-text">Tuotteet</span> -->
+          </div>
+        </div>
       </div>
+    </footer>
+    <!-- ------------------------------------- SCRIPTS ---------------------------------------------------------------------- -->
 
+    <script src="js/main.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/db.js"></script>
+    <script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
 
+    <script>
+      //import Localbase from 'localbase'; // mihinkäs tätä tarvitaankaan?
+      //let db = new Localbase('db') //tämä oli esimerkissä
+      const dbold = new Localbase('db'); //laitoin näin
+      //db.config.debug = false; //logitus pois päältä
 
-<footer class="footer page-footer green lighten-5">
-  <div class="container">
+      const db = new Localbase('helperdb');
+      listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
+      getVersionInfo(); //sw.js:stä
 
-    <div class="row lowrow">
-    <div class="col s10 nospaceright">
-      <input placeholder="Uusi kategoria" id="categoryinput" type="text" class="validate low">
-    </div>
-
-      <div class="col s2 nospaceleft">
-        <a class="btn-small add-btn" id="addCategoryBtn" data-target="side-form">
-          <i class="material-icons">add</i>
-        </a>
-      </div>
-    </div>
-    <div class="row deep-purple accent-4 lowrow">
-      <div class="col s3">
-        <i class="material-icons">home</i>
-        <!-- <span class ="footer-text">Kategoriat</span> -->
-      </div>
-      <div class="col s3">
-        <i class="material-icons">list</i>
-        <!-- <span class ="footer-text">Tuotteet</span> -->
-      </div>
-    </div>
-  </div>
-</footer>
-
-
-
-<script src="js/main.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/db.js"></script>
-<script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
-
-<script>
-  //import Localbase from 'localbase'; // mihinkäs tätä tarvitaankaan?
-  //let db = new Localbase('db') //tämä oli esimerkissä
-  const dbold = new Localbase('db'); //laitoin näin
-  //db.config.debug = false; //logitus pois päältä
-  // listaa();
-
-  const db = new Localbase('helperdb');
-  listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
-  
-/* */
-/*
-Data from serviceworker to UI
-https://stackoverflow.com/questions/37704641/access-dom-by-web-worker
-*/
-(function() {
-    "use strict";
-
-    if (!navigator.serviceWorker || !navigator.serviceWorker.register) {
-        console.log("This browser doesn't support service workers");
-        return;
-    }
-
-    // Listen to messages from service workers.
-    navigator.serviceWorker.addEventListener('message', function(event) {
-        console.log("Got reply from service worker: " + event.data);
-        document.getElementById("programVersion").innerHTML = event.data;
-    });
-
-    // Are we being controlled?
-    if (navigator.serviceWorker.controller) {
-        // Yes, send our controller a message.
-        console.log("Sending 'Ohjelmaversio:' to controller");
-        navigator.serviceWorker.controller.postMessage("Ohjelmaversio:");
-    } else {
-        // No, register a service worker to control pages like us.
-        // Note that it won't control this instance of this page, it only takes effect
-        // for pages in its scope loaded *after* it's installed.
-        navigator.serviceWorker.register("service-worker.js")
-            .then(function(registration) {
-                console.log("Service worker registered, scope: " + registration.scope);
-                console.log("Refresh the page to talk to it.");
-                // If we want to, we might do `location.reload();` so that we'd be controlled by it
-            })
-            .catch(function(error) {
-                console.log("Service worker registration failed: " + error.message);
-            });
-    }
-})();
-
-/* */
-
-</script>
+    </script>
 
 </body>
 

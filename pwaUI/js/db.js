@@ -1,17 +1,7 @@
 // https://github.com/dannyconnell/localbase
 
-function listCategories(){
-    //alert("listaan");
-    //db.collection('category').get().then(category => {
-        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
-    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
-    db.collection('category').orderBy('name', 'asc').get().then(categories => {
-        categories.forEach(element => {
-            renderCategoryList(element, element.id);
-         });
-        })
-}
 
+/********************** dbsettings ***********************/
 function getCategoryId() {
     db.collection('dbsettings').doc({skey : 'categoryId'}).get()
     .then(document=>{
@@ -49,6 +39,19 @@ function dbSetCategoryId(kid) {
     })
 } 
 
+/********************** category ***********************/
+function listCategories(){
+    //alert("listaan");
+    //db.collection('category').get().then(category => {
+        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
+    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
+    db.collection('category').orderBy('name', 'asc').get().then(categories => {
+        categories.forEach(element => {
+            renderCategoryList(element, element.id);
+         });
+        })
+}
+
 function dbDelCategory(categoryId) {
     db.collection('category')
     .doc({ id: categoryId })
@@ -77,22 +80,6 @@ function dbUpdateCategory(categoryId,categoryName) {
         throw(error); // onnistuisko näin
     })
 }
-/*
-  const categoryContainer = document.querySelector('.categories');
-  categoryContainer.addEventListener('click', evt => {
-    //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
-
-     if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
-        const categoryId = parseInt(evt.target.getAttribute('data-id'));
-        //const categoryName = document.querySelectorAll('category-name[name-id="' + categoryId + '"]');
-        const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
-        console.log('categoryId:', categoryId);
-        console.log('categoryName:', categoryName);
-        form.input1.value=categoryName;
-        form.categoryId.value = categoryId;
-    }
-  });
-*/
 
 function dbAddCategory(cname){
     // First get new categoryId
@@ -136,66 +123,7 @@ function dbAddCategory(cname){
 }
 
 
-
-
-
-
-/*
-  const addCategoryButton = document.querySelector('#addCategoryBtn');
-  const inputCategory = document.querySelector('#categoryinput');
-  addCategoryButton.addEventListener('click',evt => {
-    evt.preventDefault();
-    db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
-
-        let cname=inputCategory.value;
-       console.log('cname:'+cname + "XX")
-        if (cname=="") {
-            cname ='Uusi kategoria';
-        }
-
-        let kid = 1;
-        if(setting != null) {
-            kid = setting.value + 1;
-        }
-        
-        const category = {
-            id:kid,
-            name:cname
-        }
-
-        console.log(category);
-
-        db.collection('category')
-            .add(category)
-            .then( reload => {
-                // oma koodi, että lista päivittyy näytöllä
-                reloadCategories();
-            })
-            .then( updnextCatId =>
-                {  
-                    if(setting == null){
-                        initCategoryId();
-                    } else {
-                        setCategoryId(category.id);
-                    }
-                }
-            )
-            .catch(err =>console.log(err));
-            inputCategory.value = "";
-    }) 
-.catch( e =>
-        console.log("AddBtn Virhe lisäyksessä",e)
-);
-
-
-
-
-
-
-
-  })
-  */
-
+/******************* Ylläpitoa kehitysvaiheessa **********************/
   const deletedboldButton = document.querySelector('#deletedbold');
   deletedboldButton.addEventListener('click', evt => {
     evt.preventDefault();
