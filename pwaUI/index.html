@@ -28,6 +28,14 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   <meta name="apple-mobile-web-app-status-bar" content="#FFE1C4">
   <!-- <meta name="theme-color" content="#FFE1C4">  tämä vaaditaan ja se ylikirjoittaa manifestissa olevan -->
   <meta name="theme-color" content="#79baa2">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script >
+    $(function(){
+        $("#footernav").load("footernav.html")
+    });
+  </script>
+
 </head>
 
 
@@ -133,7 +141,41 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       </form>
 
     </div>
+
+
+<!--
+    <div id="footer"></div>
+
+  -->
+
+
+
+  <footer class="footer page-footer green lighten-5">
+    <div class="container">
+
+      <div class="row lowrow">
+                <div class="col s10 nospaceright">
+                    <input placeholder="Uusi kategoria" id="categoryinput" type="text" class="validate low">
+                </div>
+
+                <div class="col s2 nospaceleft">
+                    <a class="btn-small add-btn" id="addCategoryBtn" data-target="side-form">
+                        <i class="material-icons">add</i>
+                    </a>
+                </div>
+      </div>
+      <div id="footernav"></div>
+    </div>
+  </footer>
+
+
+
+
+
+
+    <!-- https://talkerscode.com/howto/how-to-include-html-file-in-html.php -->
     <!-- ------------------------------------- FOOTER ---------------------------------------------------------------------- -->
+    <!--
     <footer class="footer page-footer green lighten-5">
       <div class="container">
 
@@ -194,7 +236,10 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
             </a>
         </div>
 
-        
+        -->
+
+
+
 <!-- 
           <table>
             
@@ -236,10 +281,11 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
 
 
-
+<!-- 
         </div>
       </div>
     </footer>
+-->
     <!-- ------------------------------------- SCRIPTS ---------------------------------------------------------------------- -->
 
     <script src="js/main.js"></script>
