@@ -34,7 +34,7 @@ nav .sidenav-trigger{
 /* categories styles */
 .categories{
   margin-top: 60px;
-  margin-bottom: 80px;
+  margin-bottom: 115px;
   padding-top:2px;
   padding:2px;
 }
@@ -135,6 +135,24 @@ form .input-field{
 }
 
 /* Seija */
+/* vaikuttaa myös alareunan inputtiin
+.row .col {
+  padding: 0 0.2rem;
+}
+*/
+/*
+td, th {
+  padding: 1px 1px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 0;
+}
+*/
+
+
+
+
 .default-button-handler {
   width: 0;
   height: 0;
@@ -236,5 +254,22 @@ div.edit-category.container.section {
 }
 .footer-text{
   font-size: xx-small;
-
+  display: block; /* Miksi tästä tulee ylimääräinen viiva inputin yläpuolelle*/
+  padding-bottom: 8px;
 }
+.navitem{
+  color:white;
+}
+/*
+div.item {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  width: 50px;
+}
+.footer-icon {
+  width: 30px;
+  height: 30px;
+  background-color: blue;
+}
+*/
