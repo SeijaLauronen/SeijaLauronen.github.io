@@ -1,65 +1,30 @@
 // https://github.com/dannyconnell/localbase
 
-function listaa(){
-    //alert("listaan");
-    //db.collection('category').get().then(category => {
-        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
-    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
-    db.collection('category').orderBy('name', 'asc').get().then(category => {
-                  category.forEach(element => {
-                    renderList(element, element.id);
-                    console.log("elem:",element.id, element.name);
-                  });
-                })
-  }
-
-
-  function listCategories(){
+function listCategories(){
     //alert("listaan");
     //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
     //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
         categories.forEach(element => {
-            renderList(element, element.id);
-            //console.log("elem:",element.id, element.name);
+            renderCategoryList(element, element.id);
          });
         })
-  }
+}
 
-
- function getCategoryId() {
-    //alert('get');
-/*
-    db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(document => {
-        console.log(document)
-     
-      })
-*/
+function getCategoryId() {
     db.collection('dbsettings').doc({skey : 'categoryId'}).get()
     .then(document=>{
-        //alert(document.value);
         return document.value;
     })
     .catch(error => {
-        
-        //if(error.includes('ReferenceError')) {
-        //    console.log('initialisoidaan')
-        //    initCategoryId();
-        //} else {
-          
         console.log('getCategoryId: There was an error', error);
-       // alert ('Get: Ei onnistu dbsettings categoryId haku',error)
-        initCategoryId();
-        //}
+        dbInitCategoryId();
     })
-   
-    
- } 
+} 
 
- function initCategoryId() {
-    //alert('init');
-    console.log('initCategoryId')
+function dbInitCategoryId() {
+    //console.log('initCategoryId')
     db.collection('dbsettings').add(
         {
             skey: 'categoryId',
@@ -69,9 +34,9 @@ function listaa(){
     .catch(error => {
         console.log('There was an init error, do something else.', error)
     })
- } 
+} 
 
- function setCategoryId(kid) {
+function dbSetCategoryId(kid) {
     db.collection('dbsettings').doc({skey : 'categoryId'}).set(
         {
             skey: 'categoryId',
@@ -82,76 +47,40 @@ function listaa(){
         console.log('There was an error, do something else.')
         alert ("Ei onnistu dbsettings categoryId laitto")
     })
- } 
+} 
 
-  const form = document.querySelector('form');
-  form.addEventListener('submit', evt => {
-    //TODO muutoksen jälkeen ei muutos näy listalla
-    //evt.preventDefault();
-    //console.log('submit');
-    //console.log(evt);
-    console.log(evt.submitter.id);
-    //console.log(form.categoryId.value);
-    //console.log(form.input1.value);
-    const categoryId = parseInt(form.categoryId.value);
-    const categoryName = form.input1.value;
-    if (evt.submitter.id == "changeCategory") {
-        //evt.preventDefault();
-        console.log('submit2');
-        console.log(categoryName);
-        console.log(categoryId);
+function dbDelCategory(categoryId) {
+    db.collection('category')
+    .doc({ id: categoryId })
+    .delete()
+    .then(response => {
+        console.log('Delete successful, now do something.');
+        //removeCategory(categoryId); // Poistaa ui:sta
+    })
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu delete sumbitterillä", error);
+        throw(error); // onnistuisko näin
+    })
+}
 
-        db.collection('category').doc({id : categoryId}).set(
-            {
-                id: categoryId,
-                name: categoryName
-            }
-        )
-        .catch(error => {
-            console.log('There was an error, do something else.', error)
-            alert ("Ei onnistu kategorian muuttaminen laitto")
-        })
-    }
-
-    if (evt.submitter.id == "delCategory") {
-        db.collection('category')
-            .doc({ id: categoryId })
-            .delete()
-            .then(response => {
-                console.log('Delete successful, now do something.');
-                removeCategory(categoryId); // Poistaa ui:sta
-            })
-            .catch(error => {
-                console.log('There was an error, do something else.', error)
-                alert ("Ei onnistu delete sumbitterillä", error)
-            })
-    }
-
-  });
-
-  
-
+function dbUpdateCategory(categoryId,categoryName) {
+    db.collection('category').doc({id : categoryId}).set(
+        {
+            id: categoryId,
+            name: categoryName
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu kategorian muuttaminen laitto");
+        throw(error); // onnistuisko näin
+    })
+}
+/*
   const categoryContainer = document.querySelector('.categories');
   categoryContainer.addEventListener('click', evt => {
-    console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
-   /*
-    if(evt.target.tagName === 'I' && evt.target.innerText === 'delete') {
-        const categoryId = parseInt(evt.target.getAttribute('data-id')); //menee stringinä attribuuttiin
-
-        db.collection('category')
-                        .doc({ id: categoryId })
-                        .delete()
-                        .then(response => {
-                          console.log('Delete successful, now do something.');
-                          // reloadCategories(); Toimii tälläkin
-                          removeCategory(categoryId); // Poistaa ui:sta
-                        })
-                        .catch(error => {
-                          console.log('There was an error, do something else.', error)
-                          alert ("Ei onnistu del", error)
-                        })
-    } else
-    */
+    //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
      if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
         const categoryId = parseInt(evt.target.getAttribute('data-id'));
@@ -161,11 +90,57 @@ function listaa(){
         console.log('categoryName:', categoryName);
         form.input1.value=categoryName;
         form.categoryId.value = categoryId;
-
     }
   });
+*/
+
+function dbAddCategory(cname){
+    // First get new categoryId
+    db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
+        let kid = 1;
+        if(setting != null) {
+            kid = setting.value + 1;
+        }
+
+        if (cname == "") {
+            cname ='Uusi kategoria ' + kid.toString();
+        }
+        
+        const category = {
+            id:kid,
+            name:cname
+        }
+        //Then add new category
+        db.collection('category')
+            .add(category)
+            .then( reload => {
+                // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
+                uiReloadCategories();
+            })
+            .then( updnextCatId =>
+                {  
+                    if(setting == null){
+                        dbInitCategoryId();
+                    } else {
+                        dbSetCategoryId(category.id);
+                    }
+                }
+            )
+            .catch(err =>console.log(err));
+            // inputCategory.value = ""; // viittaa UI:hin
+    }) 
+    .catch( e =>
+            console.log("AddBtn Virhe lisäyksessä",e)
+    );
+
+}
 
 
+
+
+
+
+/*
   const addCategoryButton = document.querySelector('#addCategoryBtn');
   const inputCategory = document.querySelector('#categoryinput');
   addCategoryButton.addEventListener('click',evt => {
@@ -219,6 +194,7 @@ function listaa(){
 
 
   })
+  */
 
   const deletedboldButton = document.querySelector('#deletedbold');
   deletedboldButton.addEventListener('click', evt => {

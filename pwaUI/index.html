@@ -73,7 +73,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader">Tietoja</a></li>
-      <li><a>Ohjelmaversio: 245</a></li>
+      <li><a id="programVersion"></a></li>
       <li><a><div id="browserinfo"></div></a></li>
 
     </ul>
@@ -116,12 +116,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
             
             <div class="center">
 
+              <button class="btn-small left default-button-handler" type="submit" id="defaultActionCategory" >
+                <i class="material-icons">check</i>
+              </button>
+
               <button class="btn-small del-btn red left" type="submit" id="delCategory" >
                 <i class="material-icons">delete</i>
               </button>
 
-              
-              <button class="btn-small right" type="submit" id="changeCategory" >
+              <button class="btn-small right" type="submit" id="updateCategory" >
                 <i class="material-icons">check</i>
               </button>
               
@@ -178,13 +181,50 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   const db = new Localbase('helperdb');
   listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
   
+/* */
+/*
+Data from serviceworker to UI
+https://stackoverflow.com/questions/37704641/access-dom-by-web-worker
+*/
+(function() {
+    "use strict";
+
+    if (!navigator.serviceWorker || !navigator.serviceWorker.register) {
+        console.log("This browser doesn't support service workers");
+        return;
+    }
+
+    // Listen to messages from service workers.
+    navigator.serviceWorker.addEventListener('message', function(event) {
+        console.log("Got reply from service worker: " + event.data);
+        document.getElementById("programVersion").innerHTML = event.data;
+    });
+
+    // Are we being controlled?
+    if (navigator.serviceWorker.controller) {
+        // Yes, send our controller a message.
+        console.log("Sending 'Ohjelmaversio:' to controller");
+        navigator.serviceWorker.controller.postMessage("Ohjelmaversio:");
+    } else {
+        // No, register a service worker to control pages like us.
+        // Note that it won't control this instance of this page, it only takes effect
+        // for pages in its scope loaded *after* it's installed.
+        navigator.serviceWorker.register("service-worker.js")
+            .then(function(registration) {
+                console.log("Service worker registered, scope: " + registration.scope);
+                console.log("Refresh the page to talk to it.");
+                // If we want to, we might do `location.reload();` so that we'd be controlled by it
+            })
+            .catch(function(error) {
+                console.log("Service worker registration failed: " + error.message);
+            });
+    }
+})();
+
+/* */
+
 </script>
 
-
 </body>
-
-
-
-
 
 </html>

@@ -1,3 +1,6 @@
+//TODO siirrä tänne db.js:stä osia
+// formissa jos painaa enteriä, ottaa poiston oletuksena
+
 const categoryList = document.querySelector('.categories');
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -29,9 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //checkBrowser();
     document.getElementById("browserinfo").innerHTML = getBrowserName(navigator.userAgent);
+    document.getElementById("programVersion").innerHTML = "Ohjelmaversio:" + programVersion;
+
   });
 
-  const renderList = (data, id) => {
+  const renderCategoryList = (data, id) => {
     const html =`
     <div class="card-panel category category white row" data-id="${id}">
     
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  function reloadCategories(){
+  function uiReloadCategories(){
     categoryList.innerHTML ="";
     //listaa();
     listCategories();
@@ -115,54 +120,59 @@ document.addEventListener('DOMContentLoaded', function() {
   //const browserName = getBrowserName(navigator.userAgent);
   //console.log(`You are using: ${browserName}`);
 
-
-  const removeCategory = (categoryId) => {
+/*
+//Ei tarvita kun käytetään submittia
+  const uiRemoveCategory = (categoryId) => {
     const categoryIdStr = "'" + categoryId.toString() + "'"; // Vaati hipsut toimiakseen, kun on on id stringinä
     const category = document.querySelector(`.category[data-id=${categoryIdStr}]`);
     category.remove();
   };
+*/
 
-  // formclose
-  /*
-  const formclose = document.querySelector('.formclose');
-  var catform = document.querySelectorAll('.side-form');
-  formclose.addEventListener('click',evt => {
-    alert('formclose');
-    console.log(evt);
-    console.log('catform:', catform);
-    //var instance = M.Sidenav.getInstance(forms);
-    //console.log('instance:', instance);
-    //instance.close();
-    //catform.forms.M.
+// 11.3.2023 vaihdetaan eventit UI:lle
+  const form = document.querySelector('form');
+  form.addEventListener('submit', evt => {
+     //evt.preventDefault();
+     //console.log(evt.submitter.id);
+ 
+    const categoryId = parseInt(form.categoryId.value);
+    const categoryName = form.input1.value;
+    if (evt.submitter.id == "delCategory") {
+      dbDelCategory(categoryId);
+      /*
+      dbDelCategory(categoryId).then(x=> {
+        uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
+      })
+      */
+    }
+
+    if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
+      dbUpdateCategory(categoryId,categoryName);
+    }
+
   });
-  */
 
+  const categoryContainer = document.querySelector('.categories');
+  categoryContainer.addEventListener('click', evt => {
+    //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
-  /* 
-  Pitää varmaan tehdä tuonne ylös?
-  https://stackoverflow.com/questions/54595661/materialize-fixed-sidebar-close
-  document.addEventListener("DOMContentLoaded", function() {
-  var elems = document.querySelectorAll(".sidenav");
-  var options = {};
-  var instances = M.Sidenav.init(elems, options);
+     if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+        const categoryId = parseInt(evt.target.getAttribute('data-id'));
+        const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
+        console.log('categoryId:', categoryId);
+        console.log('categoryName:', categoryName);
+        form.input1.value=categoryName;
+        form.categoryId.value = categoryId;
+    }
+  });
 
-  document
-    .querySelector("#toggle_sidenav")
-    .addEventListener("click", function() {
-      var elem = document.querySelector(".sidenav");
-      var instance = M.Sidenav.getInstance(elem);
+const addCategoryButton = document.querySelector('#addCategoryBtn');
+const inputCategory = document.querySelector('#categoryinput');
+const cname=inputCategory.value;
+addCategoryButton.addEventListener('click',evt => {
+    evt.preventDefault();
+    dbAddCategory(cname);
+})
 
-      if (instance.isOpen) {
-        console.log("Is open: I need to close it");
-        instance.close();
-      } else {
-        console.log("Is closed: I need to open it");
-        instance.open();
-      }
-    });
-});
-  
-  
-  */
 
 

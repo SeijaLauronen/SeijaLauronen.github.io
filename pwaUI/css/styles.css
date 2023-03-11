@@ -133,7 +133,17 @@ form .input-field{
       font-size:17px
   }
 }
+
 /* Seija */
+.default-button-handler {
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+
 .footer {
   position: fixed;
   left: 0;

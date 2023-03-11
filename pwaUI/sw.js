@@ -1,5 +1,6 @@
-const staticCacheName = 'pwaui-static-245';
-const dynamicCacheName = 'pwaui-dynamic-245'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const programVersion = '258';
+const staticCacheName = 'pwaui-static-258';
+const dynamicCacheName = 'pwaui-dynamic-258'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not found, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dynaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -88,4 +89,8 @@ self.addEventListener('fetch', evt => {
   );
 });
 
+
+self.addEventListener("message", function(event) {
+  event.source.postMessage(event.data + programVersion);
+});
 
