@@ -124,48 +124,32 @@ function dbAddCategory(cname){
 
 
 /******************* Ylläpitoa kehitysvaiheessa **********************/
-  const deletedboldButton = document.querySelector('#deletedbold');
-  deletedboldButton.addEventListener('click', evt => {
-    evt.preventDefault();
-    //alert('deletessä');
+
+function deleteOldDB()
+{
     dbold.delete()
         .then( x=> {
-            //alert('deleted db');
-            //reloadCategories()
             console.log("dbold deleted");
             emptyCategories();
         }
-    );
-  });
+)}
 
-
-  const deletedbButton = document.querySelector('#deletedb');
-  deletedbButton.addEventListener('click', evt => {
-    evt.preventDefault();
-    //alert('deletessä');
+function deleteDB() {
     db.delete()
         .then( x=> {
-            //alert('deleted db');
-            //reloadCategories()
             console.log("db deleted");
             emptyCategories();
         }
     );
-  });
+}
 
-
-
-  const deletecategoryButton = document.querySelector('#deletecategory');
-  deletecategoryButton.addEventListener('click', evt => {
-    evt.preventDefault();
-    //alert('delete category');
+function deleteCategory() {
     db.collection('category').delete()
         .then( x=>
            { 
             console.log("category deleted");
-            //alert('deleted category');
-            //reloadCategories();
             emptyCategories();
            }
     );
-  });
+}
+  

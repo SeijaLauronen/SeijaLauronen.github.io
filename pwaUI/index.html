@@ -32,6 +32,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script >
     $(function(){
+        $("#side-menu").load("sidemenu.html")
         $("#footernav").load("footernav.html")
     });
   </script>
@@ -62,29 +63,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     </nav>
 
     <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
-    <!-- side nav -->
-    <!-- muutettu tämä aukeamaan vasemmalta ui.js:stä-->
-    <ul id="side-menu" class="sidenav side-menu">
-      <li><a class="subheader">Apuri</a></li>
-      <li><a href="index.html" class="waves-effect">Home</a></li>
-      
-      <li><a href="about.html" class="waves-effect">About</a></li>
-      <li><div class="divider"></div></li>
-      <li><a href="contact.html" class="waves-effect">
-        <i class="material-icons">mail_outline</i>Contact</a>
-      </li>
-      <li><div class="divider"></div></li>
-      <li><a class="subheader">Asetukset</a></li>
+    <ul id="side-menu" class="sidenav side-menu"></ul>
 
-      <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
-      <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
-      <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
-      <li><div class="divider"></div></li>
-      <li><a class="subheader">Tietoja</a></li>
-      <li><a id="programVersion"></a></li>
-      <li><a><div id="browserinfo"></div></a></li>
-
-    </ul>
     <!-- --------------------------------------CATEGORYLIST--------------------------------------------------------------------- -->
     <!-- categories -->
     <div class="categories container green lighten-5">
@@ -143,13 +123,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     </div>
 
 
-<!--
-    <div id="footer"></div>
-
-  -->
-
-
-
   <footer class="footer page-footer green lighten-5">
     <div class="container">
 
@@ -169,123 +142,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   </footer>
 
 
-
-
-
-
-    <!-- https://talkerscode.com/howto/how-to-include-html-file-in-html.php -->
-    <!-- ------------------------------------- FOOTER ---------------------------------------------------------------------- -->
-    <!--
-    <footer class="footer page-footer green lighten-5">
-      <div class="container">
-
-        <div class="row lowrow">
-        <div class="col s10 nospaceright">
-          <input placeholder="Uusi kategoria" id="categoryinput" type="text" class="validate low">
-        </div>
-
-          <div class="col s2 nospaceleft">
-            <a class="btn-small add-btn" id="addCategoryBtn" data-target="side-form">
-              <i class="material-icons">add</i>
-            </a>
-          </div>
-        </div>
-
-        <div class="row deep-purple accent-4 lowrow">
-
-          <div class="col s2">
-            <a href="index.html" class ="navitem">
-              <i class="material-icons">home</i>
-              <span class ="footer-text">Kategoriat</span>
-            </a> 
-          </div>
-
-          <div class="col s2">
-            <a href="about.html" class ="navitem">
-              <i class="material-icons">playlist_add</i>
-              <span class ="footer-text">Tuotteet</span> 
-            </a>
-          </div>
-
-          <div class="col s2">
-            <a href="about.html" class ="navitem">
-              <i class="material-icons">view_comfy</i>
-             <span class ="footer-text">Luokittelu</span> 
-            </a>
-          </div>
-
-          <div class="col s2">
-            <a href="about.html" class ="navitem">
-            <i class="material-icons">restaurant</i>
-            <span class ="footer-text">Ruoka</span> 
-            </a>
-          </div>
-
-          <div class="col s2">
-            <a href="about.html" class ="navitem">
-            <i class="material-icons">shopping_basket</i>
-            <span class ="footer-text">Ostokset</span> 
-            </a>
-          </div>
-
-          
-          <div class="col s2">
-            <a href="about.html" class ="navitem">
-            <i class="material-icons">more_horiz</i>
-            <span class ="footer-text">Lisää...</span> 
-            </a>
-        </div>
-
-        -->
-
-
-
-<!-- 
-          <table>
-            
-            <tbody>
-              <tr>
-                <td> <i class="material-icons">home</i> 
-
-                  Kategoriat
-                </td>
-
-                <td> <i class="material-icons">list</i> </br>
-                  <span class ="footer-text">Tuotteet</span>
-                </td>
-
-                <td> <i class="material-icons">list</i> <br>
-                  <span class ="footer-text">Ominaisuudet</span>
-                </td>
-                <td> <i class="material-icons">list</i> <br>
-                  <span class ="footer-text">Ostoslista</span>
-
-                </td>
-
-              </tr>
-            </tbody>
-          </table>
-       
-
-        <div class="item">
-          <i class="material-icons footer-icon">list</i>
-          <span class ="footer-text">Kategoriat</span>
-        </div>
-
-        <div class="item">
-          <i class="material-icons footer-icon">list</i>
-          <span class ="footer-text">Kategoriat2</span>
-        </div>
- -->
-
-
-
-
-<!-- 
-        </div>
-      </div>
-    </footer>
--->
     <!-- ------------------------------------- SCRIPTS ---------------------------------------------------------------------- -->
 
     <script src="js/main.js"></script>
@@ -301,7 +157,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
       const db = new Localbase('helperdb');
       listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
-      getVersionInfo(); //sw.js:stä
 
     </script>
 
