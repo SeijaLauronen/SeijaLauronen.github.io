@@ -39,6 +39,32 @@ function dbSetCategoryId(kid) {
     })
 } 
 
+function dbInitProductId() {
+    console.log('initProductId')
+    db.collection('dbsettings').add(
+        {
+            skey: 'productId',
+            value: 1
+        }
+    )
+    .catch(error => {
+        console.log('There was an init error (productId), do something else.', error)
+    })
+} 
+
+function dbSetProductId(pid) {
+    db.collection('dbsettings').doc({skey : 'productId'}).set(
+        {
+            skey: 'productId',
+            value: pid
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.')
+        alert ("Ei onnistu dbsettings productId laitto")
+    })
+} 
+
 /********************** category ***********************/
 function listCategories(){
     //alert("listaan");
@@ -121,6 +147,66 @@ function dbAddCategory(cname){
     );
 
 }
+
+/************************************************ Products ****/
+function listProducts(categoryId){
+    //alert("listaan");
+    //db.collection('category').get().then(category => {
+        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
+    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
+    db.collection('product').orderBy('name', 'asc').get().then(products => {
+        products.forEach(product => {
+            renderProductList(categoryId, product, product.id);
+        });
+    })
+
+}
+
+
+function dbAddProduct(pname, pCid){
+    // First get new categoryId
+    db.collection('dbsettings').doc({ skey: 'productId' }).get().then(setting => {
+        let pid = 1;
+        
+        if(setting != null) {
+            pid = setting.value + 1;
+  
+        }
+
+        if (pname == "") {
+            pname ='Uusi tuote ' + pid.toString();
+        }
+        
+        const product = {
+            id:pid,
+            cId:pCid,
+            name:pname
+        }
+        //Then add new category
+        db.collection('product')
+            .add(product)
+            .then( reload => {
+                // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
+                uiReloadProducts();
+            })
+            .then( updnextProdId =>
+                {  
+                    if(setting == null){
+                        dbInitProductId();
+                    } else {
+                        dbSetProductId(product.id);
+                    }
+                }
+            )
+            .catch(err =>console.log(err));
+            // inputCategory.value = ""; // viittaa UI:hin
+    }) 
+    .catch( e =>
+            console.log("AddBtn Virhe tuotteen lisäyksessä",e)
+    );
+
+}
+
 
 
 /******************* Ylläpitoa kehitysvaiheessa **********************/

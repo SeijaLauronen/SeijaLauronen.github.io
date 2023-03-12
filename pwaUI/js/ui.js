@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     
     <div class="category-go">
-    <a href="about.html?categoryId=${id}&categoryName=${data.name}">
+    <a href="product.html?categoryId=${id}&categoryName=${data.name}">
     <i class="material-icons data-id="${id}">arrow_forward</i>
     </a> 
   </div>
@@ -61,6 +61,32 @@ document.addEventListener('DOMContentLoaded', function() {
     categoryList.innerHTML ="";
   }
 
+  function uiReloadProducts(categoryId){
+    productList.innerHTML ="";
+    listProducts(categoryId);
+  }
+
+  const productList = document.querySelector('.products');
+  const renderProductList = (categoryId, product, id) => {
+    const html =`
+    <div class="card-panel product white row" product-id="${id}">
+    
+    <div class="product-details">
+      <div class="product-name flow-text" product-id="${id}">${product.name}
+      </div>
+    </div>
+    <div class="product-edit sidenav-trigger" data-target="side-form">
+      <i class="material-icons" product-id="${id}">edit</i>
+    </div>
+    
+    <div class="product-category">
+      ${categoryId}
+    </div>
+
+  </div>
+    `;
+    productList.innerHTML += html;
+  }
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator
   function getBrowserName(userAgent) {
@@ -155,6 +181,40 @@ document.addEventListener('DOMContentLoaded', function() {
           inputCategory.value=""; //TODO vasta jos meni ok?
       })
   }
+
+
+
+  const productContainer = document.querySelector('.products');
+  if (productContainer != null) {
+    productContainer.addEventListener('click', evt => {
+          //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+
+          if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+              const productId = parseInt(evt.target.getAttribute('product-id'));
+              //TODO
+              /*
+              const productName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
+              console.log('categoryId:', categoryId);
+              console.log('categoryName:', categoryName);
+              form.input1.value=categoryName;
+              form.categoryId.value = categoryId;
+              */
+          }
+        });
+
+      const addProductButton = document.querySelector('#addProductBtn');
+      const inputProduct = document.querySelector('#productinput');
+
+      addProductButton.addEventListener('click',evt => {
+        let pname=inputProduct.value;
+        let pCid=1; //TODO oikea kategoria id
+          evt.preventDefault();
+          dbAddProduct(pname, pCid);
+          inputProduct.value=""; //TODO vasta jos meni ok?
+      })
+  }
+
+
 
 
 

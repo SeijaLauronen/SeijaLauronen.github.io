@@ -3,23 +3,27 @@
 <!-- muutettu tämä aukeamaan vasemmalta ui.js:stä-->
 <ul>
   <li><a class="subheader">Apuri</a></li>
-  <li><a href="index.html" class="waves-effect">Home</a></li>
+  <!-- 
+  <li><a href="index.html" class="waves-effect">Kategoriat</a></li>
+  -->
   
-  <li><a href="about.html" class="waves-effect">About</a></li>
   <li><div class="divider"></div></li>
   <li><a href="contact.html" class="waves-effect">
     <i class="material-icons">mail_outline</i>Contact</a>
   </li>
   <li><div class="divider"></div></li>
   <li><a class="subheader">Asetukset</a></li>
+  <li><a>HUOM. TIEDOT POISTUVAT HETI.</a></li>
+  <li><a>EI KYSYTÄ VARMISTUSTA.</a></li>
 
-  <li><a> <button class="btn-small" id="deletecategory">Poista category</button> </a></li>
-  <li><a> <button class="btn-small" id="deletedb">Poista kaikki uudet tiedot(helperdb)</button> </a></li>
-  <li><a> <button class="btn-small" id="deletedbold">Poista vanha tietokanta (db)</button> </a></li>
+  <li><a> <button class="btn-small red" id="deletecategory">Poista kategoriat</button> </a></li>
+  <li><a> <button class="btn-small red" id="deletedb">Poista kaikki tiedot</button> </a></li>
+
   <li><div class="divider"></div></li>
   <li><a class="subheader">Tietoja</a></li>
   <li><a id="programVersion"></a></li>
-  <li><a><div id="browserinfo"></div></a></li>
+  <li><a>Selaimesi:</a></li>
+  <li><a id="browserinfo"></a></li>
 </ul>
 
 
@@ -27,13 +31,6 @@
     getVersionInfo();
     document.getElementById("browserinfo").innerHTML = getBrowserName(navigator.userAgent);
     document.getElementById("programVersion").innerHTML = "Ohjelmaversio:" + programVersion;
-
-    const deletedboldButton = document.querySelector('#deletedbold');
-    deletedboldButton.addEventListener('click', evt => {
-    evt.preventDefault();
-        deleteOldDB();
-    });
-
 
     const deletedbButton = document.querySelector('#deletedb');
     deletedbButton.addEventListener('click', evt => {
@@ -53,7 +50,6 @@
   Data from serviceworker to UI
   https://stackoverflow.com/questions/37704641/access-dom-by-web-worker
   */
-  
   function getVersionInfo() {
     "use strict";
   

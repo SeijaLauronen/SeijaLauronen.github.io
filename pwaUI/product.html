@@ -49,14 +49,9 @@
    <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
    <div id="side-menu" class="sidenav side-menu"></div>
 
-
-
-   <!-- content -->
-   <div class="container grey-text center">
-    <h5>About</h5>
-    <p>Ladataan tämä static cacheen. Kun sivut nyt juuritasolla, korjattu linkkejä</p>
-    <a href="index.html" class="btn-small orange z-depth-0">Go to the Homepage</a>
-  </div>
+   <!-- --------------------------------------PRODUCTLIST--------------------------------------------------------------------- -->
+    <!-- products -->
+  <div class="products container green lighten-5"></div>
 
 
 
@@ -80,10 +75,14 @@
 
 
 <script src="js/main.js"></script>
-
 <script src="js/ui.js"></script>
+<script src="js/db.js"></script>
+<script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
 
 <script>
+    const dbold = new Localbase('db'); 
+    const db = new Localbase('helperdb');
+
     const queryString = window.location.search;
     //console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
@@ -93,6 +92,7 @@
     if (categoryName !=null) {
       document.querySelector(".pageheader").innerHTML=categoryName + '/Tuotteet:';
     }
+    listProducts(categoryId);
 </script>
 
 </body>

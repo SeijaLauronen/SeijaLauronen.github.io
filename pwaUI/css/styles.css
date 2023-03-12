@@ -32,7 +32,7 @@ nav .sidenav-trigger{
 }
 
 /* categories styles */
-.categories{
+.categories, .products {
   margin-top: 60px;
   margin-bottom: 115px;
   padding-top:2px;
