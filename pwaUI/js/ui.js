@@ -168,8 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const addCategoryButton = document.querySelector('#addCategoryBtn');
 const inputCategory = document.querySelector('#categoryinput');
-const cname=inputCategory.value;
+
 addCategoryButton.addEventListener('click',evt => {
+  let cname=inputCategory.value;
+  console.log("cname" + cname);
     evt.preventDefault();
     dbAddCategory(cname);
 })
