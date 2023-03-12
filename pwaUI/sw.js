@@ -1,6 +1,6 @@
-const programVersion = '342';
-const staticCacheName = 'pwaui-static-342';
-const dynamicCacheName = 'pwaui-dynamic-342'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const programVersion = '344';
+const staticCacheName = 'pwaui-static-344'; 
+const dynamicCacheName = 'pwaui-dynamic-344'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not found, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dynaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
@@ -17,7 +17,9 @@ const assets = [
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
   'https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js',
-  'about.html',
+  'product.html',
+  'sidemenu.html',
+  'footernav.html',
   'fallback.html'
 ];
 
@@ -77,7 +79,7 @@ self.addEventListener('fetch', evt => {
           } else {
             cache.put(evt.request.url, fetchRes.clone()); //alkup
             // check cached items size
-            limitCacheSize(dynamicCacheName, 15);
+            limitCacheSize(dynamicCacheName, 25);
           }
           return fetchRes;
         })
