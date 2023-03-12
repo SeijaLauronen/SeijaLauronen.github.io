@@ -1,6 +1,7 @@
 <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
 <!-- side nav -->
 <!-- muutettu tämä aukeamaan vasemmalta ui.js:stä-->
+<ul>
   <li><a class="subheader">Apuri</a></li>
   <li><a href="index.html" class="waves-effect">Home</a></li>
   
@@ -19,17 +20,17 @@
   <li><a class="subheader">Tietoja</a></li>
   <li><a id="programVersion"></a></li>
   <li><a><div id="browserinfo"></div></a></li>
+</ul>
+
+
   <script>
     getVersionInfo();
     document.getElementById("browserinfo").innerHTML = getBrowserName(navigator.userAgent);
     document.getElementById("programVersion").innerHTML = "Ohjelmaversio:" + programVersion;
 
-
-
     const deletedboldButton = document.querySelector('#deletedbold');
     deletedboldButton.addEventListener('click', evt => {
     evt.preventDefault();
-    //alert('old deletessä');
         deleteOldDB();
     });
 
@@ -37,7 +38,6 @@
     const deletedbButton = document.querySelector('#deletedb');
     deletedbButton.addEventListener('click', evt => {
         evt.preventDefault();
-        //alert('deletessä');
         deleteDB();
     });
 
@@ -45,10 +45,8 @@
     const deletecategoryButton = document.querySelector('#deletecategory');
     deletecategoryButton.addEventListener('click', evt => {
         evt.preventDefault();
-        alert('delete category');
         deleteCategory();
     });
-
 
 
   /*

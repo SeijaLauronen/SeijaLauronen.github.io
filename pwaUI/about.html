@@ -23,6 +23,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script >
     $(function(){
+        //$("#top-menu").load("topmenu.html")
+        $("#side-menu").load("sidemenu.html")
         $("#footernav").load("footernav.html")
     });
   </script>
@@ -33,28 +35,20 @@
 
 <body class="grey-lighten-4">
 
-    <!-- top nav -->
-    <nav class="z-depth-0">
-      <div class="nav-wrapper container">
-        <a href="index.html"><span>Apuri</span></a> 
+   <!-- ------------------------------------ TOPMENU----------------------------------------------------------------------- -->
+    <!-- <div id="top-menu"></div>-->
+    <nav class="z-depth-0 stay-top">
+      <div class="nav-wrapper container">     
+        <a> <span class="pageheader">TUOTTEET</span> </a>
         <span class="grey-text text-darken-1">
           <i class="material-icons sidenav-trigger menuicon" data-target="side-menu">menu</i>
         </span>
       </div>
     </nav>
+  
+   <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
+   <div id="side-menu" class="sidenav side-menu"></div>
 
-    <!-- side nav -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">KESKEN</a></li>
-    <li><a href="index.html" class="waves-effect">Home</a></li>
-    
-    <li><a href="about.html" class="waves-effect">About</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contact</a>
-    </li>
-    
-  </ul>
 
 
    <!-- content -->
@@ -85,17 +79,22 @@
   </footer>
 
 
-
-
 <script src="js/main.js"></script>
-<!--
+
 <script src="js/ui.js"></script>
--->
+
+<script>
+    const queryString = window.location.search;
+    //console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    const categoryId = urlParams.get('categoryId')
+    const categoryName = urlParams.get('categoryName')
+    //console.log("category id ja Name:" + categoryId + categoryName);
+    if (categoryName !=null) {
+      document.querySelector(".pageheader").innerHTML=categoryName + '/Tuotteet:';
+    }
+</script>
 
 </body>
-
-
-
-
 
 </html>

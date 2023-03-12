@@ -7,17 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // nav menu
     const menus = document.querySelectorAll('.side-menu');
     M.Sidenav.init(menus, {edge: 'left'});
-    //alert("left");
+
     // add category form
     const forms = document.querySelectorAll('.side-form');
     var instances = M.Sidenav.init(forms, {edge: 'right'}); //tähän lisätty var instances eteen
-    //alert("right");
-
-
-    //var elems = document.querySelectorAll(".sidenav");
-    //var options = {};
-    //var instances = M.Sidenav.init(elems, options);
   
+  
+    const formclose = document.querySelector(".formclose");
+    if (formclose != null) {
     document
       .querySelector(".formclose")
       .addEventListener("click", function() {
@@ -29,10 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
           instance.close();
         } 
       });
-
-    //checkBrowser();
-    //document.getElementById("browserinfo").innerHTML = getBrowserName(navigator.userAgent);
-    //document.getElementById("programVersion").innerHTML = "Ohjelmaversio:" + programVersion;
+    }
 
   });
 
@@ -49,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     
     <div class="category-go">
-    <a href="about.html?categoryId=${id}">
+    <a href="about.html?categoryId=${id}&categoryName=${data.name}">
     <i class="material-icons data-id="${id}">arrow_forward</i>
     </a> 
   </div>
@@ -58,33 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
     categoryList.innerHTML += html;
   }
 
-
   function uiReloadCategories(){
     categoryList.innerHTML ="";
-    //listaa();
     listCategories();
   }
 
   function emptyCategories(){
     categoryList.innerHTML ="";
-  }
-
- 
-  function checkBrowser(){
-    // https://www.webfx.com/blog/web-design/browser-detection-javascript/
-   //https://www.w3schools.com/js/js_window_navigator.asp
-
-   let text = "<p>Browser CodeName: " + navigator.appCodeName + "<br>" +
-   "Browser Name: " + navigator.appName + "<br>" +
-   "Browser Version: " + navigator.appVersion + "<br>" +
-   "Cookies Enabled: " + navigator.cookieEnabled + "<br>" +
-   "Browser Language: " + navigator.language + "<br>" +
-   "Browser Online: " + navigator.onLine + "<br>" +
-   "Platform: " + navigator.platform + "<br>" +
-   "User-agent header: " + navigator.userAgent + "</p>";
-   
-   document.getElementById("browserinfo").innerHTML = text;
-    return navigator.userAgent;
   }
 
 
@@ -129,52 +103,58 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 */
 
+// TODO sivukohtaiset erikseen
+
 // 11.3.2023 vaihdetaan eventit UI:lle
   const form = document.querySelector('form');
-  form.addEventListener('submit', evt => {
-     //evt.preventDefault();
-     //console.log(evt.submitter.id);
- 
-    const categoryId = parseInt(form.categoryId.value);
-    const categoryName = form.input1.value;
-    if (evt.submitter.id == "delCategory") {
-      dbDelCategory(categoryId);
-      /*
-      dbDelCategory(categoryId).then(x=> {
-        uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
-      })
-      */
-    }
+  if (form != null) {
+    form.addEventListener('submit', evt => {
+      //evt.preventDefault();
+      //console.log(evt.submitter.id);
+  
+      const categoryId = parseInt(form.categoryId.value);
+      const categoryName = form.input1.value;
+      if (evt.submitter.id == "delCategory") {
+        dbDelCategory(categoryId);
+        /*
+        dbDelCategory(categoryId).then(x=> {
+          uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
+        })
+        */
+      }
 
-    if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
-      dbUpdateCategory(categoryId,categoryName);
-    }
+      if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
+        dbUpdateCategory(categoryId,categoryName);
+      }
 
-  });
+    });
+}
 
   const categoryContainer = document.querySelector('.categories');
-  categoryContainer.addEventListener('click', evt => {
-    //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+  if (categoryContainer != null) {
+        categoryContainer.addEventListener('click', evt => {
+          //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
-     if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
-        const categoryId = parseInt(evt.target.getAttribute('data-id'));
-        const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
-        console.log('categoryId:', categoryId);
-        console.log('categoryName:', categoryName);
-        form.input1.value=categoryName;
-        form.categoryId.value = categoryId;
-    }
-  });
+          if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+              const categoryId = parseInt(evt.target.getAttribute('data-id'));
+              const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
+              console.log('categoryId:', categoryId);
+              console.log('categoryName:', categoryName);
+              form.input1.value=categoryName;
+              form.categoryId.value = categoryId;
+          }
+        });
 
-const addCategoryButton = document.querySelector('#addCategoryBtn');
-const inputCategory = document.querySelector('#categoryinput');
+      const addCategoryButton = document.querySelector('#addCategoryBtn');
+      const inputCategory = document.querySelector('#categoryinput');
 
-addCategoryButton.addEventListener('click',evt => {
-  let cname=inputCategory.value;
-    evt.preventDefault();
-    dbAddCategory(cname);
-    inputCategory.value=""; //TODO vasta jos meni ok?
-})
+      addCategoryButton.addEventListener('click',evt => {
+        let cname=inputCategory.value;
+          evt.preventDefault();
+          dbAddCategory(cname);
+          inputCategory.value=""; //TODO vasta jos meni ok?
+      })
+  }
 
 
 

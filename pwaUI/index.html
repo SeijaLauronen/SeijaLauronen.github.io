@@ -32,6 +32,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script >
     $(function(){
+        //$("#top-menu").load("topmenu.html")
         $("#side-menu").load("sidemenu.html")
         $("#footernav").load("footernav.html")
     });
@@ -43,33 +44,22 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 <!-- -------------------------------------- BODY --------------------------------------------------------------------- -->
 <body class="green lighten-5">
     <!-- ------------------------------------ TOPMENU----------------------------------------------------------------------- -->
-    <!-- top nav -->
-    <!-- muutan tämän aukeamaan oikealta -->
+    <!-- <div id="top-menu"></div>-->
     <nav class="z-depth-0 stay-top">
-      <div class="nav-wrapper container">
-        
-        <!-- <a href="/"><span>Lista</span></a> --> <!-- tämä menisi siten juureen, ei haluta sinne, vaan tämän sovelluksen juureen:-->
-        <!-- miten tämän saa keskelle!!!! -->
-        
-        <a href="index.html"><span>Kategoriat</span></a>         
-        
-        <!-- jos tähän vaihtaa left, tai jättää right:n pois, niin hamburger menee kyllä vasemmalle, mutta ei toimi, miksi? -->
-        <!-- taiskin johtua tuosta yllä olevasta href linkistä -->
+      <div class="nav-wrapper container">     
+        <a> <span class="pageheader">KATEGORIAT</span> </a>
         <span class="grey-text text-darken-1">
           <i class="material-icons sidenav-trigger menuicon" data-target="side-menu">menu</i>
         </span>
-
       </div>
     </nav>
 
     <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
-    <ul id="side-menu" class="sidenav side-menu"></ul>
-
+    <div id="side-menu" class="sidenav side-menu"></div>
+ 
     <!-- --------------------------------------CATEGORYLIST--------------------------------------------------------------------- -->
     <!-- categories -->
-    <div class="categories container green lighten-5">
-
-    </div>
+    <div class="categories container green lighten-5"></div>
       
     <!-- -------------------------------------- FORM  --------------------------------------------------------------------- -->
     <!-- add category side nav form -->
@@ -85,14 +75,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
           </div>
         </div>
 
-        <div class="edit-category container section">
-          
-
-          <!--
-          <br><br>
-          <div class="divider"></div>
-          -->
-
+        <div class="edit-category container section">          
           <div>                  
             <input id="categoryId" type="text" hidden>  
           </div>  
@@ -125,7 +108,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
   <footer class="footer page-footer green lighten-5">
     <div class="container">
-
       <div class="row lowrow">
                 <div class="col s10 nospaceright">
                     <input placeholder="Uusi kategoria" id="categoryinput" type="text" class="validate low">
@@ -137,6 +119,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
                     </a>
                 </div>
       </div>
+      <!-- common for all pages: -->
       <div id="footernav"></div>
     </div>
   </footer>
@@ -157,7 +140,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
       const db = new Localbase('helperdb');
       listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
-
     </script>
 
 </body>
