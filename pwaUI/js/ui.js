@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="category-name flow-text" name-id="${id}">${data.name}
       </div>
     </div>
-    <div class="category-edit sidenav-trigger" data-target="side-form"">
+    <div class="category-edit sidenav-trigger" data-target="side-form">
       <i class="material-icons" data-id="${id}">edit</i>
     </div>
     
@@ -72,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="card-panel product white row" product-id="${id}">
     
     <div class="product-details">
-      <div class="product-name flow-text" product-id="${id}">${product.name}
+      <div class="product-name flow-text" productname-id="${id}">${product.name}
       </div>
     </div>
-    <div class="product-edit sidenav-trigger" data-target="side-form">
+    <div class="product-edit sidenav-trigger" data-target="side-form-product">
       <i class="material-icons" product-id="${id}">edit</i>
     </div>
     
@@ -132,14 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // TODO sivukohtaiset erikseen
 
 // 11.3.2023 vaihdetaan eventit UI:lle
-  const form = document.querySelector('form');
-  if (form != null) {
-    form.addEventListener('submit', evt => {
+  const categoryForm = document.querySelector('#categoryForm');
+  if (categoryForm != null) {
+    categoryForm.addEventListener('submit', evt => {
       //evt.preventDefault();
-      //console.log(evt.submitter.id);
+      console.log(evt.submitter.id);
+      console.log.evt;
   
-      const categoryId = parseInt(form.categoryId.value);
-      const categoryName = form.input1.value;
+      const categoryId = parseInt(categoryForm.categoryId.value);
+      const categoryName = categoryForm.input1.value;
       if (evt.submitter.id == "delCategory") {
         dbDelCategory(categoryId);
         /*
@@ -166,8 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
               const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
               console.log('categoryId:', categoryId);
               console.log('categoryName:', categoryName);
-              form.input1.value=categoryName;
-              form.categoryId.value = categoryId;
+              categoryForm.input1.value=categoryName;
+              categoryForm.categoryId.value = categoryId;
           }
         });
 
@@ -183,22 +184,49 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
+  const productForm = document.querySelector('#productForm');
+  if (productForm != null) {
+    productForm.addEventListener('submit', evt => {
+      //evt.preventDefault();
+      console.log(evt.submitter.id);
+      //console.log.evt;
+  
+      const productId = parseInt(productForm.productId.value);
+      const productName = productForm.prodInput1.value;
+      alert("productId:",productId);
+      alert("productName:", productName);
+      if (evt.submitter.id == "delProduct") {
+        //dbDelProduct(productId);
+        /*
+        dbDelCategory(categoryId).then(x=> {
+          uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
+        })
+        */
+      }
+
+      if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
+        //dbUpdateProduct(productId,productName);
+        alert("upd productId:",productId);
+        alert("upd productName:", productName);
+       
+      }
+
+    });
+}
 
   const productContainer = document.querySelector('.products');
   if (productContainer != null) {
     productContainer.addEventListener('click', evt => {
-          //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+          console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
           if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
               const productId = parseInt(evt.target.getAttribute('product-id'));
-              //TODO
-              /*
-              const productName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
-              console.log('categoryId:', categoryId);
-              console.log('categoryName:', categoryName);
-              form.input1.value=categoryName;
-              form.categoryId.value = categoryId;
-              */
+              const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
+              console.log('productId:', productId);
+              console.log('productName:', productName);
+              productForm.prodInput1.value = productName;
+              productForm.productId.value = productId; //hidden value in form
+              
           }
         });
 

@@ -53,6 +53,52 @@
     <!-- products -->
   <div class="products container green lighten-5"></div>
 
+  <!-- -------------------------------------- PRODUCTFORM--------------------------------------------------------------------- -->
+
+<!-- add product side nav form -->
+<div id="side-form-product" class="sidenav side-form">
+
+  <form id="productForm">
+    <div class="row form-header">
+      <div class="col s10">
+        <h6>Tuotteen tiedot</h6>
+      </div>
+      <div class="col s2 formclose">
+        <i class="material-icons">close</i>
+      </div>
+    </div>
+
+    <div class="edit-product container section">          
+      <div>                  
+        <input id="productId" type="text">  
+      </div>  
+
+      <div class="input-field product-input1">
+        <input placeholder="Tuotteen nimi" id="prodInput1" type="text" class="validate">
+      </div>
+      
+      <div class="center">
+
+        <button class="btn-small left default-button-handler" type="submit" id="defaultActionProduct" >
+          <i class="material-icons">check</i>
+        </button>
+
+        <button class="btn-small del-btn red left" type="submit" id="delProduct" >
+          <i class="material-icons">delete</i>
+        </button>
+
+        <button class="btn-small right" type="submit" id="updateProduct" >
+          <i class="material-icons">check</i>
+        </button>
+        
+      </div>
+
+    </div>
+  </form>
+
+</div>
+
+
 
 
   <footer class="footer page-footer green lighten-5">
