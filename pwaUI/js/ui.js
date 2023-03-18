@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   const productList = document.querySelector('.products');
-  const renderProductList = (categoryId, product, id) => {
+  const renderProductList = (selectedCategoryId, product, id) => {
     const html =`
     <div class="card-panel product white row" product-id="${id}">
     
@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <i class="material-icons" product-id="${id}">edit</i>
     </div>
     
-    <div class="product-category">
-      ${categoryId}
+    <div class="product-category" productcategory-id="${id}">
+      ${product.cId}
     </div>
 
   </div>
@@ -188,27 +188,28 @@ document.addEventListener('DOMContentLoaded', function() {
   if (productForm != null) {
     productForm.addEventListener('submit', evt => {
       //evt.preventDefault();
-      console.log(evt.submitter.id);
-      //console.log.evt;
-  
+      //console.log(evt.submitter.id);
+      //console.log(evt);
+
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
-      alert("productId:",productId);
-      alert("productName:", productName);
+      const productCategoryId = productForm.prodInput2.value; //TODO tämä valintalistalta, ja tarkistuksia...
+
+      const product = {
+        cId:productCategoryId,
+        id:productId,
+        name:productName
+      }
+
       if (evt.submitter.id == "delProduct") {
-        //dbDelProduct(productId);
-        /*
-        dbDelCategory(categoryId).then(x=> {
-          uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
-        })
-        */
+        dbDelProduct(productId);
       }
 
       if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
-        //dbUpdateProduct(productId,productName);
-        alert("upd productId:",productId);
-        alert("upd productName:", productName);
-       
+        console.log("upd productId:",product.id);
+        console.log("upd productName:", product.name);
+        console.log("upd productcategoryId:", product.cId);
+        dbUpdateProduct(product);
       }
 
     });
@@ -222,10 +223,12 @@ document.addEventListener('DOMContentLoaded', function() {
           if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
               const productId = parseInt(evt.target.getAttribute('product-id'));
               const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
+              const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
               console.log('productId:', productId);
               console.log('productName:', productName);
               productForm.prodInput1.value = productName;
               productForm.productId.value = productId; //hidden value in form
+              productForm.prodInput2.value = productCategory;
               
           }
         });

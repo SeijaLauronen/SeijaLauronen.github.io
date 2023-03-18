@@ -148,6 +148,41 @@ function dbAddCategory(cname){
 
 }
 
+
+function dbUpdateProduct(product) {
+    db.collection('product').doc({id : product.id}).set(
+        product
+        /*
+        {
+            id: product.id,
+            cId:product.cId,
+            name: product.name
+        }
+        */
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu tuotteet muuttaminen ");
+        throw(error); // onnistuisko näin
+    })
+}
+
+function dbDelProduct(productId) {
+    db.collection('product')
+    .doc({ id: productId })
+    .delete()
+    .then(response => {
+        console.log(response);
+        console.log('Deleting product successful, now do something.');
+    })
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu delete prod sumbitterillä", error);
+        throw(error); // onnistuisko näin
+    })
+}
+
+
 /************************************************ Products ****/
 function listProducts(categoryId){
     //alert("listaan");
