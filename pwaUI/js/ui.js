@@ -85,25 +85,35 @@ document.addEventListener('DOMContentLoaded', function() {
     listProducts(categoryId);
   }
 
+  
   const productList = document.querySelector('.products');
   const renderProductList = (selectedCategoryId, product, id) => {
-    const html =`
-    <div class="card-panel product white row" product-id="${id}">
-    
-    <div class="product-details">
-      <div class="product-name flow-text" productname-id="${id}">${product.name}
-      </div>
-    </div>
-    <div class="product-edit sidenav-trigger" data-target="side-form-product">
-      <i class="material-icons" product-id="${id}">edit</i>
-    </div>
-    
-    <div class="product-category" productcategory-id="${id}">
-      ${product.cId}
-    </div>
 
-  </div>
-    `;
+
+    //var urlParams = new URLSearchParams(queryString);
+    //var categoryId = urlParams.get('categoryId')
+
+    var html =``;
+    if (selectedCategoryId == null || product.cId == selectedCategoryId )
+    //if (categoryId == null || product.cId == categoryId)
+    
+        html =`
+        <div class="card-panel product white row" product-id="${id}">
+        
+        <div class="product-details">
+          <div class="product-name flow-text" productname-id="${id}">${product.name}
+          </div>
+        </div>
+        <div class="product-edit sidenav-trigger" data-target="side-form-product">
+          <i class="material-icons" product-id="${id}">edit</i>
+        </div>
+        
+        <div class="product-category" productcategory-id="${id}">
+          ${product.cId}
+        </div>
+
+      </div>
+        `;
     productList.innerHTML += html;
   }
 

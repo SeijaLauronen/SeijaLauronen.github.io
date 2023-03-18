@@ -56,10 +56,10 @@
 
   <!-- -------------------------------------- PRODUCTFORM--------------------------------------------------------------------- -->
 
-<!-- add product side nav form -->
+<!-- add product side nav form   post:lla säilyis parametrit urlissa? -->
 <div id="side-form-product" class="sidenav side-form">
 
-  <form id="productForm">
+  <form id="productForm" method="get">
     <div class="row form-header">
       <div class="col s10">
         <h6>Tuotteen tiedot</h6>
@@ -75,7 +75,7 @@
       
       
       <div>                  
-        <input id="productId" type="text">  
+        <input id="productId" type="text" hidden>  
       </div>  
 
       <div class="input-field product-input1">
@@ -84,7 +84,7 @@
 
       <!-- TODO tähän valintalista -->
       <div class="input-field product-input2">
-        <input placeholder="Tuotteen kategoria" id="prodInput2" type="text" class="validate">
+        <input placeholder="Tuotteen kategoria" id="prodInput2" type="text" class="validate" hidden>
       </div>
 <!-- valintalista kategoriolle -->
       <div class="input-field">

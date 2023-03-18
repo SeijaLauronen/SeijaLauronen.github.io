@@ -168,13 +168,6 @@ function dbAddCategory(cname){
 function dbUpdateProduct(product) {
     db.collection('product').doc({id : product.id}).set(
         product
-        /*
-        {
-            id: product.id,
-            cId:product.cId,
-            name: product.name
-        }
-        */
     )
     .catch(error => {
         console.log('There was an error, do something else.', error);
