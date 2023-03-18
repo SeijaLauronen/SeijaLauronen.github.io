@@ -28,6 +28,13 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // for categorySelection in product form
+    var combos = document.querySelectorAll('select');
+    //if (combos != null) {
+    var comboinstances = M.FormSelect.init(combos, options);
+    //}
+
+
   });
 
   const renderCategoryList = (data, id) => {
@@ -62,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(categories);
 
     let objCat= JSON.parse(categories);
-    for (let i=0; objCat.length; i++){   
+    for (let i=0; i< objCat.length; i++){   
       console.log(objCat[i].id); 
       console.log(objCat[i].name); 
     }
@@ -99,6 +106,26 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     productList.innerHTML += html;
   }
+
+  const categorySelection = document.querySelector('.categorySelect');
+  const renderCategoryDropDown = (productCategory) => {
+
+      let categories = sessionStorage.getItem("sessionCategories");
+      console.log("KATEGORIAT");
+      console.log(categories);
+
+      let objCat= JSON.parse(categories);
+      let catId ="";
+      for (let i=0; i < objCat.length; i++){   
+        //cId=toString(objCat[i].id); //miksi tämä ei toimi
+        catId=objCat[i].cId;
+        const html =`
+      <option value="${catId}">"${objCat[i].name}"</option>
+      `;
+      categorySelection.innerHTML += html;
+      }      
+  }
+ 
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator
   function getBrowserName(userAgent) {
@@ -241,6 +268,9 @@ document.addEventListener('DOMContentLoaded', function() {
               productForm.prodInput1.value = productName;
               productForm.productId.value = productId; //hidden value in form
               productForm.prodInput2.value = productCategory;
+
+
+              renderCategoryDropDown(productCategory);
               
           }
         });

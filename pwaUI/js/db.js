@@ -71,11 +71,23 @@ function listCategories(){
     //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
     //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
-    categoryArray = [];
+    let categoryArray = [];
+    let category ={};
+    let cIdStr="";
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
         categories.forEach(element => {
             renderCategoryList(element, element.id); //TODO tänne voi heittää tuon session
-            categoryArray.push(JSON.stringify(element));
+            //categoryArray.push(JSON.stringify(element));
+            cIdStr = element.id.toString();
+            console.log(cIdStr);
+            category ={
+                id:element.id,
+                cId:cIdStr,
+                name:element.name,
+                cname:element.name
+            }
+            categoryArray.push(JSON.stringify(category));
+
          });
          sessionStorage.setItem("sessionCategories", '[' + categoryArray +']');
         })

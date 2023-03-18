@@ -273,3 +273,8 @@ div.item {
   background-color: blue;
 }
 */
+
+/* muuten on display none oletuksena, eikä näy mitään?!*/
+select {
+  display: block;
+}
