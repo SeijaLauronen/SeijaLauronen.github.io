@@ -71,10 +71,13 @@ function listCategories(){
     //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
     //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
+    categoryArray = [];
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
         categories.forEach(element => {
-            renderCategoryList(element, element.id);
+            renderCategoryList(element, element.id); //TODO tänne voi heittää tuon session
+            categoryArray.push(JSON.stringify(element));
          });
+         sessionStorage.setItem("sessionCategories", '[' + categoryArray +']');
         })
 }
 
@@ -148,6 +151,7 @@ function dbAddCategory(cname){
 
 }
 
+/********************** product ***********************/
 
 function dbUpdateProduct(product) {
     db.collection('product').doc({id : product.id}).set(

@@ -55,6 +55,18 @@ document.addEventListener('DOMContentLoaded', function() {
   function uiReloadCategories(){
     categoryList.innerHTML ="";
     listCategories();
+
+    console.log("uiReloadCategories");
+    //TODO
+    let categories = sessionStorage.getItem("sessionCategories");
+    console.log(categories);
+
+    let objCat= JSON.parse(categories);
+    for (let i=0; objCat.length; i++){   
+      console.log(objCat[i].id); 
+      console.log(objCat[i].name); 
+    }
+
   }
 
   function emptyCategories(){
