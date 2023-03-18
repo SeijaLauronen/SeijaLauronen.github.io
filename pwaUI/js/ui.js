@@ -235,10 +235,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const addProductButton = document.querySelector('#addProductBtn');
       const inputProduct = document.querySelector('#productinput');
-
+      const selectedCategoryID = document.querySelector('.pageheader-categoryID');
       addProductButton.addEventListener('click',evt => {
         let pname=inputProduct.value;
-        let pCid=1; //TODO oikea kategoria id
+        let pCid = 1;
+        if (selectedCategoryID.innerText != '') {
+          pCid = parseInt(selectedCategoryID.innerText);
+        }
+        /*
+        let pCid = parseInt(selectedCategoryID.innerText);
+        if (pCid == null || pCid == NaN) {
+          pCid=1; 
+        }
+
+        */
+
+        //let pCid=1; //TODO oikea kategoria id
           evt.preventDefault();
           dbAddProduct(pname, pCid);
           inputProduct.value=""; //TODO vasta jos meni ok?
