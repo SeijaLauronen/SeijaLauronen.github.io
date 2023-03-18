@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // for categorySelection in product form
     var combos = document.querySelectorAll('select');
     //if (combos != null) {
-    var comboinstances = M.FormSelect.init(combos, options);
+    //var comboinstances = M.FormSelect.init(combos, options); //Mitä tuohon optionsiin pitäisi laittaa... ilmeisesti array jossa values ja names..
     //}
 
 
@@ -116,13 +116,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
       let objCat= JSON.parse(categories);
       let catId ="";
+      let html =``;
+      categorySelection.innerHTML = html;
       for (let i=0; i < objCat.length; i++){   
         //cId=toString(objCat[i].id); //miksi tämä ei toimi
-        catId=objCat[i].cId;
-        const html =`
-      <option value="${catId}">"${objCat[i].name}"</option>
-      `;
-      categorySelection.innerHTML += html;
+          catId=objCat[i].cId;
+          if (productCategory == catId) {
+            html =`
+            <option value="${catId}" selected>"${objCat[i].name}"</option>
+            `;
+          } else {
+            html =`
+            <option value="${catId}">"${objCat[i].name}"</option>
+            `;
+          }
+        categorySelection.innerHTML += html;
       }      
   }
  
@@ -233,6 +241,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
       const productCategoryId = productForm.prodInput2.value; //TODO tämä valintalistalta, ja tarkistuksia...
+      
+      //var comboinstance = M.FormSelect.getInstance(combos);
+      const comboinstance = document.querySelector('.categorySelect');
 
       const product = {
         cId:productCategoryId,
@@ -247,7 +258,18 @@ document.addEventListener('DOMContentLoaded', function() {
       if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
         console.log("upd productId:",product.id);
         console.log("upd productName:", product.name);
-        console.log("upd productcategoryId:", product.cId);
+        console.log("upd productcategoryId1:", product.cId);
+
+        /*
+        var selectedProductCategoryIds = comboinstance.getSelectedValues();
+        var selectedProductCategoryId = comboinstance.getSelectedValues()[0];
+*/
+        var selectedProductCategoryId = comboinstance.value;
+        product.cId=parseInt(selectedProductCategoryId);
+
+        console.log("upd productcategoryIdSelected:", product.cId);
+        
+
         dbUpdateProduct(product);
       }
 
