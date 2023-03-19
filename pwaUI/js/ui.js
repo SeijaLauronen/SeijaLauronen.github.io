@@ -116,17 +116,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
         html =`
         <div class="card-panel product white row" product-id="${id}">
+
+        <div class="product checkbox">
+          <label>
+            <input type="checkbox" class="filled-in" />
+          </label>
+        </div>
         
         <div class="product-details">
           <div class="product-name flow-text" productname-id="${id}">${product.name}
           </div>
         </div>
+
         <div class="product-edit sidenav-trigger" data-target="side-form-product">
           <i class="material-icons" product-id="${id}">edit</i>
         </div>
         
-        <div class="product-category" productcategory-id="${id}">
-          ${product.cId}: ${catname}
+        <div class="product category-info">
+          <span class="product-category" productcategory-id="${id}" hidden>${product.cId}</span>
+          <span class="product-category" productcategoryname-id="${id}">${catname}</span>
         </div>
 
       </div>
