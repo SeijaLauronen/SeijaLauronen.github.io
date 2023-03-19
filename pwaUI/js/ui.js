@@ -102,6 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
     //var urlParams = new URLSearchParams(queryString);
     //var categoryId = urlParams.get('categoryId')
     let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
+//categories.find(record => record.id === 6);
+//alert (c.name);
+    let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
+    let catObj = categoryArray.find(record => record.id == product.cId);
+   let catname = catObj.cname;
+   console.log("catname:",catname);
+
 
     var html =``;
     if (selectedCategoryId == null || product.cId == selectedCategoryId )
@@ -119,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <div class="product-category" productcategory-id="${id}">
-          ${product.cId}
+          ${product.cId}: ${catname}
         </div>
 
       </div>
@@ -143,11 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
           catId=objCat[i].cId;
           if (productCategory == catId) {
             html =`
-            <option value="${catId}" selected>"${objCat[i].name}"</option>
+            <option value="${catId}" selected>${objCat[i].name}</option>
             `;
           } else {
             html =`
-            <option value="${catId}">"${objCat[i].name}"</option>
+            <option value="${catId}">${objCat[i].name}</option>
             `;
           }
         categorySelection.innerHTML += html;
