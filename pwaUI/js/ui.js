@@ -304,6 +304,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 }
 
+
+
   const productContainer = document.querySelector('.products');
   if (productContainer != null) {
     productContainer.addEventListener('click', evt => {
@@ -349,6 +351,12 @@ document.addEventListener('DOMContentLoaded', function() {
           inputProduct.value=""; //TODO vasta jos meni ok?
       })
   }
+
+const footerNavigation = document.querySelector('.footernavigation');
+footerNavigation.addEventListener('click', evt =>{
+  sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
+  sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
+});
 
 
 
