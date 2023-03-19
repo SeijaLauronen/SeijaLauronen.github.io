@@ -143,7 +143,7 @@ function dbAddCategory(cname){
             .add(category)
             .then( reload => {
                 // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
-                uiReloadCategories();
+                uiLoadCategories();
             })
             .then( updnextCatId =>
                 {  
@@ -193,14 +193,14 @@ function dbDelProduct(productId) {
 
 
 /************************************************ Products ****/
-function listProducts(categoryId){
+function listProducts(){
     //alert("listaan");
     //db.collection('category').get().then(category => {
         // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
     //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
     db.collection('product').orderBy('name', 'asc').get().then(products => {
         products.forEach(product => {
-            renderProductList(categoryId, product, product.id);
+            renderProductList(product, product.id);
         });
     })
 

@@ -145,14 +145,28 @@
 <script>
     const dbold = new Localbase('db'); 
     const db = new Localbase('helperdb');
-
+/*
     const queryString = window.location.search;
     //console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
     const categoryId = urlParams.get('categoryId')
     const categoryName = urlParams.get('categoryName')
     //console.log("category id ja Name:" + categoryId + categoryName);
-    if (categoryName !=null) {
+*/
+/*
+    const categoryId =sessionStorage.getItem(selectedCategoryId);
+    const categoryName =sessionStorage.getItem(selectedCategoryName);
+*/
+//const categoryId = null;
+//const categoryName ="";
+//if (sessionStorage.getItem(selectedCategoryId) != null){
+  const categoryId = sessionStorage.getItem("selectedCategoryId");
+//}
+//if (sessionStorage.getItem(selectedCategoryName) != null){
+  const categoryName = sessionStorage.getItem("selectedCategoryName");
+//}
+
+    if (categoryName != null) {
       document.querySelector(".pageheader").innerHTML=categoryName;
       document.querySelector(".pageheader-categoryID").innerHTML=categoryId;
     }

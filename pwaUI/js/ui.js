@@ -37,33 +37,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
   });
 
+  /* 
+  
+      <div class="category-go">
+    <a href="product.html?categoryId=${id}&categoryName=${data.name}">
+    <i class="material-icons" data-id="${id}">arrow_forward</i>
+    </a> 
+  */
+
   const renderCategoryList = (data, id) => {
     const html =`
     <div class="card-panel category category white row" data-id="${id}">
     
-    <div class="category-details">
-      <div class="category-name flow-text" name-id="${id}">${data.name}
+      <div class="category-details">
+        <div class="category-name flow-text" name-id="${id}">${data.name}
+        </div>
       </div>
+
+      <div class="category-edit sidenav-trigger" data-target="side-form">
+        <i class="material-icons" data-id="${id}">edit</i>
+      </div>
+
+      <div class="category-go">
+        <i class="material-icons" data-id="${id}" categoryname="${data.name}">arrow_forward</i>
+      </div>
+
     </div>
-    <div class="category-edit sidenav-trigger" data-target="side-form">
-      <i class="material-icons" data-id="${id}">edit</i>
-    </div>
-    
-    <div class="category-go">
-    <a href="product.html?categoryId=${id}&categoryName=${data.name}">
-    <i class="material-icons data-id="${id}">arrow_forward</i>
-    </a> 
-  </div>
-  </div>
     `;
     categoryList.innerHTML += html;
   }
 
-  function uiReloadCategories(){
+  function uiLoadCategories(){
     categoryList.innerHTML ="";
     listCategories();
 
-    console.log("uiReloadCategories");
+    console.log("uiLoadCategories");
     //TODO
     let categories = sessionStorage.getItem("sessionCategories");
     console.log(categories);
@@ -73,25 +81,27 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(objCat[i].id); 
       console.log(objCat[i].name); 
     }
-
+    sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
+    sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
   }
 
   function emptyCategories(){
     categoryList.innerHTML ="";
   }
 
-  function uiReloadProducts(categoryId){
+ // function uiReloadProducts(categoryId){
+  function uiReloadProducts(){
     productList.innerHTML ="";
-    listProducts(categoryId);
+    listProducts();
   }
 
   
   const productList = document.querySelector('.products');
-  const renderProductList = (selectedCategoryId, product, id) => {
-
+  const renderProductList = (product, id) => {
 
     //var urlParams = new URLSearchParams(queryString);
     //var categoryId = urlParams.get('categoryId')
+    let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
 
     var html =``;
     if (selectedCategoryId == null || product.cId == selectedCategoryId )
@@ -226,6 +236,14 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log('categoryName:', categoryName);
               categoryForm.input1.value=categoryName;
               categoryForm.categoryId.value = categoryId;
+          } else if(evt.target.tagName === 'I' && evt.target.innerText === 'arrow_forward') {
+              const categoryId = parseInt(evt.target.getAttribute('data-id'));
+              const categoryName = evt.target.getAttribute('categoryname');
+              sessionStorage.setItem("selectedCategoryId",categoryId);
+              sessionStorage.setItem("selectedCategoryName",categoryName);
+              // window.location.replace("http://www.w3schools.com");
+              //window.location.href = "http://www.w3schools.com"
+              window.location.href = "product.html"; //http://127.0.0.1:5500/product.html?categoryId=2&categoryName=Rasvat
           }
         });
 
@@ -312,9 +330,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const selectedCategoryID = document.querySelector('.pageheader-categoryID');
       addProductButton.addEventListener('click',evt => {
         let pname=inputProduct.value;
-        let pCid = 1;
+        let pCid = 1; //Oletuskategoria uudelle tuotteelle
+        //Jos tuotesivu on suodatettu kategorian mukaan lisätään tuote siihen kategoriaan
         if (selectedCategoryID.innerText != '') {
-          pCid = parseInt(selectedCategoryID.innerText);
+          pCid = parseInt(selectedCategoryID.innerText);          
         }
         /*
         let pCid = parseInt(selectedCategoryID.innerText);
