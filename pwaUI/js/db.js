@@ -176,6 +176,19 @@ function dbUpdateProduct(product) {
     })
 }
 
+function dbUpdateProductToList(pid, checked) {
+    db.collection('product').doc({id : pid}).update({
+            toList:checked
+    }
+    )
+    .catch(error => {
+        console.log('There was an error updating product to list, do something else.', error);
+        alert ("Ei onnistu tuotteen listalle muuttaminen ");
+        throw(error); // onnistuisko näin
+    })
+}
+
+
 function dbDelProduct(productId) {
     db.collection('product')
     .doc({ id: productId })

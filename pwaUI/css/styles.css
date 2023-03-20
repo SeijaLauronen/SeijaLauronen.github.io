@@ -110,27 +110,37 @@ nav .sidenav-trigger{
   margin: 5px;
   box-shadow: 0px 1px 3px rgba(90,90,90,0.1);
   display: grid;
-  grid-template-columns: 1fr 8fr 2fr 1fr;
-  grid-template-areas: "chb pname pcat pedit";
+  /* grid-template-columns: 1fr 8fr 2fr 1fr; */
+  /* grid-template-columns: 20px auto 50px 20px; */
+  grid: 15px 35px / 20px auto 30px;
+  
+  /* grid-gap: 10px;*/
+  background-color: #2196F3;
+
+  /* grid-template-areas: "chb pname pcat pedit";*/
   position: relative;
   min-height: 35px;
 }
 .product.checkbox{
-  grid-area: chb;
+  /*grid-area: chb;*/
+  grid-column: 1 / span 1;
   margin-top:15px;
 }
-.product-edit{
-  grid-area: pedit;
-  margin:5px;
-}
 .product-details{
-  grid-area: pname;
+  /*grid-area: pname;*/
+  grid-column: 2 / span 1;
   margin:5px;
 }
 .product.category-info{
-  grid-area: pcat;
+  /*grid-area: pcat;*/
+  /*grid-column: 3 / span 1;*/
+  grid-column: 1 / span 3;
 }
-
+.product-edit{
+  /*grid-area: pedit;*/
+  grid-column: 3 / span 1;
+  margin:5px;
+}
 
 
 

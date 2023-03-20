@@ -106,8 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
 //alert (c.name);
     let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
     let catObj = categoryArray.find(record => record.id == product.cId);
-   let catname = catObj.cname;
-   console.log("catname:",catname);
+    let catname = catObj.cname;
+    let checkedText = "";
+    if (product.toList == true) {
+      checkedText = "checked=true";
+    }
+    //console.log("catname:",catname);
 
 
     var html =``;
@@ -117,26 +121,25 @@ document.addEventListener('DOMContentLoaded', function() {
         html =`
         <div class="card-panel product white row" product-id="${id}">
 
-        <div class="product checkbox">
-          <label>
-            <input type="checkbox" class="filled-in" />
-          </label>
-        </div>
-        
-        <div class="product-details">
-          <div class="product-name flow-text" productname-id="${id}">${product.name}
+          <div class="product category-info">
+            <span class="product-category" productcategory-id="${id}" hidden>${product.cId}</span>
+            <span class="product-category" productcategoryname-id="${id}">${catname}</span>
           </div>
-        </div>
+          
+          <div class="product checkbox">
+            <label>
+              <input type="checkbox" class="filled-in" productchecked-id="${id}" ${checkedText} />
+            </label>
+          </div>
+          
+          <div class="product-details">
+            <div class="product-name flow-text" productname-id="${id}">${product.name}
+            </div>
+          </div>
 
-        <div class="product-edit sidenav-trigger" data-target="side-form-product">
-          <i class="material-icons" product-id="${id}">edit</i>
-        </div>
-        
-        <div class="product category-info">
-          <span class="product-category" productcategory-id="${id}" hidden>${product.cId}</span>
-          <span class="product-category" productcategoryname-id="${id}">${catname}</span>
-        </div>
-
+          <div class="product-edit sidenav-trigger" data-target="side-form-product">
+            <i class="material-icons" product-id="${id}">edit</i>
+          </div>
       </div>
         `;
     productList.innerHTML += html;
@@ -339,6 +342,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
               renderCategoryDropDown(productCategory);
               
+          } else if (evt.target.type == "checkbox") {
+            //checked==true
+            const productId = parseInt(evt.target.getAttribute('productchecked-id'));
+            const checked = evt.target.checked;
+            dbUpdateProductToList(productId, checked)
           }
         });
 
