@@ -126,10 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="product-category" productcategoryname-id="${id}">${catname}</span>
           </div>
           
-          <div class="product checkbox">
-            <label>
-              <input type="checkbox" class="filled-in" productchecked-id="${id}" ${checkedText} />
-            </label>
+          <div class="product-edit sidenav-trigger" data-target="side-form-product">
+            <i class="material-icons" product-id="${id}">edit</i>
           </div>
           
           <div class="product-details">
@@ -137,8 +135,10 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
 
-          <div class="product-edit sidenav-trigger" data-target="side-form-product">
-            <i class="material-icons" product-id="${id}">edit</i>
+          <div class="product checkbox">
+            <label>
+              <input type="checkbox" class="filled-in" productchecked-id="${id}" ${checkedText} />
+            </label>
           </div>
       </div>
         `;

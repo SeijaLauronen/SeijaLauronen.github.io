@@ -112,7 +112,7 @@ nav .sidenav-trigger{
   display: grid;
   /* grid-template-columns: 1fr 8fr 2fr 1fr; */
   /* grid-template-columns: 20px auto 50px 20px; */
-  grid: 15px 35px / 20px auto 30px;
+  grid: 15px 35px / 30px auto 30px;
   
   /* grid-gap: 10px;*/
   background-color: #2196F3;
@@ -121,26 +121,37 @@ nav .sidenav-trigger{
   position: relative;
   min-height: 35px;
 }
-.product.checkbox{
-  /*grid-area: chb;*/
+.product.category-info{
+  /*grid-area: pcat;*/
+  /*grid-column: 3 / span 1;*/
+  margin-left: 15px;
+  grid-column: 2 / span 1;
+}
+.product-edit{
+  /*grid-area: pedit;*/
   grid-column: 1 / span 1;
-  margin-top:15px;
+  margin:5px;
 }
 .product-details{
   /*grid-area: pname;*/
   grid-column: 2 / span 1;
-  margin:5px;
+  margin:5px 15px 5px 15px;
 }
-.product.category-info{
-  /*grid-area: pcat;*/
-  /*grid-column: 3 / span 1;*/
-  grid-column: 1 / span 3;
-}
-.product-edit{
-  /*grid-area: pedit;*/
+.product.checkbox{
+  /*grid-area: chb;*/
   grid-column: 3 / span 1;
-  margin:5px;
+  margin-top:10px;
+   /* Double-sized Checkboxes */
+   -ms-transform: scale(2); /* IE */
+   -moz-transform: scale(2); /* FF */
+   -webkit-transform: scale(2); /* Safari and Chrome */
+   -o-transform: scale(2); /* Opera */
+   transform: scale(2);
+   
+
 }
+
+
 
 
 
