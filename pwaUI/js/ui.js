@@ -286,16 +286,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
-      const productCategoryId = productForm.prodInput2.value; //TODO tämä valintalistalta, ja tarkistuksia...
+      //const productCategoryId = productForm.prodInput2.value; //TODO tämä valintalistalta, ja tarkistuksia...
       
       //var comboinstance = M.FormSelect.getInstance(combos);
       const comboinstance = document.querySelector('.categorySelect');
+      var productToList = false;
+      if (productForm.productInputToList.checked) {
+        productToList=true;
+      }
 
       const product = {
-        cId:productCategoryId,
         id:productId,
-        name:productName
+        name:productName,
+        toList:productToList
       }
+      var selectedProductCategoryId = comboinstance.value;
+      product.cId=parseInt(selectedProductCategoryId);
+
+       
 
       if (evt.submitter.id == "delProduct") {
         dbDelProduct(productId);
@@ -310,8 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var selectedProductCategoryIds = comboinstance.getSelectedValues();
         var selectedProductCategoryId = comboinstance.getSelectedValues()[0];
 */
-        var selectedProductCategoryId = comboinstance.value;
-        product.cId=parseInt(selectedProductCategoryId);
+        
 
         console.log("upd productcategoryIdSelected:", product.cId);
         
@@ -329,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productContainer.addEventListener('click', evt => {
           console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
+          //TODO pitäisi välittää koko tuotteen tiedot
           if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
               const productId = parseInt(evt.target.getAttribute('product-id'));
               const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
@@ -337,7 +345,8 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log('productName:', productName);
               productForm.prodInput1.value = productName;
               productForm.productId.value = productId; //hidden value in form
-              productForm.prodInput2.value = productCategory;
+              //productForm.prodInput2.value = productCategory;
+              productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id]').checked;
 
 
               renderCategoryDropDown(productCategory);

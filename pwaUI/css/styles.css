@@ -142,11 +142,11 @@ nav .sidenav-trigger{
   grid-column: 3 / span 1;
   margin-top:10px;
    /* Double-sized Checkboxes */
-   -ms-transform: scale(2); /* IE */
-   -moz-transform: scale(2); /* FF */
-   -webkit-transform: scale(2); /* Safari and Chrome */
-   -o-transform: scale(2); /* Opera */
-   transform: scale(2);
+   -ms-transform: scale(1.7); /* IE */
+   -moz-transform: scale(1.7); /* FF */
+   -webkit-transform: scale(1.7); /* Safari and Chrome */
+   -o-transform: scale(1.7); /* Opera */
+   transform: scale(1.7);
    
 
 }

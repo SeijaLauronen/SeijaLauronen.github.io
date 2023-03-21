@@ -78,15 +78,18 @@
         <input id="productId" type="text" hidden>  
       </div>  
 
+      <div class="input-field productform checkbox product-toList">
+          <div class="row">
+              <div class="col s1"><input type="checkbox" class="filled-in" id="productInputToList"/></div>
+              <div class="col s1"><label>Ostoslistalle</label></div>
+          </div>
+      </div>
+    
       <div class="input-field product-input1">
         <input placeholder="Tuotteen nimi" id="prodInput1" type="text" class="validate">
       </div>
 
-      <!-- TODO tähän valintalista -->
-      <div class="input-field product-input2">
-        <input placeholder="Tuotteen kategoria" id="prodInput2" type="text" class="validate" hidden>
-      </div>
-<!-- valintalista kategoriolle -->
+      <!-- valintalista kategoriolle -->
       <div class="input-field">
         <select class="categorySelect">
         </select>
@@ -100,11 +103,11 @@
           <i class="material-icons">check</i>
         </button>
 
-        <button class="btn-small del-btn red left" type="submit" id="delProduct" >
+        <button class="btn-large del-btn red left" type="submit" id="delProduct" >
           <i class="material-icons">delete</i>
         </button>
 
-        <button class="btn-small right" type="submit" id="updateProduct" >
+        <button class="btn-large right" type="submit" id="updateProduct" >
           <i class="material-icons">check</i>
         </button>
         
