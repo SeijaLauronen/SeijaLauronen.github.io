@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const productForm = document.querySelector('#productForm');
   if (productForm != null) {
     productForm.addEventListener('submit', evt => {
-      //evt.preventDefault();
+      evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu
       //console.log(evt.submitter.id);
       //console.log(evt);
 
@@ -307,6 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (evt.submitter.id == "delProduct") {
         dbDelProduct(productId);
+        closeForm(); //TODO reload page?
+        window.location.href = "product.html"; // to reload page
       }
 
       if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
@@ -324,13 +326,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
 
         dbUpdateProduct(product);
+        closeForm(); //TODO reload page?
+        window.location.href = "product.html"; // to reload page
       }
 
     });
 }
 
+function closeForm() {
+  var elem = document.querySelector(".side-form");
+  var instance = M.Sidenav.getInstance(elem);
 
-
+  if (instance.isOpen) {
+    console.log("Is open: I need to close it");
+    instance.close();
+  } 
+}
   const productContainer = document.querySelector('.products');
   if (productContainer != null) {
     productContainer.addEventListener('click', evt => {
@@ -345,10 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log('productName:', productName);
               productForm.prodInput1.value = productName;
               productForm.productId.value = productId; //hidden value in form
-              //productForm.prodInput2.value = productCategory;
-              productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id]').checked;
-
-
+              productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
               renderCategoryDropDown(productCategory);
               
           } else if (evt.target.type == "checkbox") {
