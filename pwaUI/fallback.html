@@ -18,8 +18,14 @@
   <link rel="apple-touch-icon" href="/img/icons/icon-96x96.png">
   <meta name="apple-mobile-web-app-status-bar" content="#FFE1C4">
   <meta name="theme-color" content="#79baa2">
-</head>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script >
+    $(function(){
+        $("#side-menu").load("sidemenu.html")
+    });
+  </script>
+</head>
 
 
 <body class="grey-lighten-4">
@@ -34,7 +40,10 @@
       </div>
     </nav>
 
-    <!-- side nav -->
+    <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
+   <div id="side-menu" class="sidenav side-menu"></div>
+
+    <!-- side nav 
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">KESKEN</a></li>
     <li><a href="index.html" class="waves-effect">Home</a></li>
@@ -46,13 +55,13 @@
     </li>
     
   </ul>
-
+-->
 
    <!-- content -->
    <div class="container grey-text center">
-    <h5>OOPS!</h5>
-    <p>Currently you can't view this page without a connection.</p>
-    <a href="index.html" class="btn-small orange z-depth-0">Go to the Homepage</a>
+    <h5>HUPS!</h5>
+    <p>Sivua ei voida näytää. Tarkista nettiyhteys.</p>
+    <a href="index.html" class="btn-small orange z-depth-0">Kotisivulle...</a>
   </div>
 
 

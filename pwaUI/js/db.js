@@ -94,19 +94,35 @@ function listCategories(){
 }
 
 //TODO älä anna poistaa kategoriaa, jos siinä on vielä tuotteita, tulee virhe tuotteiden listaamisessa
-function dbDelCategory(categoryId) {
-    db.collection('category')
-    .doc({ id: categoryId })
-    .delete()
-    .then(response => {
-        console.log('Delete successful, now do something.');
-        //removeCategory(categoryId); // Poistaa ui:sta
-    })
-    .catch(error => {
-        console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu delete sumbitterillä", error);
-        throw(error); // onnistuisko näin
-    })
+//function dbDelCategory(categoryId) {
+    function dbDelCategory(categoryId, page, callback) {
+    var toastTxt ="";
+    // Hakua ei voi rajoittaa kuin kentällä, joka rajaa tuloksen yhteen :(
+    db.collection('product')
+        .get()
+        .then(products => {
+            //console.log(products);
+            var productsInCategory = products.find(prod => prod.cId == categoryId);  
+            if (productsInCategory == null) {
+                db.collection('category')
+                .doc({ id: categoryId })
+                .delete()
+                .then(response => {
+                    console.log('Delete successful, now do something.');
+                    //removeCategory(categoryId); // Poistaa ui:sta
+                })
+                .catch(error => {
+                    console.log('There was an error, do something else.', error);
+                    alert ("Ei onnistu delete sumbitterillä", error);
+                    throw(error); // onnistuisko näin
+                })
+            }   
+            else {
+                toastTxt ='Kategoriassa on tuotteita, siirrä/poista ensin kategorian tuotteet';
+            } 
+            callback(page, toastTxt);       
+                
+        }) //TODO vaikka callback info, että kategoriassa on tuotteita, ei poisteta
 }
 
 function dbUpdateCategory(categoryId,categoryName) {
@@ -238,20 +254,24 @@ function dbUpdateProductToList(pid, checked) {
 
 /**************************** events from productform  **********************************/
 function dbUpdateProduct(product, page, callback) {
+    var toastTxt ="";
     db.collection('product').doc({id : product.id}).set(
         product
     ).then(x => {
-        callback(page);
+        callback(page,toastTxt);
     })
     .catch(error => {
         console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu tuotteet muuttaminen ");
-        throw(error); // onnistuisko näin
+        //alert ("Ei onnistu tuotteet muuttaminen ");
+        toastTxt ="Ei onnistu tuotteet muuttaminen";
+        callback(page,toastTxt);
+        //throw(error); // onnistuisko näin
     })
 }
 
 
 function dbDelProduct(productId, page, callback) {
+    var toastTxt ="";
     db.collection('product')
     .doc({ id: productId })
     .delete()
@@ -262,8 +282,10 @@ function dbDelProduct(productId, page, callback) {
     })
     .catch(error => {
         console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu delete prod sumbitterillä", error);
-        throw(error); // onnistuisko näin
+        //alert ("Ei onnistu delete prod sumbitterillä", error);
+        //throw(error); // onnistuisko näin
+        toastTxt ="Ei onnistu delete prod sumbitterillä";
+        callback(page, toastTxt);
     })
 }
 

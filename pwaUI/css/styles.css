@@ -112,7 +112,7 @@ nav .sidenav-trigger{
   display: grid;
   /* grid-template-columns: 1fr 8fr 2fr 1fr; */
   /* grid-template-columns: 20px auto 50px 20px; */
-  grid: 15px 35px / 30px auto 30px;
+  grid: 15px auto / 30px auto 30px;
   
   /* grid-gap: 10px;*/
   background-color: #2196F3;

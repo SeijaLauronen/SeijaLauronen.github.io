@@ -83,7 +83,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
 
 
 // toistaiseksi vain tuotesivun formi käyttää tätä
-  function closeFormReturnToPage(page) {
+  function closeFormReturnToPage(page, toastTxt) {
     var elem = document.querySelector(".side-form");
     var instance = M.Sidenav.getInstance(elem);
   
@@ -91,6 +91,11 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
       console.log("Is open: I need to close it");
       instance.close();
     } 
+    
+    if (toastTxt != "") 
+    {
+      M.toast({html: toastTxt}, 5000); //TODO Ei vaikuta tässä tuo viive, kun tulee page reload...
+    }
     window.location.href=page;
   }
   
@@ -155,14 +160,15 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   const categoryForm = document.querySelector('#categoryForm');
   if (categoryForm != null) {
     categoryForm.addEventListener('submit', evt => {
-      //evt.preventDefault();
+      //evt.preventDefault(); //Ei suljeta submitilla
       console.log(evt.submitter.id);
       console.log.evt;
   
       const categoryId = parseInt(categoryForm.categoryId.value);
       const categoryName = categoryForm.input1.value;
       if (evt.submitter.id == "delCategory") {
-        dbDelCategory(categoryId);
+        //dbDelCategory(categoryId);
+        dbDelCategory(categoryId,"index.html", closeFormReturnToPage);
         /*
         dbDelCategory(categoryId).then(x=> {
           uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
@@ -223,7 +229,10 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
       let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
       let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
       let catObj = categoryArray.find(record => record.id == product.cId);
-      let catname = catObj.cname;
+      let catname = "";
+      if (catObj != null) { //jos tuotteelle merkitty kategoria onkin poistettu
+        catname=catObj.cname;
+      }
       let checkedText = "";
       if (product.toList == true) {
         checkedText = "checked=true";
@@ -338,7 +347,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   const productForm = document.querySelector('#productForm');
   if (productForm != null) {
     productForm.addEventListener('submit', evt => {
-      evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu
+      //evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu
       //console.log(evt.submitter.id);
       //console.log(evt);
       const productId = parseInt(productForm.productId.value);
