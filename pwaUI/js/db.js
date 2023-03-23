@@ -93,6 +93,7 @@ function listCategories(){
         })
 }
 
+//TODO älä anna poistaa kategoriaa, jos siinä on vielä tuotteita, tulee virhe tuotteiden listaamisessa
 function dbDelCategory(categoryId) {
     db.collection('category')
     .doc({ id: categoryId })
@@ -163,51 +164,10 @@ function dbAddCategory(cname){
 
 }
 
-/********************** product ***********************/
-
-function dbUpdateProduct(product, page, callback) {
-    db.collection('product').doc({id : product.id}).set(
-        product
-    ).then(x => {
-        callback(page);
-    })
-    .catch(error => {
-        console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu tuotteet muuttaminen ");
-        throw(error); // onnistuisko näin
-    })
-}
-
-function dbUpdateProductToList(pid, checked) {
-    db.collection('product').doc({id : pid}).update({
-            toList:checked
-    }
-    )
-    .catch(error => {
-        console.log('There was an error updating product to list, do something else.', error);
-        alert ("Ei onnistu tuotteen listalle muuttaminen ");
-        throw(error); // onnistuisko näin
-    })
-}
-
-
-function dbDelProduct(productId) {
-    db.collection('product')
-    .doc({ id: productId })
-    .delete()
-    .then(response => {
-        console.log(response);
-        console.log('Deleting product successful, now do something.');
-    })
-    .catch(error => {
-        console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu delete prod sumbitterillä", error);
-        throw(error); // onnistuisko näin
-    })
-}
-
-
-/************************************************ Products ****/
+/*************************************** product **********************************/
+/**************************** events from product list **********************************/
+/* when page loaded */
+// TODO tämä voisi lähettää taulukon/objektit ja kutsutaan callbackilla tulostusta
 function listProducts(){
     //alert("listaan");
     //db.collection('category').get().then(category => {
@@ -218,10 +178,9 @@ function listProducts(){
             renderProductList(product, product.id);
         });
     })
-
 }
 
-
+/* add product using button on page footer */
 function dbAddProduct(pname, pCid){
     // First get new categoryId
     db.collection('dbsettings').doc({ skey: 'productId' }).get().then(setting => {
@@ -229,7 +188,6 @@ function dbAddProduct(pname, pCid){
         
         if(setting != null) {
             pid = setting.value + 1;
-  
         }
 
         if (pname == "") {
@@ -266,7 +224,48 @@ function dbAddProduct(pname, pCid){
 
 }
 
+/* click checked on productlista */
+function dbUpdateProductToList(pid, checked) {
+    db.collection('product').doc({id : pid}).update({
+            toList:checked
+    })
+    .catch(error => {
+        console.log('There was an error updating product to list, do something else.', error);
+        alert ("Ei onnistu tuotteen listalle muuttaminen ");
+        throw(error); // onnistuisko näin
+    })
+}
 
+/**************************** events from productform  **********************************/
+function dbUpdateProduct(product, page, callback) {
+    db.collection('product').doc({id : product.id}).set(
+        product
+    ).then(x => {
+        callback(page);
+    })
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu tuotteet muuttaminen ");
+        throw(error); // onnistuisko näin
+    })
+}
+
+
+function dbDelProduct(productId, page, callback) {
+    db.collection('product')
+    .doc({ id: productId })
+    .delete()
+    .then(response => {
+        console.log(response);
+        console.log('Deleting product successful, now do something.');
+        callback(page);
+    })
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        alert ("Ei onnistu delete prod sumbitterillä", error);
+        throw(error); // onnistuisko näin
+    })
+}
 
 /******************* Ylläpitoa kehitysvaiheessa **********************/
 
