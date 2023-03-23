@@ -165,10 +165,12 @@ function dbAddCategory(cname){
 
 /********************** product ***********************/
 
-function dbUpdateProduct(product) {
+function dbUpdateProduct(product, page, callback) {
     db.collection('product').doc({id : product.id}).set(
         product
-    )
+    ).then(x => {
+        callback(page);
+    })
     .catch(error => {
         console.log('There was an error, do something else.', error);
         alert ("Ei onnistu tuotteet muuttaminen ");

@@ -307,8 +307,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (evt.submitter.id == "delProduct") {
         dbDelProduct(productId);
+        /*
+        .then(x => {
+          closeForm(); //TODO reload page?
+          window.location.href = "product.html"; // to reload page
+        }) 
+        */
+       /*
         closeForm(); //TODO reload page?
         window.location.href = "product.html"; // to reload page
+        */
+        closeFormReturnToPage("product.html");
+        //TODO oikea  callback
       }
 
       if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
@@ -325,15 +335,24 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("upd productcategoryIdSelected:", product.cId);
         
 
-        dbUpdateProduct(product);
-        closeForm(); //TODO reload page?
-        window.location.href = "product.html"; // to reload page
+        dbUpdateProduct(product, "product.html", closeFormReturnToPage );
+        /*
+        .then(x => {
+          closeForm(); //TODO reload page?
+          window.location.href = "product.html"; // to reload page
+        })      
+        */
+        
+        //closeFormReturnToPage("product.html"); //TODO reload page?
+        //window.location.href = "product.html"; // to reload page
+
+         //TODO oikea  callback   https://www.w3schools.com/js/js_callback.asp
       }
 
     });
 }
 
-function closeForm() {
+function closeFormReturnToPage(page) {
   var elem = document.querySelector(".side-form");
   var instance = M.Sidenav.getInstance(elem);
 
@@ -341,7 +360,9 @@ function closeForm() {
     console.log("Is open: I need to close it");
     instance.close();
   } 
+  window.location.href=page;
 }
+
   const productContainer = document.querySelector('.products');
   if (productContainer != null) {
     productContainer.addEventListener('click', evt => {
