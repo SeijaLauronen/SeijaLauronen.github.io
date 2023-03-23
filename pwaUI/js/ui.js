@@ -175,7 +175,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
       }
 
       if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
-        dbUpdateCategory(categoryId,categoryName);
+        dbUpdateCategory(categoryId,categoryName,"index.html", closeFormReturnToPage);
       }
 
     });

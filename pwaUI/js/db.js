@@ -132,7 +132,8 @@ function listCategories(){
         }) //TODO vaikka callback info, että kategoriassa on tuotteita, ei poisteta
 }
 
-function dbUpdateCategory(categoryId,categoryName) {
+function dbUpdateCategory(categoryId,categoryName,page,callback) {
+    let toastTxt ="";
     db.collection('category').doc({id : categoryId}).set(
         {
             id: categoryId,
@@ -141,9 +142,11 @@ function dbUpdateCategory(categoryId,categoryName) {
     )
     .catch(error => {
         console.log('There was an error, do something else.', error);
-        alert ("Ei onnistu kategorian muuttaminen laitto");
-        throw(error); // onnistuisko näin
+        //alert ("Ei onnistu kategorian muuttaminen laitto");
+        //throw(error); // onnistuisko näin
+        toastTxt = "Ei onnistu kategorian muuttaminen laitto";
     })
+    callback(page, toastTxt);
 }
 
 function dbAddCategory(cname){
