@@ -283,12 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
       evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu
       //console.log(evt.submitter.id);
       //console.log(evt);
-
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
-      //const productCategoryId = productForm.prodInput2.value; //TODO tämä valintalistalta, ja tarkistuksia...
-      
-      //var comboinstance = M.FormSelect.getInstance(combos);
       const comboinstance = document.querySelector('.categorySelect');
       var productToList = false;
       if (productForm.productInputToList.checked) {
@@ -303,50 +299,17 @@ document.addEventListener('DOMContentLoaded', function() {
       var selectedProductCategoryId = comboinstance.value;
       product.cId=parseInt(selectedProductCategoryId);
 
-       
-
       if (evt.submitter.id == "delProduct") {
         dbDelProduct(productId);
-        /*
-        .then(x => {
-          closeForm(); //TODO reload page?
-          window.location.href = "product.html"; // to reload page
-        }) 
-        */
-       /*
-        closeForm(); //TODO reload page?
-        window.location.href = "product.html"; // to reload page
-        */
-        closeFormReturnToPage("product.html");
-        //TODO oikea  callback
+        closeFormReturnToPage("product.html"); //TODO callback
       }
 
       if (evt.submitter.id == "updateProduct" || evt.submitter.id == "defaultActionProduct") {
         console.log("upd productId:",product.id);
         console.log("upd productName:", product.name);
         console.log("upd productcategoryId1:", product.cId);
-
-        /*
-        var selectedProductCategoryIds = comboinstance.getSelectedValues();
-        var selectedProductCategoryId = comboinstance.getSelectedValues()[0];
-*/
-        
-
         console.log("upd productcategoryIdSelected:", product.cId);
-        
-
-        dbUpdateProduct(product, "product.html", closeFormReturnToPage );
-        /*
-        .then(x => {
-          closeForm(); //TODO reload page?
-          window.location.href = "product.html"; // to reload page
-        })      
-        */
-        
-        //closeFormReturnToPage("product.html"); //TODO reload page?
-        //window.location.href = "product.html"; // to reload page
-
-         //TODO oikea  callback   https://www.w3schools.com/js/js_callback.asp
+        dbUpdateProduct(product, "product.html", closeFormReturnToPage);
       }
 
     });
