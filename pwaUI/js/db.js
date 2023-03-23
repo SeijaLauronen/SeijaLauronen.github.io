@@ -91,6 +91,11 @@ function listCategories(){
          });
          sessionStorage.setItem("sessionCategories", '[' + categoryArray +']');
         })
+        .then(x=>{
+            if (localStorage.getItem("helper-index-quote-scroll") != null) {
+                  $(window).scrollTop(localStorage.getItem("helper-index-quote-scroll")); //TODO toimii, mutta muuta callbac:ksi
+            }
+        })
 }
 
 //TODO älä anna poistaa kategoriaa, jos siinä on vielä tuotteita, tulee virhe tuotteiden listaamisessa
