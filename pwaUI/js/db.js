@@ -121,9 +121,11 @@ function listCategories(){
                     alert ("Ei onnistu delete sumbitterillä", error);
                     throw(error); // onnistuisko näin
                 })
+                //callback(page, toastTxt);
             }   
             else {
                 toastTxt ='Kategoriassa on tuotteita, siirrä/poista ensin kategorian tuotteet';
+                //M.toast({html: toastTxt}, 5000);
             } 
             callback(page, toastTxt);       
                 
@@ -198,6 +200,11 @@ function listProducts(){
         products.forEach(product => {
             renderProductList(product, product.id);
         });
+    })
+    .then(x=>{
+        if (sessionStorage.getItem("selectedCategoryId") == null && localStorage.getItem("helper-product-quote-scroll") != null) {
+              $(window).scrollTop(localStorage.getItem("helper-product-quote-scroll")); //TODO toimii, mutta muuta callbac:ksi
+        }
     })
 }
 
@@ -283,7 +290,7 @@ function dbDelProduct(productId, page, callback) {
     .then(response => {
         console.log(response);
         console.log('Deleting product successful, now do something.');
-        callback(page);
+        callback(page, toastTxt);
     })
     .catch(error => {
         console.log('There was an error, do something else.', error);
@@ -319,6 +326,16 @@ function deleteCategory() {
         .then( x=>
            { 
             console.log("category deleted");
+            emptyCategories();
+           }
+    );
+}
+
+function deleteProduct() {
+    db.collection('product').delete()
+        .then( x=>
+           { 
+            console.log("product deleted");
             emptyCategories();
            }
     );

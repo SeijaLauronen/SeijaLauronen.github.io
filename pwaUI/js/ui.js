@@ -82,26 +82,24 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
 });
 
 
-// toistaiseksi vain tuotesivun formi käyttää tätä
+// Formit kategoria ja tuote -sivuilla
   function closeFormReturnToPage(page, toastTxt) {
     var elem = document.querySelector(".side-form");
     var instance = M.Sidenav.getInstance(elem);
   
-    if (instance.isOpen) {
-      console.log("Is open: I need to close it");
-      instance.close();
-    } 
-    
+    /* If something in toast text, show it and do not close the form and not go to page */
     if (toastTxt != "") 
     {
-      M.toast({html: toastTxt}, 5000); //TODO Ei vaikuta tässä tuo viive, kun tulee page reload...
+      M.toast({html: toastTxt}, 9000000); 
+    } else {
+      if (instance.isOpen) {
+        console.log("Is open: I need to close it");
+        instance.close();
+      } 
+      window.location.href=page;
     }
-    window.location.href=page;
   }
   
-
-
-
 
  /************************************  Kategoriasivu  **************************/ 
   /* 
@@ -156,11 +154,11 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
     categoryList.innerHTML ="";
   }
 
-  // 11.3.2023 vaihdetaan eventit UI:lle
+/*********************************** Kategoria formin eventit ********************/ 
   const categoryForm = document.querySelector('#categoryForm');
   if (categoryForm != null) {
     categoryForm.addEventListener('submit', evt => {
-      //evt.preventDefault(); //Ei suljeta submitilla
+      evt.preventDefault(); //Ei suljeta submitilla
       console.log(evt.submitter.id);
       console.log.evt;
   
@@ -183,6 +181,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
     });
 }
 
+/******************************  Kategoria listan eventit  *************/
   const categoryContainer = document.querySelector('.categories');
   if (categoryContainer != null) {
         categoryContainer.addEventListener('click', evt => {
@@ -200,13 +199,14 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
               const categoryName = evt.target.getAttribute('categoryname');
               sessionStorage.setItem("selectedCategoryId",categoryId);
               sessionStorage.setItem("selectedCategoryName",categoryName);
+              localStorage.setItem("helper-product-quote-scroll", 0); //Nollataa tuotesivun skrollauskohta
               // window.location.replace("http://www.w3schools.com");
               //window.location.href = "http://www.w3schools.com"
               window.location.href = "product.html"; //http://127.0.0.1:5500/product.html?categoryId=2&categoryName=Rasvat
           }
         });
 
-        /* Kategorain lisäys footerissa */
+ /****************** Kategorain lisäys footerissa ********/
         const addCategoryButton = document.querySelector('#addCategoryBtn');
         const inputCategory = document.querySelector('#categoryinput');
         addCategoryButton.addEventListener('click',evt => {

@@ -28,6 +28,18 @@
         $("#footernav").load("footernav.html")
     });
   </script>
+  <!-- TODO tämä olisi uudempi kuin ylhäällä -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+  // scrollTop after rendering list, not here
+      if (sessionStorage.getItem("selectedCategoryId") == null) {
+          $(window).on("scroll", function() {
+              localStorage.setItem("helper-product-quote-scroll", $(window).scrollTop());
+          });
+      }
+    });
+  </script>
 
 </head>
 

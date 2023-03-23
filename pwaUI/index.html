@@ -37,7 +37,16 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         $("#footernav").load("footernav.html")
     });
   </script>
-
+  <!-- TODO tämä olisi uudempi kuin ylhäällä -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+  // scrollTop after rendering list
+      $(window).on("scroll", function() {
+          localStorage.setItem("helper-index-quote-scroll", $(window).scrollTop());
+      });
+    });
+  </script>
 
 </head>
 
@@ -144,24 +153,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       uiLoadCategories();
       
     </script>
-
-
-<!-- TODO tämä olisi uudempi kuin ylhäällä -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-/*
-    if (localStorage.getItem("helper-index-quote-scroll") != null) {
-      
-        $(window).scrollTop(localStorage.getItem("helper-index-quote-scroll"));
-    }
-    */
-    $(window).on("scroll", function() {
-        localStorage.setItem("helper-index-quote-scroll", $(window).scrollTop());
-    });
-
-  });
-</script>
 
 </body>
 

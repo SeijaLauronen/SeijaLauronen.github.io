@@ -17,6 +17,7 @@
   <li><a>EI KYSYTÄ VARMISTUSTA.</a></li>
 
   <li><a> <button class="btn-small red" id="deletecategory">Poista kategoriat</button> </a></li>
+  <li><a> <button class="btn-small red" id="deletecproduct">Poista tuotteet</button> </a></li>
   <li><a> <button class="btn-small red" id="deletedb">Poista kaikki tiedot</button> </a></li>
 
   <li><div class="divider"></div></li>
@@ -43,6 +44,12 @@
     deletecategoryButton.addEventListener('click', evt => {
         evt.preventDefault();
         deleteCategory();
+    });
+
+    const deleteproductButton = document.querySelector('#deleteproduct');
+    deleteproductButton.addEventListener('click', evt => {
+        evt.preventDefault();
+        deleteProduct();
     });
 
 
