@@ -1,7 +1,7 @@
 // https://github.com/dannyconnell/localbase
 
-
-/********************** dbsettings ***********************/
+/*********************************************** dbsettings ***********************************/
+/**********************************************************************************************/
 function getCategoryId() {
     db.collection('dbsettings').doc({skey : 'categoryId'}).get()
     .then(document=>{
@@ -65,7 +65,9 @@ function dbSetProductId(pid) {
     })
 } 
 
-/********************** category ***********************/
+/**********************************************************************************************/
+/************************************ category ************************************************/
+/**********************************************************************************************/
 function dbGetCategories(callback){
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
         sessionStorage.setItem("sessionCategories",JSON.stringify(categories));
@@ -75,15 +77,14 @@ function dbGetCategories(callback){
         })
 }
 
-//TODO älä anna poistaa kategoriaa, jos siinä on vielä tuotteita, tulee virhe tuotteiden listaamisessa
-//function dbDelCategory(categoryId) {
-    function dbDelCategory(categoryId, page, callback) {
+function dbDelCategory(categoryId, page, callback) {
     var toastTxt ="";
     // Hakua ei voi rajoittaa kuin kentällä, joka rajaa tuloksen yhteen :(
     db.collection('product')
         .get()
         .then(products => {
             //console.log(products);
+            //Ei anneta poistaa kategoriaa, jos siinä on vielä tuotteita
             var productsInCategory = products.find(prod => prod.cId == categoryId);  
             if (productsInCategory == null) {
                 db.collection('category')
@@ -102,11 +103,9 @@ function dbGetCategories(callback){
             }   
             else {
                 toastTxt ='Kategoriassa on tuotteita, siirrä/poista ensin kategorian tuotteet';
-                //M.toast({html: toastTxt}, 5000);
             } 
-            callback(page, toastTxt);       
-                
-        }) //TODO vaikka callback info, että kategoriassa on tuotteita, ei poisteta
+            callback(page, toastTxt);         
+        }) 
 }
 
 function dbUpdateCategory(categoryId,categoryName,page,callback) {
@@ -119,8 +118,6 @@ function dbUpdateCategory(categoryId,categoryName,page,callback) {
     )
     .catch(error => {
         console.log('There was an error, do something else.', error);
-        //alert ("Ei onnistu kategorian muuttaminen laitto");
-        //throw(error); // onnistuisko näin
         toastTxt = "Ei onnistu kategorian muuttaminen laitto";
     })
     callback(page, toastTxt);
@@ -167,29 +164,20 @@ function dbAddCategory(cname){
 
 }
 
-/*************************************** product **********************************/
-/**************************** events from product list **********************************/
-/* when page loaded */
-// TODO tämä voisi lähettää taulukon/objektit ja kutsutaan callbackilla tulostusta
-function listProducts(){
-    //alert("listaan");
-    //db.collection('category').get().then(category => {
-        // voidaan järjestää data, voidaan tuoda myös avaimet(ei onnistunut avainten tuonti näin)
-    //db.collection('category').orderBy('name', 'desc').get({keys: true}).then(category => {
+/**********************************************************************************************/
+/*********************************************** product **************************************/
+/**********************************************************************************************/
+
+/********************************** events from product list **********************************/
+
+function dbGetProducts(callback){
     db.collection('product').orderBy('name', 'asc').get().then(products => {
-        products.forEach(product => {
-            renderProductList(product, product.id);
-        });
-    })
-    .then(x=>{
-        if (sessionStorage.getItem("selectedCategoryId") == null && localStorage.getItem("helper-product-quote-scroll") != null) {
-              $(window).scrollTop(localStorage.getItem("helper-product-quote-scroll")); //TODO toimii, mutta muuta callbac:ksi
-        }
+        callback(JSON.stringify(products));    
     })
 }
 
 /* add product using button on page footer */
-function dbAddProduct(pname, pCid){
+function dbAddProduct(pname, pCid, callback){
     // First get new categoryId
     db.collection('dbsettings').doc({ skey: 'productId' }).get().then(setting => {
         let pid = 1;
@@ -211,8 +199,7 @@ function dbAddProduct(pname, pCid){
         db.collection('product')
             .add(product)
             .then( reload => {
-                // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
-                uiReloadProducts();
+                callback();
             })
             .then( updnextProdId =>
                 {  
@@ -240,11 +227,11 @@ function dbUpdateProductToList(pid, checked) {
     .catch(error => {
         console.log('There was an error updating product to list, do something else.', error);
         alert ("Ei onnistu tuotteen listalle muuttaminen ");
-        throw(error); // onnistuisko näin
+        throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
     })
 }
 
-/**************************** events from productform  **********************************/
+/******************************* events from productform  *************************************/
 function dbUpdateProduct(product, page, callback) {
     var toastTxt ="";
     db.collection('product').doc({id : product.id}).set(
@@ -281,7 +268,9 @@ function dbDelProduct(productId, page, callback) {
     })
 }
 
-/******************* Ylläpitoa kehitysvaiheessa **********************/
+/**********************************************************************************************/
+/********************************** Ylläpitoa kehitysvaiheessa ********************************/
+/**********************************************************************************************/
 
 function deleteOldDB()
 {
@@ -321,3 +310,4 @@ function deleteProduct() {
     );
 }
   
+/**********************************************************************************************/

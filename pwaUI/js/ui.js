@@ -1,14 +1,14 @@
-
-/***************************************************** common for all pages *****************************/
+/**********************************************************************************************/
+/******************************************* common for all pages *****************************/
+/**********************************************************************************************/
 document.addEventListener('DOMContentLoaded', function() {
     // nav menu
     const menus = document.querySelectorAll('.side-menu');
     M.Sidenav.init(menus, {edge: 'left'});
 
-    // add category form
+    // forms
     const forms = document.querySelectorAll('.side-form');
-    var instances = M.Sidenav.init(forms, {edge: 'right'}); //tähän lisätty var instances eteen
-  
+    var instances = M.Sidenav.init(forms, {edge: 'right'});
   
     const formclose = document.querySelector(".formclose");
     if (formclose != null) { //not evry page has form
@@ -17,9 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
       .addEventListener("click", function() {
         var elem = document.querySelector(".side-form");
         var instance = M.Sidenav.getInstance(elem);
-  
         if (instance.isOpen) {
-          console.log("Is open: I need to close it");
+          //console.log("Is open: I need to close it");
           instance.close();
         } 
       });
@@ -27,9 +26,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // for categorySelection in product form
     var combos = document.querySelectorAll('select'); //TODO onko tämä oikeassa paikassa...
-  });
+});
 
-/************************************  Menu vasemmalla  **************************/ 
+// Formit kategoria ja tuote -sivuilla
+function closeFormReturnToPage(page, toastTxt) {
+    var elem = document.querySelector(".side-form");
+    var instance = M.Sidenav.getInstance(elem);
+
+    /* If something in toast text, show it and do not close the form and not go to page */
+    if (toastTxt != "") 
+    {
+      M.toast({html: toastTxt}, 9000000); 
+    } else {
+      if (instance.isOpen) {
+        console.log("Is open: I need to close it");
+        instance.close();
+      } 
+      window.location.href=page;
+    }
+}
+
+/**********************************************************************************************/
+/************************************  Menu vasemmalla  ***************************************/ 
+/**********************************************************************************************/
 //https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator
 function getBrowserName(userAgent) {
   // The order matters here, and this may report false positives for unlisted browsers.
@@ -59,21 +78,10 @@ function getBrowserName(userAgent) {
     return "Selainta ei tunnistettu";
   }
 }
-//const browserName = getBrowserName(navigator.userAgent);
-//console.log(`You are using: ${browserName}`);
 
-/*
-//Ei tarvita kun käytetään submittia
-const uiRemoveCategory = (categoryId) => {
-  const categoryIdStr = "'" + categoryId.toString() + "'"; // Vaati hipsut toimiakseen, kun on on id stringinä
-  const category = document.querySelector(`.category[data-id=${categoryIdStr}]`);
-  category.remove();
-};
-*/
-
-// TODO sivukohtaiset erikseen
-
-/*****************************  Footer ******/ 
+/**********************************************************************************************/
+/****************************************  Footer *********************************************/ 
+/**********************************************************************************************/
 
 const footerNavigation = document.querySelector('.footernavigation');
 footerNavigation.addEventListener('click', evt =>{
@@ -81,27 +89,10 @@ sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalint
 sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
 });
 
-
-// Formit kategoria ja tuote -sivuilla
-  function closeFormReturnToPage(page, toastTxt) {
-    var elem = document.querySelector(".side-form");
-    var instance = M.Sidenav.getInstance(elem);
   
-    /* If something in toast text, show it and do not close the form and not go to page */
-    if (toastTxt != "") 
-    {
-      M.toast({html: toastTxt}, 9000000); 
-    } else {
-      if (instance.isOpen) {
-        console.log("Is open: I need to close it");
-        instance.close();
-      } 
-      window.location.href=page;
-    }
-  }
-  
-
- /************************************  Kategoriasivu  **************************/ 
+/**********************************************************************************************/
+/************************************  Kategoriasivu  *****************************************/ 
+/**********************************************************************************************/
 
   const categoryList = document.querySelector('.categories');
   function uiRenderCategoryList(categories){
@@ -152,7 +143,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   }
 
 /*********************************** Kategoria formin eventit ********************/ 
-  const categoryForm = document.querySelector('#categoryForm');
+const categoryForm = document.querySelector('#categoryForm');
   if (categoryForm != null) {
     categoryForm.addEventListener('submit', evt => {
       evt.preventDefault(); //Ei suljeta submitilla
@@ -162,13 +153,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
       const categoryId = parseInt(categoryForm.categoryId.value);
       const categoryName = categoryForm.input1.value;
       if (evt.submitter.id == "delCategory") {
-        //dbDelCategory(categoryId);
         dbDelCategory(categoryId,"index.html", closeFormReturnToPage);
-        /*
-        dbDelCategory(categoryId).then(x=> {
-          uiRemoveCategory(categoryId); // Poistaa ui:sta, tarvitaankohan.... Ei tarvita
-        })
-        */
       }
 
       if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
@@ -179,8 +164,8 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
 }
 
 /******************************  Kategoria listan eventit  *************/
-  const categoryContainer = document.querySelector('.categories');
-  if (categoryContainer != null) {
+const categoryContainer = document.querySelector('.categories');
+if (categoryContainer != null) {
         categoryContainer.addEventListener('click', evt => {
           /* Klikkaus katergorialistalla */
           //console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
@@ -203,7 +188,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
           }
         });
 
- /****************** Kategorain lisäys footerissa ********/
+        /****************** Kategorian lisäys footerissa ********/
         const addCategoryButton = document.querySelector('#addCategoryBtn');
         const inputCategory = document.querySelector('#categoryinput');
         addCategoryButton.addEventListener('click',evt => {
@@ -212,64 +197,81 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
             dbAddCategory(cname);
             inputCategory.value=""; //TODO vasta jos meni ok?
         })
-  }
+}
 
- /****************************************  Tuotesivu  *********************************/ 
+/**********************************************************************************************/
+/****************************************  Tuotesivu  *****************************************/ 
+/**********************************************************************************************/
 
-  function uiReloadProducts(){
+function uiLoadProducts(){
     productList.innerHTML ="";
-    listProducts();
-  }
+    dbGetProducts(uiRenderProductList);
+    //listProducts();
+}
   
-  const productList = document.querySelector('.products');
-  const renderProductList = (product, id) => {
+const productList = document.querySelector('.products');
+
+function uiRenderProductList(products){
       let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
       let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
-      let catObj = categoryArray.find(record => record.id == product.cId);
+      let productsParsed= JSON.parse(products);
+      let catObj = null;
       let catname = "";
-      if (catObj != null) { //jos tuotteelle merkitty kategoria onkin poistettu
-        catname=catObj.name;
-      }
+      let product = null;
       let checkedText = "";
-      if (product.toList == true) {
-        checkedText = "checked=true";
-      }
- 
-      var html =``;
-      if (selectedCategoryId == null || product.cId == selectedCategoryId )
-      
-          html =`
-          <div class="card-panel product white row" product-id="${id}">
+      let html =``;
+      for (let i=0; i< productsParsed.length; i++){
+          product=productsParsed[i];
+          catObj = categoryArray.find(record => record.id == product.cId);
+          catname = "";
+          if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
+            catname=catObj.name;
+          }
+          checkedText = "";
+          if (product.toList == true) {
+            checkedText = "checked=true";
+          }
+          html =``;
+          if (selectedCategoryId == null || product.cId == selectedCategoryId )
+            html =`
+            <div class="card-panel product white row" product-id="${product.id}">
 
-            <div class="product category-info">
-              <span class="product-category" productcategory-id="${id}" hidden>${product.cId}</span>
-              <span class="product-category" productcategoryname-id="${id}">${catname}</span>
-            </div>
-            
-            <div class="product-edit sidenav-trigger" data-target="side-form-product">
-              <i class="material-icons" product-id="${id}">edit</i>
-            </div>
-            
-            <div class="product-details">
-              <div class="product-name flow-text" productname-id="${id}">${product.name}
+              <div class="product category-info">
+                <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
+                <span class="product-category" productcategoryname-id="${product.id}">${catname}</span>
               </div>
-            </div>
+              
+              <div class="product-edit sidenav-trigger" data-target="side-form-product">
+                <i class="material-icons" product-id="${product.id}">edit</i>
+              </div>
+              
+              <div class="product-details">
+                <div class="product-name flow-text" productname-id="${product.id}">${product.name}
+                </div>
+              </div>
 
-            <div class="product checkbox">
-              <label>
-                <input type="checkbox" class="filled-in" productchecked-id="${id}" ${checkedText} />
-              </label>
-            </div>
-        </div>
-          `;
-      productList.innerHTML += html;
-  }
+              <div class="product checkbox">
+                <label>
+                  <input type="checkbox" class="filled-in" productchecked-id="${product.id}" ${checkedText} />
+                </label>
+              </div>
+          </div>
+            `;
+          productList.innerHTML += html;
+      }
 
-  /******************** Tuotelistasivun eventit  */
-  const productContainer = document.querySelector('.products');
-  if (productContainer != null) {
+      // Skrollataan samaan kohtaan vain ei olla valitussa kategoriassa.. Voi olla tarpeellista muuttaa
+      if (sessionStorage.getItem("selectedCategoryId") == null && localStorage.getItem("helper-product-quote-scroll") != null) {
+        $(window).scrollTop(localStorage.getItem("helper-product-quote-scroll")); 
+      }
 
-    /* Klikkaus tuotelistalla*/
+}
+
+/**********************************************************************************************/
+/*********************************** Tuotelistasivun eventit  *********************************/
+const productContainer = document.querySelector('.products');
+if (productContainer != null) {
+    /******************** Klikkaus tuotelistalla ********************************/
       productContainer.addEventListener('click', evt => {
             console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
@@ -293,7 +295,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
             }
       });
 
-      /* Tuotteen lisäys footerissa */  
+    /************************** Tuotteen lisäys footerissa **************************/  
       const addProductButton = document.querySelector('#addProductBtn');
       const inputProduct = document.querySelector('#productinput');
       const selectedCategoryID = document.querySelector('.pageheader-categoryID');      
@@ -306,20 +308,17 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
         }
 
         evt.preventDefault();
-        dbAddProduct(pname, pCid);
+        dbAddProduct(pname, pCid, uiLoadProducts);
         inputProduct.value=""; //TODO vasta jos meni ok?
       })
-  }
+}
 
-  /******************************** Tuote Form ******************************/
-  /********** dropdown lista kategorioista formille */
-  const categorySelection = document.querySelector('.categorySelect');
-  const renderCategoryDropDown = (productCategory) => {
-
+/**********************************************************************************************/
+/********************************************* Tuote Form *************************************/
+/********** dropdown lista kategorioista formille */
+const categorySelection = document.querySelector('.categorySelect');
+const renderCategoryDropDown = (productCategory) => {
       let categories = sessionStorage.getItem("sessionCategories");
-      //console.log("KATEGORIAT");
-      //console.log(categories);
-
       let objCat= JSON.parse(categories);
       let catId ="";
       let html =``;
@@ -337,15 +336,13 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
           }
         categorySelection.innerHTML += html;
       }      
-  }
+}
 
-  /************************** Tuoteformin eventit *************************/
-  const productForm = document.querySelector('#productForm');
-  if (productForm != null) {
+/*********************************** Tuoteformin eventit **************************************/
+const productForm = document.querySelector('#productForm');
+if (productForm != null) {
     productForm.addEventListener('submit', evt => {
-      //evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu
-      //console.log(evt.submitter.id);
-      //console.log(evt);
+      evt.preventDefault(); //että formi ei sulkeudu ennekuin sen kentätä on luettu. ?
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
       const comboinstance = document.querySelector('.categorySelect');
@@ -376,7 +373,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
 
     });
 }
-
+/**********************************************************************************************/
 
  
  
