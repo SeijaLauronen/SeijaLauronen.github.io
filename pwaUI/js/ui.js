@@ -102,50 +102,47 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   
 
  /************************************  Kategoriasivu  **************************/ 
-  /* 
-  
-      <div class="category-go">
-    <a href="product.html?categoryId=${id}&categoryName=${data.name}">
-    <i class="material-icons" data-id="${id}">arrow_forward</i>
-    </a> 
-  */
+
   const categoryList = document.querySelector('.categories');
-  const renderCategoryList = (data, id) => {
-    const html =`
-    <div class="card-panel category category white row" data-id="${id}">
-    
-      <div class="category-details">
-        <div class="category-name flow-text" name-id="${id}">${data.name}
-        </div>
-      </div>
+  function uiRenderCategoryList(categories){
+    var html =``;
+    let category = null;
+    //categories.forEach(category => {
+    let categoriesParsed= JSON.parse(categories);
+    for (let i=0; i< categoriesParsed.length; i++){
+          category=categoriesParsed[i];
+          html =`
+          <div class="card-panel category white row" data-id="${category.id}">
+          
+            <div class="category-details">
+              <div class="category-name flow-text" name-id="${category.id}">${category.name}
+              </div>
+            </div>
 
-      <div class="category-edit sidenav-trigger" data-target="side-form">
-        <i class="material-icons" data-id="${id}">edit</i>
-      </div>
+            <div class="category-edit sidenav-trigger" data-target="side-form">
+              <i class="material-icons" data-id="${category.id}">edit</i>
+            </div>
 
-      <div class="category-go">
-        <i class="material-icons" data-id="${id}" categoryname="${data.name}">arrow_forward</i>
-      </div>
+            <div class="category-go">
+              <i class="material-icons" data-id="${category.id}" categoryname="${category.name}">arrow_forward</i>
+            </div>
 
-    </div>
-    `;
-    categoryList.innerHTML += html;
+          </div>
+          `;
+          categoryList.innerHTML += html;
+    }
+
+    if (localStorage.getItem("helper-index-quote-scroll") != null) {
+      $(window).scrollTop(localStorage.getItem("helper-index-quote-scroll")); 
+    }
+
   }
 
   function uiLoadCategories(){
     categoryList.innerHTML ="";
-    listCategories();
-
+    // listCategories();
+    dbGetCategories(uiRenderCategoryList);
     console.log("uiLoadCategories");
-    //TODO
-    let categories = sessionStorage.getItem("sessionCategories");
-    console.log(categories);
-
-    let objCat= JSON.parse(categories);
-    for (let i=0; i< objCat.length; i++){   
-      console.log(objCat[i].id); 
-      console.log(objCat[i].name); 
-    }
     sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
     sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
   }
@@ -231,7 +228,7 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
       let catObj = categoryArray.find(record => record.id == product.cId);
       let catname = "";
       if (catObj != null) { //jos tuotteelle merkitty kategoria onkin poistettu
-        catname=catObj.cname;
+        catname=catObj.name;
       }
       let checkedText = "";
       if (product.toList == true) {
@@ -320,16 +317,15 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   const renderCategoryDropDown = (productCategory) => {
 
       let categories = sessionStorage.getItem("sessionCategories");
-      console.log("KATEGORIAT");
-      console.log(categories);
+      //console.log("KATEGORIAT");
+      //console.log(categories);
 
       let objCat= JSON.parse(categories);
       let catId ="";
       let html =``;
       categorySelection.innerHTML = html;
       for (let i=0; i < objCat.length; i++){   
-        //cId=toString(objCat[i].id); //miksi tämä ei toimi
-          catId=objCat[i].cId;
+          catId=objCat[i].id;
           if (productCategory == catId) {
             html =`
             <option value="${catId}" selected>${objCat[i].name}</option>
