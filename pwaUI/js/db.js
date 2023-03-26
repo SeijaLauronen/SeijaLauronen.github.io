@@ -222,7 +222,8 @@ function dbAddProduct(pname, pCid, callback){
 /* click checked on productlista */
 function dbUpdateProductToList(pid, checked) {
     db.collection('product').doc({id : pid}).update({
-            toList:checked
+            toList:checked,
+            collected:false
     })
     .catch(error => {
         console.log('There was an error updating product to list, do something else.', error);
@@ -311,3 +312,17 @@ function deleteProduct() {
 }
   
 /**********************************************************************************************/
+/* click checked on productlista */
+function dbUpdateProductToCollected(pid, checked) {
+    db.collection('product').doc({id : pid}).update({
+            collected:checked
+    })
+    .catch(error => {
+        console.log('There was an error updating product to collected, do something else.', error);
+        //TODO callback toast
+        alert ("Ei onnistu tuotteen listalle kerätty muuttaminen ");
+        throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
+

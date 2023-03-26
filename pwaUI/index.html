@@ -143,15 +143,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     <script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
 
     <script>
-      //import Localbase from 'localbase'; // mihinkäs tätä tarvitaankaan?
-      //let db = new Localbase('db') //tämä oli esimerkissä
-      const dbold = new Localbase('db'); //laitoin näin
-      //db.config.debug = false; //logitus pois päältä
-
       const db = new Localbase('helperdb');
-      //listCategories(); //Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
-      uiLoadCategories();
-      
+      uiLoadCategories();//Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
     </script>
 
 </body>

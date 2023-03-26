@@ -1,10 +1,10 @@
-const programVersion = '2023-03-25: 563';
-const staticCacheName = 'pwaui-static-563'; 
-const dynamicCacheName = 'pwaui-dynamic-563'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const programVersion = '2023-03-25: 587';
+const staticCacheName = 'pwaui-static-587'; 
+const dynamicCacheName = 'pwaui-dynamic-587'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not found, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dynaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
-//TODO riittäisikö uudempi jquey?
+//TODO riittäisikö uudempi jquery?
 const assets = [
   '/',
   'index.html',

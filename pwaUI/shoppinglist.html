@@ -23,26 +23,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script >
     $(function(){
-        //$("#top-menu").load("topmenu.html")
         $("#side-menu").load("sidemenu.html")
         $("#footernav").load("footernav.html")
     });
   </script>
-  <!-- TODO tämä olisi uudempi kuin ylhäällä -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function () {
-  // scrollTop after rendering list, not here
-      if (sessionStorage.getItem("selectedCategoryId") == null) {
-          $(window).on("scroll", function() {
-              localStorage.setItem("helper-product-quote-scroll", $(window).scrollTop());
-          });
-      }
-    });
-  </script>
-
+   <!-- TODO tämä olisi uudempi kuin ylhäällä -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function () {
+   // scrollTop after rendering list, not here       
+      $(window).on("scroll", function() {
+          localStorage.setItem("helper-shoppinglist-quote-scroll", $(window).scrollTop());
+      });
+     });
+   </script>
 </head>
-
 
 
 <body class="grey-lighten-4">
@@ -51,7 +46,7 @@
     <!-- <div id="top-menu"></div>-->
     <nav class="z-depth-0 stay-top">
       <div class="nav-wrapper container">     
-        <a> <span class="pageheader">TUOTTEET</span> </a>
+        <a> <span class="pageheader">OSTOSLISTA</span> </a>
         <a class="pageheader-categoryID" hidden></a>
         <span class="grey-text text-darken-1">
           <i class="material-icons sidenav-trigger menuicon" data-target="side-menu">menu</i>
@@ -64,7 +59,7 @@
 
    <!-- --------------------------------------PRODUCTLIST--------------------------------------------------------------------- -->
     <!-- products -->
-  <div class="products container green lighten-5"></div>
+  <div class="productsToShop container green lighten-5"></div>
 
   <!-- -------------------------------------- PRODUCTFORM--------------------------------------------------------------------- -->
 
@@ -74,17 +69,14 @@
   <form id="productForm" method="get">
     <div class="row form-header">
       <div class="col s10">
-        <h6>Tuotteen tiedot</h6>
+        <h6>Ostoslista</h6>
       </div>
       <div class="col s2 formclose">
         <i class="material-icons">close</i>
       </div>
     </div>
 
-
-
-    <div class="edit-product container section">   
-      
+    <div class="edit-product container section">         
       
       <div>                  
         <input id="productId" type="text" hidden>  
@@ -131,19 +123,12 @@
 </div>
 
 
-
-
   <footer class="footer page-footer green lighten-5">
     <div class="container">
-
       <div class="row lowrow">
-                <div class="col s10 nospaceright">
-                    <input placeholder="Uusi tuote" id="productinput" type="text" class="validate low">
-                </div>
-
-                <div class="col s2 nospaceleft">
-                    <a class="btn-small add-btn" id="addProductBtn" data-target="side-form">
-                        <i class="material-icons">add</i>
+                <div class="col s12">
+                    <a class="btn-large remove-btn" id="removeFromList" data-target="side-form">
+                        Poista valitut tuotteet listalta
                     </a>
                 </div>
       </div>
@@ -159,13 +144,7 @@
 
 <script>
     const db = new Localbase('helperdb');
-    const categoryId = sessionStorage.getItem("selectedCategoryId");
-    const categoryName = sessionStorage.getItem("selectedCategoryName");
-    if (categoryName != null) {
-      document.querySelector(".pageheader").innerHTML=categoryName;
-      document.querySelector(".pageheader-categoryID").innerHTML=categoryId;
-    }
-    uiLoadProducts();
+    uiLoadProductsToShop();
 </script>
 
 </body>

@@ -206,7 +206,6 @@ if (categoryContainer != null) {
 function uiLoadProducts(){
     productList.innerHTML ="";
     dbGetProducts(uiRenderProductList);
-    //listProducts();
 }
   
 const productList = document.querySelector('.products');
@@ -374,8 +373,130 @@ if (productForm != null) {
     });
 }
 /**********************************************************************************************/
+/********************************** Ostoslista ************************************************/
+const productListToShop = document.querySelector('.productsToShop');
 
- 
+function uiLoadProductsToShop(){
+  productListToShop.innerHTML ="";
+  dbGetProducts(uiRenderProductListToShop);
+}
+
+function uiRenderProductListToShop(products){
+    
+    let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
+    let productsParsed= JSON.parse(products);
+    let catObj = null;
+    let catname = "";
+    let product = null;
+    let checkedText = "";
+    let html =``;
+    for (let i=0; i< productsParsed.length; i++){
+          product=productsParsed[i];
+          catObj = categoryArray.find(record => record.id == product.cId);
+          catname = "";
+          if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
+            catname=catObj.name;
+          }
+          checkedText = ""; 
+          if (product.collected == true) {
+            checkedText = "checked=true";
+          }
+          html =``;
+          if (product.toList == true) {
+                html =`
+                <div class="card-panel product white row" product-id="${product.id}">
+
+                  <div class="product category-info">
+                    <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
+                    <span class="product-category" productcategoryname-id="${product.id}">${catname}</span>
+                  </div>
+                  
+                  <div class="product-edit sidenav-trigger" data-target="side-form-product">
+                    <i class="material-icons" product-id="${product.id}">edit</i>
+                  </div>
+                  
+                  <div class="product-details">
+                    <div class="product-name flow-text" productname-id="${product.id}">${product.name}
+                    </div>
+                  </div>
+
+                  <div class="product checkbox">
+                    <label>
+                      <input type="checkbox" class="filled-in my-collected" productchecked-id="${product.id}" ${checkedText} />
+                    </label>
+                  </div>
+              </div>
+                `;
+              productListToShop.innerHTML += html;
+        }
+  }
+   // Skrollataan samaan kohtaan vain ei olla valitussa kategoriassa.. Voi olla tarpeellista muuttaa
+  if (localStorage.getItem("helper-shoppinglist-quote-scroll") != null) {
+    $(window).scrollTop(localStorage.getItem("helper-shoppinglist-quote-scroll")); 
+  }
+}
+
+
+
+productListToShop.addEventListener('click', evt => {
+  console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+
+  //TODO pitäisi välittää koko tuotteen tiedot
+  if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+    //TODO
+      const productId = parseInt(evt.target.getAttribute('product-id'));
+      const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
+      const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
+      console.log('productId:', productId);
+      console.log('productName:', productName);
+      productForm.prodInput1.value = productName;
+      productForm.productId.value = productId; //hidden value in form
+      productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
+      renderCategoryDropDown(productCategory);
+      
+  } else if (evt.target.type == "checkbox") {
+    //checked==true
+    const productId = parseInt(evt.target.getAttribute('productchecked-id'));
+    const checked = evt.target.checked;
+    dbUpdateProductToCollected(productId, checked);
+  }
+});
+
+
+/* Footerissa: Tuotteen poisto listalta*/
+const removeFromListButton = document.querySelector('#removeFromList');
+     
+removeFromListButton.addEventListener('click',evt => {
+  //const list = document.querySelectorAll('.productchecked-id');
+  /*
+  const list = document.querySelectorAll('.my-collected');
+  let pid =0;
+  list.forEach(prod => {
+    if (prod.checked == true) {
+      pid=parseInt(prod.getAttribute("productchecked-id"));
+      dbUpdateProductToList(pid, false);
+    }
+    
+  });
+  //TODO tämä pitäs taas tehäd fiksummin callbackeilla/asynkeillä tms
+  */
+  updateCollected()
+  .then( x => uiLoadProductsToShop());
+})
+
+async function updateCollected() {
+  const list = document.querySelectorAll('.my-collected');
+  let pid =0;
+  list.forEach(prod => {
+    if (prod.checked == true) {
+      pid=parseInt(prod.getAttribute("productchecked-id"));
+      dbUpdateProductToList(pid, false);
+    }
+    
+  });
+
+}
+
  
 
 
