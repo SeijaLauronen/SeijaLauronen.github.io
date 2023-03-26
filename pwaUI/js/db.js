@@ -171,9 +171,20 @@ function dbAddCategory(cname){
 /********************************** events from product list **********************************/
 
 function dbGetProducts(callback){
-    db.collection('product').orderBy('name', 'asc').get().then(products => {
-        callback(JSON.stringify(products));    
+    db.collection('product').orderBy('name', 'asc').get()
+    .then(products => {
+        prods =JSON.stringify(products); //miksi dbUpdateProductToCollected jälkeen tämä kutsu hakee vain yhden??
+        if (prods.charAt(0) =='[') {
+            callback(prods);    
+        } else {
+            //otetaanpa uusiksi. Jostain syystä ostoslista sivulta kun kutsuu dbUpdateProductToCollected, niin toisaan tuo ekalla kerralla vain viimeksi päivitetyn
+            db.collection('product').orderBy('name', 'asc').get()
+            .then(products => {
+                callback(JSON.stringify(products)); 
+            })
+        }
     })
+     
 }
 
 /* add product using button on page footer */
@@ -313,6 +324,7 @@ function deleteProduct() {
   
 /**********************************************************************************************/
 /* click checked on productlista */
+/* Jostain syystä sen jälkeen kun tätä on kutsuttu, ja kutsutaan getProducts, niin se h akee vain viimeisimmän päivitetyn! */
 function dbUpdateProductToCollected(pid, checked) {
     db.collection('product').doc({id : pid}).update({
             collected:checked
