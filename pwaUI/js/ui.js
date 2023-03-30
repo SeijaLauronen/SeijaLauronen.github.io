@@ -281,10 +281,15 @@ if (productContainer != null) {
                 const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
                 console.log('productId:', productId);
                 console.log('productName:', productName);
+                dbGetProduct(productId,fillProductForm)
+
+
+/*
                 productForm.prodInput1.value = productName;
                 productForm.productId.value = productId; //hidden value in form
                 productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
                 renderCategoryDropDown(productCategory);
+                */
                 
             } else if (evt.target.type == "checkbox") {
               //checked==true
@@ -337,6 +342,18 @@ const renderCategoryDropDown = (productCategory) => {
       }      
 }
 
+function fillProductForm(product){
+  productForm.prodInput1.value = product.name;
+      productForm.productId.value = product.id; //hidden value in form
+      //productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + product.id + '"]')[0].checked;
+      productForm.productInputToList.checked = product.toList;
+      productForm.productInputPh1.checked = product.phase1;
+      productForm.productInputPh2.checked = product.phase2;
+      productForm.productInputPh3.checked = product.phase3;
+      productForm.productInputForbidden.checked = product.forbidden;
+      renderCategoryDropDown(product.cId);
+}
+
 /*********************************** Tuoteformin eventit **************************************/
 const productForm = document.querySelector('#productForm');
 if (productForm != null) {
@@ -346,14 +363,35 @@ if (productForm != null) {
       const productName = productForm.prodInput1.value;
       const comboinstance = document.querySelector('.categorySelect');
       var productToList = false;
+      var ph1 = false;
+      var ph2 = false;
+      var ph3 = false;
+      var fb = false;
+
       if (productForm.productInputToList.checked) {
         productToList=true;
+      }
+      if (productForm.productInputPh1.checked) {
+        ph1=true;
+      }
+      if (productForm.productInputPh2.checked) {
+        ph2=true;
+      }
+      if (productForm.productInputPh3.checked) {
+        ph3=true;
+      }
+      if (productForm.productInputForbidden.checked) {
+        fb=true;
       }
 
       const product = {
         id:productId,
         name:productName,
-        toList:productToList
+        toList:productToList,
+        phase1:ph1,
+        phase2:ph2,
+        phase3:ph3,
+        forbidden:fb
       }
       var selectedProductCategoryId = comboinstance.value;
       product.cId=parseInt(selectedProductCategoryId);
@@ -449,10 +487,15 @@ productListToShop.addEventListener('click', evt => {
       const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
       console.log('productId:', productId);
       console.log('productName:', productName);
+
+      //dbGetProduct(productId,fillProductForm)
+
       productForm.prodInput1.value = productName;
       productForm.productId.value = productId; //hidden value in form
       productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
       renderCategoryDropDown(productCategory);
+
+
       
   } else if (evt.target.type == "checkbox") {
     //checked==true
@@ -461,6 +504,10 @@ productListToShop.addEventListener('click', evt => {
     dbUpdateProductToCollected(productId, checked);
   }
 });
+
+
+
+
 
 
 /* Footerissa: Tuotteen poisto listalta*/

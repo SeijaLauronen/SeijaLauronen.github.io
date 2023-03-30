@@ -169,11 +169,14 @@ function dbAddCategory(cname){
 /**********************************************************************************************/
 
 /********************************** events from product list **********************************/
-
+// zzz: tulkitsee ekakerralla jostain että halutaan doc, eikä collection!?
+//localebase.min.js kohdassa 
+        //var n = u.default.call(this);
+        // return "collection" == n ? this.getCollection() : "doc" == n ? this.getDocument() : void 
 function dbGetProducts(callback){
     db.collection('product').orderBy('name', 'asc').get()
     .then(products => {
-        prods =JSON.stringify(products); //miksi dbUpdateProductToCollected jälkeen tämä kutsu hakee vain yhden??
+        prods =JSON.stringify(products); //miksi dbUpdateProductToCollected jälkeen tämä kutsu hakee vain yhden?? kts zzz
         if (prods.charAt(0) =='[') {
             callback(prods);    
         } else {
@@ -186,6 +189,19 @@ function dbGetProducts(callback){
     })
      
 }
+
+
+/* click checked on productlista */
+function dbGetProduct(pid, callback) {
+    db.collection('product').doc({id : pid}).get()
+    .then(product=> callback(product))
+    .catch(error => {
+        console.log('There was an error updating product to list, do something else.', error);
+        alert ("Ei onnistu tuotteen listalle muuttaminen ");
+        throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
 
 /* add product using button on page footer */
 function dbAddProduct(pname, pCid, callback){
@@ -280,6 +296,19 @@ function dbDelProduct(productId, page, callback) {
     })
 }
 
+/***************************** Ostolistalla****************************************************/
+function dbUpdateProductToCollected(pid, checked) {
+    db.collection('product').doc({id : pid}).update({
+            collected:checked
+    })
+    .catch(error => {
+        console.log('There was an error updating product to collected, do something else.', error);
+        //TODO callback toast
+        alert ("Ei onnistu tuotteen listalle kerätty muuttaminen ");
+        throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
 /**********************************************************************************************/
 /********************************** Ylläpitoa kehitysvaiheessa ********************************/
 /**********************************************************************************************/
@@ -323,18 +352,5 @@ function deleteProduct() {
 }
   
 /**********************************************************************************************/
-/* click checked on productlista */
-/* Jostain syystä sen jälkeen kun tätä on kutsuttu, ja kutsutaan getProducts, niin se h akee vain viimeisimmän päivitetyn! */
-function dbUpdateProductToCollected(pid, checked) {
-    db.collection('product').doc({id : pid}).update({
-            collected:checked
-    })
-    .catch(error => {
-        console.log('There was an error updating product to collected, do something else.', error);
-        //TODO callback toast
-        alert ("Ei onnistu tuotteen listalle kerätty muuttaminen ");
-        throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
-    })
-}
 
 
