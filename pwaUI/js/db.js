@@ -65,6 +65,33 @@ function dbSetProductId(pid) {
     })
 } 
 
+
+function dbInitClassId() {
+    console.log('initClassId')
+    db.collection('dbsettings').add(
+        {
+            skey: 'classId',
+            value: 1
+        }
+    )
+    .catch(error => {
+        console.log('There was an init error (classId), do something else.', error)
+    })
+} 
+
+function dbSetClassId(clid) {
+    db.collection('dbsettings').doc({skey : 'classId'}).set(
+        {
+            skey: 'classId',
+            value: clid
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.')
+        alert ("Ei onnistu dbsettings classId laitto")
+    })
+} 
+
 /**********************************************************************************************/
 /************************************ category ************************************************/
 /**********************************************************************************************/
@@ -307,6 +334,56 @@ function dbUpdateProductToCollected(pid, checked) {
         alert ("Ei onnistu tuotteen listalle kerätty muuttaminen ");
         throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
     })
+}
+
+/**********************************************************************************************/
+/********************************** Classes ***************************************************/
+/**********************************************************************************************/
+function dbGetClasses(callback){
+    db.collection('productclass').orderBy('ordernro', 'asc').get().then(classes => {
+        sessionStorage.setItem("sessionClasses",JSON.stringify(classes));
+        callback(sessionStorage.getItem("sessionClasses"));
+        })        
+}
+function dbAddClass(pcname, pcordernro){
+    // First get new categoryId
+    db.collection('dbsettings').doc({ skey: 'classId' }).get().then(setting => {
+        let pcid = 1;
+        if(setting != null) {
+            pcid = setting.value + 1;
+        }
+
+        if (pcname == "") {
+            pcname ='Uusi luokka ' + clid.toString();
+        }
+        
+        const productclass = {
+            id:pcid,
+            name:pcname,
+            ordernro:pcordernro
+        }
+        //Then add new category
+        db.collection('productclass')
+            .add(productclass)
+            .then( reload => {
+                // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
+                uiLoadClasses();
+            })
+            .then( updnextPCId =>
+                {  
+                    if(setting == null){
+                        dbInitClassId();
+                    } else {
+                        dbSetClassId(productclass.id);
+                    }
+                }
+            )
+            .catch(err =>console.log(err));
+            // inputCategory.value = ""; // viittaa UI:hin
+    }) 
+    .catch( e =>
+            console.log("AddBtn Virhe productclass lisäyksessä",e)
+    );
 }
 
 /**********************************************************************************************/

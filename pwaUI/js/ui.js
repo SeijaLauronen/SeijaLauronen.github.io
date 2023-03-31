@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // for categorySelection in product form
     var combos = document.querySelectorAll('select'); //TODO onko tämä oikeassa paikassa...
+
 });
 
 // Formit kategoria ja tuote -sivuilla
@@ -45,6 +46,7 @@ function closeFormReturnToPage(page, toastTxt) {
       window.location.href=page;
     }
 }
+
 
 /**********************************************************************************************/
 /************************************  Menu vasemmalla  ***************************************/ 
@@ -420,6 +422,61 @@ if (productForm != null) {
 
     });
 }
+/*******************************************Luokittelu ****************************************/
+/**********************************************************************************************/
+
+/****************** Luokan lisäys footerissa ********/
+const addClassButton = document.querySelector('#addClassBtn');
+const inputCategory = document.querySelector('#classinput');
+addClassButton.addEventListener('click',evt => {
+  let pcname=classinput.value;
+  let ordernro=orderinput.value;
+    evt.preventDefault();
+    dbAddClass(pcname, ordernro);
+    classinput.value=""; //TODO vasta jos meni ok?
+    orderinput.value=null; //TODO vasta jos meni ok?
+})
+
+function uiLoadClasses(){
+  //classList.innerHTML ="";
+  dbGetClasses(uiRenderClassList);
+  console.log("uiLoadClasses");
+}
+
+const classList = document.querySelector('.productClasses');
+function uiRenderClassList(productclasses) {
+    var html =``;
+    let pclass = null;
+    let classesParsed= JSON.parse(productclasses);
+    // <ul class="collapsible expandable container green lighten-5">
+    //TODO expand vaihtumaan more-> less sen mukaan onko auki vai kiinni
+    for (let i=0; i< classesParsed.length; i++){
+        pclass=classesParsed[i];
+          html =`
+            <li class="active">
+              <div class="collapsible-header row" data-id="${pclass.id}">
+                <div class ="col s11">${pclass.name} </div>
+                <div class ="col s1">
+                  <i class="material-icons">expand_more</i>
+                </div>
+              </div> 
+              <div class="collapsible-body"><span>Tässä sitten jotain</span></div>
+            </li>
+          `;
+          classList.innerHTML += html;
+    }
+
+
+    //voisi laittaa myös renderöinnin loppuun, varsinkin jos eri tavalla käyttäytyviä collapsiblejä
+    var collElems = document.querySelectorAll('.collapsible');
+    //var collInstances = M.Collapsible.init(collElems, "accordion");
+    var collInstances = M.Collapsible.init(collElems, {
+      accordion: false
+    });
+    
+ 
+}
+
 /**********************************************************************************************/
 /********************************** Ostoslista ************************************************/
 const productListToShop = document.querySelector('.productsToShop');
@@ -515,30 +572,15 @@ if (productListToShop != null) {
 }
 
 
-
-
-
-
 /* Footerissa: Tuotteen poisto listalta*/
 const removeFromListButton = document.querySelector('#removeFromList');
      
-removeFromListButton.addEventListener('click',evt => {
-  //const list = document.querySelectorAll('.productchecked-id');
-  /*
-  const list = document.querySelectorAll('.my-collected');
-  let pid =0;
-  list.forEach(prod => {
-    if (prod.checked == true) {
-      pid=parseInt(prod.getAttribute("productchecked-id"));
-      dbUpdateProductToList(pid, false);
-    }
-    
-  });
-  //TODO tämä pitäs taas tehäd fiksummin callbackeilla/asynkeillä tms
-  */
-  updateCollected()
-  .then( x => uiLoadProductsToShop());
-})
+if (removeFromListButton != null) {
+    removeFromListButton.addEventListener('click',evt => {
+      updateCollected()
+      .then( x => uiLoadProductsToShop());
+    })
+}
 
 async function updateCollected() {
   const list = document.querySelectorAll('.my-collected');
@@ -554,7 +596,5 @@ async function updateCollected() {
 }
 
  
-
-
 
 

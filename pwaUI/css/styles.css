@@ -402,3 +402,23 @@ input[type="checkbox"] {
   min-width: max-content;
   text-transform: none; /* ylikirjoitetaan materializen uppercase */
 }
+
+#classlistcontainer {
+  margin-top: 100px;
+  margin-bottom: 150px;
+  margin-left: 10px;
+  margin-right: 10px; /* tällä ei vaikutusta*/
+  width: 95%;
+  background-color: grey;
+}
+/* rgb(251, 251, 207);*/
+.collapsible-header {
+  background-color: lightyellow;
+  font-size: 18px!important;
+  margin-bottom: 0px;
+}
+/* rgb(254, 254, 234);*/
+.collapsible-body{
+  background-color: rgb(252, 252, 241);
+  margin-bottom: 10px;
+}
