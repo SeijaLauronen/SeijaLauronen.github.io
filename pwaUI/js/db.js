@@ -150,7 +150,7 @@ function dbUpdateCategory(categoryId,categoryName,page,callback) {
     callback(page, toastTxt);
 }
 
-function dbAddCategory(cname){
+function dbAddCategory(cname, callback){
     // First get new categoryId
     db.collection('dbsettings').doc({ skey: 'categoryId' }).get().then(setting => {
         let kid = 1;
@@ -171,7 +171,7 @@ function dbAddCategory(cname){
             .add(category)
             .then( reload => {
                 // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
-                uiLoadCategories();
+                callback(); //uiLoadCategories();
             })
             .then( updnextCatId =>
                 {  
@@ -345,8 +345,13 @@ function dbGetClasses(callback){
         callback(sessionStorage.getItem("sessionClasses"));
         })        
 }
-function dbAddClass(pcname, pcordernro){
+function dbAddClass(pcname, pcordernro,callback){
     // First get new categoryId
+    var pcordernroInt = 0;
+    if (pcordernro !="") {
+        pcordernroInt = parseInt(pcordernro);
+    }
+
     db.collection('dbsettings').doc({ skey: 'classId' }).get().then(setting => {
         let pcid = 1;
         if(setting != null) {
@@ -360,14 +365,14 @@ function dbAddClass(pcname, pcordernro){
         const productclass = {
             id:pcid,
             name:pcname,
-            ordernro:pcordernro
+            ordernro:pcordernroInt
         }
         //Then add new category
         db.collection('productclass')
             .add(productclass)
             .then( reload => {
                 // oma koodi, että lista päivittyy näytöllä TODO voisiko siirtää ui:lle
-                uiLoadClasses();
+                callback();
             })
             .then( updnextPCId =>
                 {  
@@ -423,7 +428,17 @@ function deleteProduct() {
         .then( x=>
            { 
             console.log("product deleted");
-            emptyCategories();
+            //emptyProducts();
+           }
+    );
+}
+
+function deleteProductclass() {
+    db.collection('productclass').delete()
+        .then( x=>
+           { 
+            console.log("productclass deleted");
+            //emptyClasses();
            }
     );
 }

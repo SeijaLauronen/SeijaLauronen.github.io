@@ -409,7 +409,7 @@ input[type="checkbox"] {
   margin-left: 10px;
   margin-right: 10px; /* tällä ei vaikutusta*/
   width: 95%;
-  background-color: grey;
+  background-color: grey!important;
 }
 /* rgb(251, 251, 207);*/
 .collapsible-header {

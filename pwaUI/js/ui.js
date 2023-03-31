@@ -196,7 +196,7 @@ if (categoryContainer != null) {
         addCategoryButton.addEventListener('click',evt => {
           let cname=inputCategory.value;
             evt.preventDefault();
-            dbAddCategory(cname);
+            dbAddCategory(cname, uiLoadCategories);
             inputCategory.value=""; //TODO vasta jos meni ok?
         })
 }
@@ -205,12 +205,12 @@ if (categoryContainer != null) {
 /****************************************  Tuotesivu  *****************************************/ 
 /**********************************************************************************************/
 
-function uiLoadProducts(){
-    productList.innerHTML ="";
-    dbGetProducts(uiRenderProductList);
-}
-  
 const productList = document.querySelector('.products');
+
+function uiLoadProducts(){
+  productList.innerHTML ="";
+  dbGetProducts(uiRenderProductList);
+}
 
 function uiRenderProductList(products){
       let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
@@ -428,30 +428,35 @@ if (productForm != null) {
 /****************** Luokan lisäys footerissa ********/
 const addClassButton = document.querySelector('#addClassBtn');
 const inputCategory = document.querySelector('#classinput');
-addClassButton.addEventListener('click',evt => {
-  let pcname=classinput.value;
-  let ordernro=orderinput.value;
-    evt.preventDefault();
-    dbAddClass(pcname, ordernro);
-    classinput.value=""; //TODO vasta jos meni ok?
-    orderinput.value=null; //TODO vasta jos meni ok?
-})
+if (addClassButton != null){
+    addClassButton.addEventListener('click',evt => {
+      let pcname=classinput.value;
+      let ordernro=orderinput.value;
+        evt.preventDefault();
+        dbAddClass(pcname, ordernro, uiLoadClasses);
+        classinput.value=""; //TODO vasta jos meni ok?
+        orderinput.value=null; //TODO vasta jos meni ok?
+    })
+}
 
+const classList = document.querySelector('.productClasses');
 function uiLoadClasses(){
-  //classList.innerHTML ="";
+  classList.innerHTML ="";
   dbGetClasses(uiRenderClassList);
   console.log("uiLoadClasses");
 }
 
-const classList = document.querySelector('.productClasses');
 function uiRenderClassList(productclasses) {
     var html =``;
     let pclass = null;
     let classesParsed= JSON.parse(productclasses);
+    var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+
+
     // <ul class="collapsible expandable container green lighten-5">
     //TODO expand vaihtumaan more-> less sen mukaan onko auki vai kiinni
-    for (let i=0; i< classesParsed.length; i++){
-        pclass=classesParsed[i];
+    for (let i=0; i< classesSorted.length; i++){
+        pclass=classesSorted[i];
           html =`
             <li class="active">
               <div class="collapsible-header row" data-id="${pclass.id}">
