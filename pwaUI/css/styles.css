@@ -180,13 +180,16 @@ form .input-field{
 
 /* tuote formi */
 .productBasic {
-  background-color:whitesmoke
+  background-color:whitesmoke;
+  margin-bottom: 10px!important;
 }
 .shopping {
   background-color: rgb(234, 254, 254);
+  margin-bottom: 10px!important;
 }
 .classify{
   background-color:rgb(253, 253, 213);
+  margin-bottom: 10px!important;
 }
 
 /* card-panels on product form*/
@@ -366,6 +369,7 @@ select {
 .subheader {
   font-size: 18px!important;
   color: blue!important;
+  line-height: 25px!important; /* 48 alunperin, yläpuolen tilaa määrittää */
 }
 
 input[type="checkbox"] {

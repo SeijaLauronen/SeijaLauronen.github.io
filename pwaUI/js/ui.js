@@ -347,10 +347,16 @@ function fillProductForm(product){
       productForm.productId.value = product.id; //hidden value in form
       //productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + product.id + '"]')[0].checked;
       productForm.productInputToList.checked = product.toList;
+      if (product.amount != null)
+        productForm.prodInputAmount.value = product.amount;
+      if (product.unit != null)
+        productForm.prodInputUnit.value = product.unit;
       productForm.productInputPh1.checked = product.phase1;
       productForm.productInputPh2.checked = product.phase2;
       productForm.productInputPh3.checked = product.phase3;
       productForm.productInputForbidden.checked = product.forbidden;
+      if (product.dose != null)
+        productForm.productInputDose = product.dose;
       renderCategoryDropDown(product.cId);
 }
 
@@ -383,7 +389,7 @@ if (productForm != null) {
       if (productForm.productInputForbidden.checked) {
         fb=true;
       }
-
+     
       const product = {
         id:productId,
         name:productName,
@@ -393,6 +399,10 @@ if (productForm != null) {
         phase3:ph3,
         forbidden:fb
       }
+      product.amount = productForm.prodInputAmount.value;
+      product.unit = productForm.prodInputUnit.value; 
+      product.dose = productForm.prodInputDose.value;
+
       var selectedProductCategoryId = comboinstance.value;
       product.cId=parseInt(selectedProductCategoryId);
 
@@ -475,35 +485,34 @@ function uiRenderProductListToShop(products){
 }
 
 
+if (productListToShop != null) {
+    productListToShop.addEventListener('click', evt => {
+      console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
 
-productListToShop.addEventListener('click', evt => {
-  console.log(evt); //tällä näet tagName:t jne tuo I tarkoittanee ikonia, niin jos niitä tulee useita, pitää erotella jotenkin muuten
+      //TODO pitäisi välittää koko tuotteen tiedot
+      if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
+        //TODO
+          const productId = parseInt(evt.target.getAttribute('product-id'));
+          const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
+          const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
+          console.log('productId:', productId);
+          console.log('productName:', productName);
 
-  //TODO pitäisi välittää koko tuotteen tiedot
-  if(evt.target.tagName === 'I' && evt.target.innerText === 'edit') {
-    //TODO
-      const productId = parseInt(evt.target.getAttribute('product-id'));
-      const productName = document.querySelectorAll('[productname-id="' + productId + '"]')[0].innerText;
-      const productCategory = document.querySelectorAll('[productcategory-id="' + productId + '"]')[0].innerText;
-      console.log('productId:', productId);
-      console.log('productName:', productName);
+          //dbGetProduct(productId,fillProductForm)
 
-      //dbGetProduct(productId,fillProductForm)
-
-      productForm.prodInput1.value = productName;
-      productForm.productId.value = productId; //hidden value in form
-      productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
-      renderCategoryDropDown(productCategory);
-
-
-      
-  } else if (evt.target.type == "checkbox") {
-    //checked==true
-    const productId = parseInt(evt.target.getAttribute('productchecked-id'));
-    const checked = evt.target.checked;
-    dbUpdateProductToCollected(productId, checked);
-  }
-});
+          productForm.prodInput1.value = productName;
+          productForm.productId.value = productId; //hidden value in form
+          productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
+          renderCategoryDropDown(productCategory);
+          
+      } else if (evt.target.type == "checkbox") {
+        //checked==true
+        const productId = parseInt(evt.target.getAttribute('productchecked-id'));
+        const checked = evt.target.checked;
+        dbUpdateProductToCollected(productId, checked);
+      }
+    });
+}
 
 
 

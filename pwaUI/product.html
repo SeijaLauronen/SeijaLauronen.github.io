@@ -92,57 +92,47 @@
 
 
 <section class="card-panel productBasic">
-      <div class="input-field product-input1">
         <input placeholder="Tuotteen nimi" id="prodInput1" type="text" class="validate">
-      </div>
 
       <!-- valintalista kategoriolle -->
-      <div class="input-field">
         <select class="categorySelect">
         </select>
-        <label></label>
-      </div>
 </section>
 
 <section class="card-panel shopping">
-  <div class="input-field productform checkbox product-toList">
-      <div class="row">
+  <div class="input-field lowrow productform checkbox product-toList">
+      <div class="row lowrow">
           <a class="col s4"><label>Ostoslistalle</label></a>
           <a class="col s4"><label>Määrä</label></a>
           <a class="col s4"><label>Yksikkö</label></a>
       </div>
-      <div class="row">
-        <a class="col s4"><input type="checkbox" class="filled-in" id="productInputToList"/></a>
-        <a class="col s4"><input placeholder="Määrä" id="prodInputAmount" type="text" class="validate"></a>
-        <a class="col s4"><input placeholder="Yksikkö" id="prodInputUnit" type="text" class="validate"></a>
+      <div class="row lowrow">
+        <a class="col s1"></a>
+        <a class="col s2"><input type="checkbox" class="filled-in" id="productInputToList"/></a>
+        <a class="col s4"><input placeholder="Määrä" id="prodInputAmount" type="text" class="low validate"></a>
+        <a class="col s4"><input placeholder="Yksikkö" id="prodInputUnit" type="text" class="low validate"></a>
       </div>
   </div>
 </section>
 
 <section class="card-panel classify">
-      <div class="divider"></div>
-      <div class="subheader bold">Luokittelu</div>
-      <div class="divider"></div>
+      
+      <div class="subheader">Luokittelu</div>
 
-      <div class="input-field productform checkbox product-phlabel">
-        <div class="row">
-          <div class="col s2"><label>V1</label></div>
-            <div class="col s2"><label>V2</label></div>
-            <div class="col s3"><label>V3</label></div>
-            <div class="col s5"><label>Kielletty</label></div>
-        </div>
+      <div class="row lowrow">
+        <div class="col s2"><label>V1</label></div>
+          <div class="col s2"><label>V2</label></div>
+          <div class="col s3"><label>V3</label></div>
+          <div class="col s5"><label>Kielletty</label></div>
       </div>
-
-      <div class="input-field productform checkbox product-Phase">
-        <div class="row">
-            <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh1"/></div>
-            <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh2"/></div>
-            <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh3"/></div>
-            <div class="col s4"><input type="checkbox" class="filled-in" id="productInputForbidden"/></div>
-        </div>
+    
+      <div class="row lowrow">
+          <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh1"/></div>
+          <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh2"/></div>
+          <div class="col s3"><input type="checkbox" class="filled-in" id="productInputPh3"/></div>
+          <div class="col s5"><input type="checkbox" class="filled-in" id="productInputForbidden"/></div>
       </div>
-
-      <div class="input-field product-inputDose">
+      <div class="lowrow">
         <input placeholder="Annos" id="prodInputDose" type="text" class="validate">
       </div>      
 </section>
