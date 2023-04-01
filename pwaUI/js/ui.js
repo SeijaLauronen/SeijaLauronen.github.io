@@ -220,9 +220,68 @@ function uiRenderProductList(products){
       let catname = "";
       let product = null;
       let checkedText = "";
+      let categoryHiddenTxt="";
+      let v1Color="";
+      let v2Color="";
+      let v3Color="";
+      let forbiddenColor="";
+      let v1Visible="hidden";
+      let v2Visible="hidden";
+      let v3Visible="hidden";
+      let forbiddenVisible="hidden";
+      let phases=false;
+      
+
       let html =``;
       for (let i=0; i< productsParsed.length; i++){
           product=productsParsed[i];
+          v1Color="";
+          v2Color="";
+          v3Color="";
+          forbiddenColor="grey";
+          v1Visible="";
+          v2Visible="";
+          v3Visible="";
+          forbiddenVisible="hidden";
+          phases=false;
+
+          if (product.phase1 != null && product.phase1 == true) 
+          { 
+            v1Color="yellow";
+            v1Visible ="";
+            phases = true;
+          } 
+          if (product.phase2 != null && product.phase2 == true)
+           {
+            v2Color="green";
+            v2Visible ="";
+            phases = true;
+          }
+          if (product.phase3 != null && product.phase3 == true) 
+          { 
+            v3Color="red";
+            v3Visible ="";
+            phases = true;
+          }
+          if (product.forbidden != null && product.forbidden == true) 
+          {
+            forbiddenColor="grey";
+            forbiddenVisible="";
+            /* jos on kielletty, piilotettan kaikki vaiheet */
+            v1Visible="hidden";
+            v2Visible="hidden";
+            v3Visible="hidden";
+            phases = true;
+          }
+
+          /* Jos ei ole mitään luokiteltu, ei näytetä vaihebokseja*/
+          if (phases == false) {
+            v1Visible="hidden";
+            v2Visible="hidden";
+            v3Visible="hidden";
+            forbiddenVisible="hidden";
+          }
+
           catObj = categoryArray.find(record => record.id == product.cId);
           catname = "";
           if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
@@ -232,14 +291,27 @@ function uiRenderProductList(products){
           if (product.toList == true) {
             checkedText = "checked=true";
           }
+
+          if (product.cId == selectedCategoryId)
+          categoryHiddenTxt ="hidden";
+
+
           html =``;
           if (selectedCategoryId == null || product.cId == selectedCategoryId )
             html =`
             <div class="card-panel product white row" product-id="${product.id}">
 
               <div class="product category-info">
+              
+              <span class="product-category">
+                <span ${v1Visible}> <i class="tiny material-icons ${v1Color}" >crop_square</i></span>
+                <span ${v2Visible}> <i class="tiny material-icons ${v2Color}" ${v2Visible}>crop_square</i></span>
+                <span ${v3Visible}> <i class="tiny material-icons ${v3Color}" ${v3Visible}>crop_square</i></span>
+                <span ${forbiddenVisible}>  <i class="tiny material-icons ${forbiddenColor}">clear</i> </span>
+              </span>
+
                 <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
-                <span class="product-category" productcategoryname-id="${product.id}">${catname}</span>
+                <span class="product-category" productcategoryname-id="${product.id}" ${categoryHiddenTxt}>${catname}</span>
               </div>
               
               <div class="product-edit sidenav-trigger" data-target="side-form-product">
@@ -344,6 +416,34 @@ const renderCategoryDropDown = (productCategory) => {
       }      
 }
 
+
+const productClassSelection = document.querySelector('.productClassSelect');
+const renderProductClassDropDown = (productClassId) => {
+      let prodClasses = sessionStorage.getItem("sessionClasses");
+      let classesParsed= JSON.parse(prodClasses);
+      var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+      let classId =0;
+      let html =`
+      <option value="0">Valitse luokka</option>
+      `;
+      productClassSelection.innerHTML = html;
+      for (let i=0; i < classesSorted.length; i++){   
+        classId=classesSorted[i].id;
+          if (productClassId == classId) {
+            html =`
+            <option value="${classId}" selected>${classesSorted[i].name}</option>
+            `;
+          } else {
+            html =`
+            <option value="${classId}">${classesSorted[i].name}</option>
+            `;
+          }
+          productClassSelection.innerHTML += html;
+      }      
+}
+
+
+
 function fillProductForm(product){
   productForm.prodInput1.value = product.name;
       productForm.productId.value = product.id; //hidden value in form
@@ -358,8 +458,9 @@ function fillProductForm(product){
       productForm.productInputPh3.checked = product.phase3;
       productForm.productInputForbidden.checked = product.forbidden;
       if (product.dose != null)
-        productForm.productInputDose = product.dose;
+        productForm.productInputDose.value = product.dose;
       renderCategoryDropDown(product.cId);
+      renderProductClassDropDown(product.classId);
 }
 
 /*********************************** Tuoteformin eventit **************************************/
@@ -370,6 +471,8 @@ if (productForm != null) {
       const productId = parseInt(productForm.productId.value);
       const productName = productForm.prodInput1.value;
       const comboinstance = document.querySelector('.categorySelect');
+      const comboClassInstance = document.querySelector('.productClassSelect');
+
       var productToList = false;
       var ph1 = false;
       var ph2 = false;
@@ -403,10 +506,13 @@ if (productForm != null) {
       }
       product.amount = productForm.prodInputAmount.value;
       product.unit = productForm.prodInputUnit.value; 
-      product.dose = productForm.prodInputDose.value;
+      product.dose = productForm.productInputDose.value;
 
+      //combot
       var selectedProductCategoryId = comboinstance.value;
       product.cId=parseInt(selectedProductCategoryId);
+      var selectedProductClassId=comboClassInstance.value;
+      product.classId = parseInt(selectedProductClassId);
 
       if (evt.submitter.id == "delProduct") {
         dbDelProduct(productId, "product.html", closeFormReturnToPage);
