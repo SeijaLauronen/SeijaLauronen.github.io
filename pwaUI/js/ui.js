@@ -212,6 +212,74 @@ function uiLoadProducts(){
   dbGetProducts(uiRenderProductList);
 }
 
+function uiRenderPhaseHtml(product){
+  let html =``;
+
+  let v1Color="";
+  let v2Color="";
+  let v3Color="";
+  let forbiddenColor="";
+  let v1Visible="hidden";
+  let v2Visible="hidden";
+  let v3Visible="hidden";
+  let forbiddenVisible="hidden";
+  let phases=false;
+  v1Color="";
+  v2Color="";
+  v3Color="";
+  forbiddenColor="grey";
+  v1Visible="";
+  v2Visible="";
+  v3Visible="";
+  forbiddenVisible="hidden";
+  phases=false;
+
+  if (product.phase1 != null && product.phase1 == true) 
+  { 
+    v1Color="yellow";
+    v1Visible ="";
+    phases = true;
+  } 
+  if (product.phase2 != null && product.phase2 == true)
+    {
+    v2Color="green";
+    v2Visible ="";
+    phases = true;
+  }
+  if (product.phase3 != null && product.phase3 == true) 
+  { 
+    v3Color="red";
+    v3Visible ="";
+    phases = true;
+  }
+  if (product.forbidden != null && product.forbidden == true) 
+  {
+    forbiddenColor="grey";
+    forbiddenVisible="";
+    /* jos on kielletty, piilotettan kaikki vaiheet */
+    v1Visible="hidden";
+    v2Visible="hidden";
+    v3Visible="hidden";
+    phases = true;
+  }
+
+  /* Jos ei ole mitään luokiteltu, ei näytetä vaihebokseja*/
+  if (phases == false) {
+    v1Visible="hidden";
+    v2Visible="hidden";
+    v3Visible="hidden";
+    forbiddenVisible="hidden";
+  }
+
+  html =`
+                <span ${v1Visible}> <i class="tiny material-icons ${v1Color}" >crop_square</i></span>
+                <span ${v2Visible}> <i class="tiny material-icons ${v2Color}" ${v2Visible}>crop_square</i></span>
+                <span ${v3Visible}> <i class="tiny material-icons ${v3Color}" ${v3Visible}>crop_square</i></span>
+                <span ${forbiddenVisible}>  <i class="tiny material-icons ${forbiddenColor}">clear</i> </span>
+              `;
+              return html;
+}
+
 function uiRenderProductList(products){
       let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
       let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
@@ -221,66 +289,11 @@ function uiRenderProductList(products){
       let product = null;
       let checkedText = "";
       let categoryHiddenTxt="";
-      let v1Color="";
-      let v2Color="";
-      let v3Color="";
-      let forbiddenColor="";
-      let v1Visible="hidden";
-      let v2Visible="hidden";
-      let v3Visible="hidden";
-      let forbiddenVisible="hidden";
-      let phases=false;
-      
 
       let html =``;
       for (let i=0; i< productsParsed.length; i++){
           product=productsParsed[i];
-          v1Color="";
-          v2Color="";
-          v3Color="";
-          forbiddenColor="grey";
-          v1Visible="";
-          v2Visible="";
-          v3Visible="";
-          forbiddenVisible="hidden";
-          phases=false;
-
-          if (product.phase1 != null && product.phase1 == true) 
-          { 
-            v1Color="yellow";
-            v1Visible ="";
-            phases = true;
-          } 
-          if (product.phase2 != null && product.phase2 == true)
-           {
-            v2Color="green";
-            v2Visible ="";
-            phases = true;
-          }
-          if (product.phase3 != null && product.phase3 == true) 
-          { 
-            v3Color="red";
-            v3Visible ="";
-            phases = true;
-          }
-          if (product.forbidden != null && product.forbidden == true) 
-          {
-            forbiddenColor="grey";
-            forbiddenVisible="";
-            /* jos on kielletty, piilotettan kaikki vaiheet */
-            v1Visible="hidden";
-            v2Visible="hidden";
-            v3Visible="hidden";
-            phases = true;
-          }
-
-          /* Jos ei ole mitään luokiteltu, ei näytetä vaihebokseja*/
-          if (phases == false) {
-            v1Visible="hidden";
-            v2Visible="hidden";
-            v3Visible="hidden";
-            forbiddenVisible="hidden";
-          }
+          phaseHtml = uiRenderPhaseHtml(product);
 
           catObj = categoryArray.find(record => record.id == product.cId);
           catname = "";
@@ -303,12 +316,9 @@ function uiRenderProductList(products){
 
               <div class="product category-info">
               
-              <span class="product-category">
-                <span ${v1Visible}> <i class="tiny material-icons ${v1Color}" >crop_square</i></span>
-                <span ${v2Visible}> <i class="tiny material-icons ${v2Color}" ${v2Visible}>crop_square</i></span>
-                <span ${v3Visible}> <i class="tiny material-icons ${v3Color}" ${v3Visible}>crop_square</i></span>
-                <span ${forbiddenVisible}>  <i class="tiny material-icons ${forbiddenColor}">clear</i> </span>
-              </span>
+                <span class="product-category">
+                ${phaseHtml}
+                </span>
 
                 <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
                 <span class="product-category" productcategoryname-id="${product.id}" ${categoryHiddenTxt}>${catname}</span>
