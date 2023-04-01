@@ -81,7 +81,7 @@ nav .sidenav-trigger{
   right: 15px;
 }
 .category-edit i{
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .category-go{
@@ -90,8 +90,8 @@ nav .sidenav-trigger{
   bottom: 0px;
   right: 0px;
 }
-.category-edit i{
-  font-size: 20px;
+.category-go i{
+  font-size: 24px;
 }
 
 .category-title{

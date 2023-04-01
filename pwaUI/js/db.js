@@ -104,6 +104,19 @@ function dbGetCategories(callback){
         })
 }
 
+
+
+function dbGetCategory(cid, callback) {
+    db.collection('category').doc({id : cid}).get()
+    .then(category=> callback(category))
+    .catch(error => {
+        console.log('There was an error getting category to, do something else.', error);
+        alert ("Ei onnistu kategorian haku");
+        //throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
+
 function dbDelCategory(categoryId, page, callback) {
     var toastTxt ="";
     // Hakua ei voi rajoittaa kuin kentällä, joka rajaa tuloksen yhteen :(
@@ -135,12 +148,18 @@ function dbDelCategory(categoryId, page, callback) {
         }) 
 }
 
-function dbUpdateCategory(categoryId,categoryName,page,callback) {
+function dbUpdateCategory(categoryId,categoryName,categoryOrdernro,page,callback) {
     let toastTxt ="";
+    let catordernro = categoryId; // laitetaan id järjestysnumeroksi, jos sitä ei ole annettu
+    if (categoryOrdernro != "")
+    {
+        catordernro = parseInt(categoryOrdernro);
+    }
     db.collection('category').doc({id : categoryId}).set(
         {
             id: categoryId,
-            name: categoryName
+            name: categoryName,
+            ordernro: catordernro
         }
     )
     .catch(error => {
@@ -162,9 +181,11 @@ function dbAddCategory(cname, callback){
             cname ='Uusi kategoria ' + kid.toString();
         }
         
+        // laitetaan järjestysnumeroksi id
         const category = {
             id:kid,
-            name:cname
+            name:cname,
+            ordernro:kid
         }
         //Then add new category
         db.collection('category')

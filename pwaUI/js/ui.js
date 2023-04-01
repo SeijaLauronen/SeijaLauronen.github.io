@@ -100,10 +100,12 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
   function uiRenderCategoryList(categories){
     var html =``;
     let category = null;
-    //categories.forEach(category => {
     let categoriesParsed= JSON.parse(categories);
-    for (let i=0; i< categoriesParsed.length; i++){
-          category=categoriesParsed[i];
+
+    var categoriesSorted = categoriesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+
+    for (let i=0; i< categoriesSorted.length; i++){
+          category=categoriesSorted[i];
           html =`
           <div class="card-panel category white row" data-id="${category.id}">
           
@@ -154,12 +156,14 @@ const categoryForm = document.querySelector('#categoryForm');
   
       const categoryId = parseInt(categoryForm.categoryId.value);
       const categoryName = categoryForm.input1.value;
+      const categoryOrdernro = categoryForm.inputCategoryOrdernro.value;
+
       if (evt.submitter.id == "delCategory") {
         dbDelCategory(categoryId,"index.html", closeFormReturnToPage);
       }
 
       if (evt.submitter.id == "updateCategory" || evt.submitter.id == "defaultActionCategory") {
-        dbUpdateCategory(categoryId,categoryName,"index.html", closeFormReturnToPage);
+        dbUpdateCategory(categoryId,categoryName,categoryOrdernro,"index.html", closeFormReturnToPage);
       }
 
     });
@@ -176,8 +180,12 @@ if (categoryContainer != null) {
               const categoryName = document.querySelectorAll('[name-id="' + categoryId + '"]')[0].innerText;
               console.log('categoryId:', categoryId);
               console.log('categoryName:', categoryName);
-              categoryForm.input1.value=categoryName;
-              categoryForm.categoryId.value = categoryId;
+              //categoryForm.input1.value=categoryName;
+              //categoryForm.categoryId.value = categoryId;
+              //categoryForm.inputCategoryOrdernro.value = 
+
+              dbGetCategory(categoryId, fillCategoryForm); 
+
           } else if(evt.target.tagName === 'I' && evt.target.innerText === 'arrow_forward') {
               const categoryId = parseInt(evt.target.getAttribute('data-id'));
               const categoryName = evt.target.getAttribute('categoryname');
@@ -199,6 +207,12 @@ if (categoryContainer != null) {
             dbAddCategory(cname, uiLoadCategories);
             inputCategory.value=""; //TODO vasta jos meni ok?
         })
+}
+
+function fillCategoryForm(category) {
+  categoryForm.input1.value=category.name;
+  categoryForm.categoryId.value = category.id;
+  categoryForm.inputCategoryOrdernro.value = category.ordernro;
 }
 
 /**********************************************************************************************/
@@ -299,6 +313,10 @@ function uiRenderProductList(products){
           catname = "";
           if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
             catname=catObj.name;
+            if (catname.length > 20)
+            {
+              catname = catname.substring(0,20) + "...";
+            }
           }
           checkedText = "";
           if (product.toList == true) {
@@ -366,14 +384,6 @@ if (productContainer != null) {
                 console.log('productId:', productId);
                 console.log('productName:', productName);
                 dbGetProduct(productId,fillProductForm)
-
-
-/*
-                productForm.prodInput1.value = productName;
-                productForm.productId.value = productId; //hidden value in form
-                productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + productId + '"]')[0].checked;
-                renderCategoryDropDown(productCategory);
-                */
                 
             } else if (evt.target.type == "checkbox") {
               //checked==true
