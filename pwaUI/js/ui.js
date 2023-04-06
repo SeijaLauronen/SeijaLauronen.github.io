@@ -285,11 +285,13 @@ function uiRenderPhaseHtml(product){
     forbiddenVisible="hidden";
   }
 
+  /* kun laittaa boksein reunat saman värisiksi kuin itse boksi, niin ei näytä väri menevän yli boksin */
+  /* mutta jostain syystä eipä toimi */
   html =`
-                <span ${v1Visible}> <i class="tiny material-icons ${v1Color}" >crop_square</i></span>
-                <span ${v2Visible}> <i class="tiny material-icons ${v2Color}" ${v2Visible}>crop_square</i></span>
-                <span ${v3Visible}> <i class="tiny material-icons ${v3Color}" ${v3Visible}>crop_square</i></span>
-                <span ${forbiddenVisible}>  <i class="tiny material-icons ${forbiddenColor}">clear</i> </span>
+                <span ${v1Visible}> <i class="tiny material-icons ${v1Color} ${v1Color}-text phase" >crop_square</i></span>
+                <span ${v2Visible}> <i class="tiny material-icons ${v2Color} ${v2Color}-text phase" ${v2Visible}>crop_square</i></span>
+                <span ${v3Visible}> <i class="tiny material-icons ${v3Color} ${v3Color}-text phase" ${v3Visible}>crop_square</i></span>
+                <span ${forbiddenVisible}>  <i class="tiny material-icons ${forbiddenColor} ${forbiddenColor}-text phase">clear</i> </span>
               `;
               return html;
 }
@@ -465,6 +467,7 @@ const renderProductClassDropDown = (productClassId) => {
 
 
 function fillProductForm(product){
+  const productinfo = document.querySelector('#productinfo');
   productForm.prodInput1.value = product.name;
       productForm.productId.value = product.id; //hidden value in form
       //productForm.productInputToList.checked = document.querySelectorAll('[productchecked-id="' + product.id + '"]')[0].checked;
@@ -477,6 +480,8 @@ function fillProductForm(product){
       productForm.productInputPh2.checked = product.phase2;
       productForm.productInputPh3.checked = product.phase3;
       productForm.productInputForbidden.checked = product.forbidden;
+      if (product.info != null)
+        productinfo.value = product.info; /* huom. ei kelpuuttanut id:tä väliviivalla!! Eikä myöskään hyväksynyt productForm.productinfo miksikähän..? */
       if (product.dose != null)
         productForm.productInputDose.value = product.dose;
       renderCategoryDropDown(product.cId);
@@ -527,6 +532,7 @@ if (productForm != null) {
       product.amount = productForm.prodInputAmount.value;
       product.unit = productForm.prodInputUnit.value; 
       product.dose = productForm.productInputDose.value;
+      product.info = productForm.productinfo.value;
 
       //combot
       var selectedProductCategoryId = comboinstance.value;

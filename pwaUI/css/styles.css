@@ -422,3 +422,16 @@ input[type="checkbox"] {
   background-color: rgb(252, 252, 241);
   margin-bottom: 10px;
 }
+
+/* materialilzezta etsitty, mitkä vois vaikuttaa pienten checkboxikonien kokoon*/
+/* i.tiny { */
+  .phase {
+    font-size: 0.5rem !important;
+  /*line-height: 0.5; *//* tällä saa matalammaksi väriä, muta millä saisi leveyttä? */
+  /* margin : 0!important; */ /* ei vaikutusta siihen, että väri menee boksin yli */
+}
+
+#productinfo {
+  scroll-behavior: auto;
+  height: 80px!important;
+}
