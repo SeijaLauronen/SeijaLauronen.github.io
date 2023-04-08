@@ -299,6 +299,7 @@ function uiRenderPhaseHtml(product){
 function uiRenderProductList(products){
       let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
       let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
+      let classesArray = JSON.parse(sessionStorage.getItem("sessionClasses"));
       let productsParsed= JSON.parse(products);
       let catObj = null;
       let catname = "";
@@ -316,11 +317,23 @@ function uiRenderProductList(products){
           catname = "";
           if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
             catname=catObj.name;
-            if (catname.length > 20)
+            if (catname.length > 30)
             {
-              catname = catname.substring(0,20) + "...";
+              catname = catname.substring(0,30) + "...";
             }
           }
+
+          classObj = classesArray.find(record => record.id == product.classId);
+          classname = "";
+          if (classObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
+            classname=classObj.name;
+            if (classname.length > 25)
+            {
+              classname = classname.substring(0,25) ;
+            }
+          }
+          
+
           checkedText = "";
           if (product.toList == true) {
             checkedText = "checked=true";
@@ -335,15 +348,7 @@ function uiRenderProductList(products){
             html =`
             <div class="card-panel product white row" product-id="${product.id}">
 
-              <div class="product category-info">
               
-                <span class="product-category">
-                ${phaseHtml}
-                </span>
-
-                <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
-                <span class="product-category" productcategoryname-id="${product.id}" ${categoryHiddenTxt}>${catname}</span>
-              </div>
               
               <div class="product-edit sidenav-trigger" data-target="side-form-product">
                 <i class="material-icons" product-id="${product.id}">edit</i>
@@ -359,6 +364,22 @@ function uiRenderProductList(products){
                   <input type="checkbox" class="filled-in" productchecked-id="${product.id}" ${checkedText} />
                 </label>
               </div>
+
+
+              <div class="product class-info">
+              
+                  <span class="product-class">
+                  ${phaseHtml}
+                  </span>
+                  <span class="product-class" productclass-id="${product.id}" hidden>${product.cId}</span>
+                  <span class="product-class" productclassname-id="${product.id}">${classname}</span>
+              </div>
+
+              <div class="product category-info">
+                  <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
+                  <span class="product-category" productcategoryname-id="${product.id}" ${categoryHiddenTxt}>${catname}</span>
+              </div>
+
           </div>
             `;
           productList.innerHTML += html;

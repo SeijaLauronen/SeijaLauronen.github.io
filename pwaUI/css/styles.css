@@ -138,7 +138,15 @@ nav .sidenav-trigger{
   /*grid-area: pcat;*/
   /*grid-column: 3 / span 1;*/
   margin-left: 15px;
-  grid-column: 2 / span 1;
+  grid-column: 2 / span 1; /*    1 / span 2; vaihtoehtona, jos ihan rivin alusta.. */
+  margin-top: 0px; /* kun rivi alhaalla */
+}
+.product.class-info{
+  /*grid-area: pcat;*/
+  /*grid-column: 3 / span 1;*/
+  margin-left: 15px;
+  grid-column: 2 / span 1; /*    1 / span 2; vaihtoehtona, jos ihan rivin alusta.. */
+  margin-top: 8px; /* kun rivi alhaalla */
 }
 .product-edit{
   /*grid-area: pedit;*/
@@ -148,8 +156,14 @@ nav .sidenav-trigger{
 .product-details{
   /*grid-area: pname;*/
   grid-column: 2 / span 1;
-  margin:5px 15px 5px 15px;
+  margin:0px 15px 5px 15px; /* jos rivi alhaalla margin:5px 15px 5px 15px;*/
 }
+
+
+.product-name.flow-text {
+  height: fit-content; /* Ei vaikutusta, että tuoteen nimi jos on pitkä, niin olisi korkeampi*/
+}
+
 
 input[type="checkbox"]{
    /* Double-sized Checkboxes */
