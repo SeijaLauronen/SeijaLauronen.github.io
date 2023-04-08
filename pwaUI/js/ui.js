@@ -643,13 +643,14 @@ function uiRenderProductListToShop(products){
 
       starthtml =`
       <li class="active">
-        <div class="collapsible-header row" >
+        <div class="collapsible-header toshop row" >
           <div class ="col s11">${catname}${countProds} </div>
           <div class ="col s1">
             <i class="material-icons">expand_more</i>
           </div>
         </div> 
-        <div class="collapsible-body">
+        <div class="spaceElement"></div>
+        <div class="collapsible-body toshop">
       `;
       
       endhtml =`
