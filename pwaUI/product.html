@@ -72,7 +72,7 @@
 <div id="side-form-product" class="sidenav side-form">
 
   <form id="productForm" method="get">
-    <div class="row form-header">
+    <div class="row product-form-row form-header">
       <div class="col s10">
         <h6>Tuotteen tiedot</h6>
       </div>
@@ -100,13 +100,13 @@
 </section>
 
 <section class="card-panel shopping">
-  <div class="input-field lowrow productform checkbox product-toList">
-      <div class="row lowrow">
+  <div class="input-field productform checkbox product-toList">
+      <div class="row product-form-row">
           <a class="col s4"><label>Ostoslistalle</label></a>
           <a class="col s4"><label>Määrä</label></a>
           <a class="col s4"><label>Yksikkö</label></a>
       </div>
-      <div class="row lowrow">
+      <div class="row product-form-row">
         <a class="col s1"></a>
         <a class="col s2"><input type="checkbox" class="filled-in" id="productInputToList"/></a>
         <a class="col s4"><input placeholder="Määrä" id="prodInputAmount" type="text" class="low validate"></a>
@@ -143,8 +143,8 @@
 </section>
 
 <section class="card-panel productBasic">     
-      <div class="row">
-        <div class="input-field col s12">
+      <div class="row product-form-row">
+        <div class="input-field col s12 product-form-row">
           <textarea id ="productinfo" class="materialize-textarea" placeholder="Muistiinpanoja"></textarea>
         </div>
       </div>
@@ -201,6 +201,7 @@
 <script src="js/ui.js"></script>
 <script src="js/db.js"></script>
 <script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
+<!--<script src="js/localbase.min.js"></script>-->
 
 <script>
     const db = new Localbase('helperdb');

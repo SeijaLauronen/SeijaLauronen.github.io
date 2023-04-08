@@ -1,10 +1,13 @@
-const programVersion = '2023-04-04: 734';
-const staticCacheName = 'pwaui-static-734'; 
-const dynamicCacheName = 'pwaui-dynamic-734'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const programVersion = '2023-04-08: 743';
+const staticCacheName = 'pwaui-static-743'; 
+const dynamicCacheName = 'pwaui-dynamic-743'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not found, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dynaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi
 //TODO riittäisikö uudempi jquery?
+//miksi localbase ei toimi paikallisesta?
+//localbase käyttää myös tätä: https://www.googletagmanager.com/gtag/js?id=UA-140352188-1
+
 const assets = [
   '/',
   'index.html',
@@ -15,6 +18,8 @@ const assets = [
   'js/materialize.min.js',
   'css/styles.css',
   'css/materialize.min.css',
+  'https://unpkg.com/localbase/dist/localbase.min.js',
+  'https://www.googletagmanager.com/gtag/js?id=UA-140352188-1',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
   'https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js',
