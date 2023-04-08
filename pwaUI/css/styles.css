@@ -121,6 +121,19 @@ nav .sidenav-trigger{
   position: relative;
   min-height: 35px;
 }
+
+.card-panel.productToShop {
+  border-radius: 8px;
+  padding: 2px 5px 2px 10px;
+  margin: 0px;
+  box-shadow: 0px 1px 3px rgba(90,90,90,0.1);
+  display: grid;
+  grid: 15px auto / 30px auto 30px;
+  background-color: #2196F3;
+  position: relative;
+  min-height: 35px;
+}
+
 .product.category-info{
   /*grid-area: pcat;*/
   /*grid-column: 3 / span 1;*/
@@ -430,12 +443,35 @@ input[type="checkbox"] {
   background-color: lightyellow;
   font-size: 18px!important;
   margin-bottom: 0px;
+  /*
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.5;
+  */
+  padding: 0px 2rem 0px 2rem !important;
+  /*
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  */
 }
+
 /* rgb(254, 254, 234);*/
-.collapsible-body{
+.collapsible-body {
   background-color: rgb(252, 252, 241);
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  /*
+  display: none;
+  border-bottom: 1px solid #ddd;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  */
+  padding: 0px!important;
 }
+
 
 /* materialilzezta etsitty, mitkä vois vaikuttaa pienten checkboxikonien kokoon*/
 /* i.tiny { */

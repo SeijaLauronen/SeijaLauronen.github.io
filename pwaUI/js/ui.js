@@ -623,59 +623,94 @@ function uiLoadProductsToShop(){
   dbGetProducts(uiRenderProductListToShop);
 }
 
+
 function uiRenderProductListToShop(products){
     
-    let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
-    let productsParsed= JSON.parse(products);
-    let catObj = null;
-    let catname = "";
-    let product = null;
-    let checkedText = "";
-    let html =``;
-    for (let i=0; i< productsParsed.length; i++){
-          product=productsParsed[i];
-          catObj = categoryArray.find(record => record.id == product.cId);
-          catname = "";
-          if (catObj != null) { //tarkistus, jos tuotteelle merkitty kategoria onkin poistettu, ettei kaadu
-            catname=catObj.name;
-          }
-          checkedText = ""; 
-          if (product.collected == true) {
-            checkedText = "checked=true";
-          }
-          html =``;
-          if (product.toList == true) {
-                html =`
-                <div class="card-panel product white row" product-id="${product.id}">
+  let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
+  var categoryArraySorted = categoryArray.sort(({ordernro:a}, {ordernro:b}) => a-b)
+  let productsParsed= JSON.parse(products);
 
-                  <div class="product category-info">
-                    <span class="product-category" productcategory-id="${product.id}" hidden>${product.cId}</span>
-                    <span class="product-category" productcategoryname-id="${product.id}">${catname}</span>
-                  </div>
-                  
-                  <div class="product-edit sidenav-trigger" data-target="side-form-product">
-                    <i class="material-icons" product-id="${product.id}">edit</i>
-                  </div>
-                  
-                  <div class="product-details">
-                    <div class="product-name flow-text" productname-id="${product.id}">${product.name}
+  let selectedProducts = productsParsed.filter(record => record.toList == true);
+
+
+    for (let j=0; j< categoryArraySorted.length; j++){
+      let currentCategoryProds = selectedProducts.filter(record => record.cId == categoryArraySorted[j].id);
+
+      let catname = categoryArraySorted[j].name;
+      let product = null;
+      let checkedText = "";
+      let countProds = " (" + currentCategoryProds.length + ")";
+
+      starthtml =`
+      <li class="active">
+        <div class="collapsible-header row" >
+          <div class ="col s11">${catname}${countProds} </div>
+          <div class ="col s1">
+            <i class="material-icons">expand_more</i>
+          </div>
+        </div> 
+        <div class="collapsible-body">
+      `;
+      
+      endhtml =`
+      </div>
+      </li>
+      `;
+
+      let productshtml=``;
+
+      let html =``;
+      for (let i=0; i< currentCategoryProds.length; i++){
+                product=currentCategoryProds[i];
+
+                checkedText = ""; 
+                if (product.collected == true) {
+                  checkedText = "checked=true";
+                }
+                
+                
+                      html =`
+                  <div class="card-panel productToShop white row" product-id="${product.id}">
+                    
+                    <div class="product-edit sidenav-trigger" data-target="side-form-product">
+                      <i class="material-icons" product-id="${product.id}">edit</i>
                     </div>
-                  </div>
+                    
+                    <div class="product-details">
+                      <div class="product-name flow-text" productname-id="${product.id}">${product.name}
+                      </div>
+                    </div>
 
-                  <div class="product checkbox">
-                    <label>
-                      <input type="checkbox" class="filled-in my-collected" productchecked-id="${product.id}" ${checkedText} />
-                    </label>
-                  </div>
-              </div>
-                `;
-              productListToShop.innerHTML += html;
-        }
-  }
-   // Skrollataan samaan kohtaan vain ei olla valitussa kategoriassa.. Voi olla tarpeellista muuttaa
-  if (localStorage.getItem("helper-shoppinglist-quote-scroll") != null) {
-    $(window).scrollTop(localStorage.getItem("helper-shoppinglist-quote-scroll")); 
-  }
+                    <div class="product checkbox">
+                      <label>
+                        <input type="checkbox" class="filled-in my-collected" productchecked-id="${product.id}" ${checkedText} />
+                      </label>
+                    </div>
+                </div>
+                  `;
+                //productListToShop.innerHTML += html;
+                productshtml += html;
+                //productshtml +=` ${product.name}`;
+                
+
+      }
+
+      if (currentCategoryProds.length>0) {
+        productListToShop.innerHTML += starthtml + productshtml + endhtml;
+      }
+
+    }
+
+    var collElems = document.querySelectorAll('.collapsible');
+    //var collInstances = M.Collapsible.init(collElems, "accordion");
+    var collInstances = M.Collapsible.init(collElems, {
+      accordion: false
+    });
+
+    // Skrollataan samaan kohtaan vain ei olla valitussa kategoriassa.. Voi olla tarpeellista muuttaa
+    if (localStorage.getItem("helper-shoppinglist-quote-scroll") != null) {
+      $(window).scrollTop(localStorage.getItem("helper-shoppinglist-quote-scroll")); 
+    }
 }
 
 
