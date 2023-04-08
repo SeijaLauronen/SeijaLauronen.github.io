@@ -309,6 +309,7 @@ function uiRenderProductList(products){
       let html =``;
       for (let i=0; i< productsParsed.length; i++){
           product=productsParsed[i];
+          /* Värit vaiheittain */
           phaseHtml = uiRenderPhaseHtml(product);
 
           catObj = categoryArray.find(record => record.id == product.cId);
@@ -574,21 +575,55 @@ if (addClassButton != null){
 const classList = document.querySelector('.productClasses');
 function uiLoadClasses(){
   classList.innerHTML ="";
-  dbGetClasses(uiRenderClassList);
+  //dbGetClasses(uiRenderClassList);
+  dbGetClassesAndProducts(uiRenderClassList);
+  //dbGetClasses(dbGetProducts(uiRenderClassList));
   console.log("uiLoadClasses");
 }
 
-function uiRenderClassList(productclasses) {
+//function uiRenderClassList(productclasses) {
+  function uiRenderClassList(products) {
+
     var html =``;
     let pclass = null;
-    let classesParsed= JSON.parse(productclasses);
+    //let classesParsed= JSON.parse(productclasses);
+    let classesParsed= JSON.parse(sessionStorage.getItem("sessionClasses"));
     var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
-
+    let productsParsed = JSON.parse(products);
 
     // <ul class="collapsible expandable container green lighten-5">
     //TODO expand vaihtumaan more-> less sen mukaan onko auki vai kiinni
     for (let i=0; i< classesSorted.length; i++){
         pclass=classesSorted[i];
+        prodInClass=productsParsed.filter(record=>record.classId==pclass.id);
+
+        starthtml  =`
+            <li class="active">
+              <div class="collapsible-header row" data-id="${pclass.id}">
+                <div class ="col s11">${pclass.name} </div>
+                <div class ="col s1">
+                  <i class="material-icons">expand_more</i>
+                </div>
+              </div> 
+              <div class="collapsible-body">
+          `;
+
+          endhtml =`
+          </div>
+            </li>
+          `;
+
+          prodhtml ="";
+          for (let j=0; j< prodInClass.length; j++){
+            product = prodInClass[j];
+            phaseHtml = uiRenderPhaseHtml(product);
+
+              prodhtml +=`
+                <div>${phaseHtml} ${product.name}</div>
+                `;
+          }
+
+/*
           html =`
             <li class="active">
               <div class="collapsible-header row" data-id="${pclass.id}">
@@ -600,7 +635,10 @@ function uiRenderClassList(productclasses) {
               <div class="collapsible-body"><span>Tässä sitten jotain</span></div>
             </li>
           `;
-          classList.innerHTML += html;
+          */
+
+          //classList.innerHTML += html;
+          classList.innerHTML += starthtml + prodhtml + endhtml ;
     }
 
 
@@ -649,7 +687,6 @@ function uiRenderProductListToShop(products){
             <i class="material-icons">expand_more</i>
           </div>
         </div> 
-        <div class="spaceElement"></div>
         <div class="collapsible-body toshop">
       `;
       

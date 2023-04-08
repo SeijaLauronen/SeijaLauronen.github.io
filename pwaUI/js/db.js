@@ -366,6 +366,17 @@ function dbGetClasses(callback){
         callback(sessionStorage.getItem("sessionClasses"));
         })        
 }
+
+function dbGetClassesAndProducts(callback){
+    db.collection('productclass').orderBy('ordernro', 'asc').get()
+    .then(classes => {
+        sessionStorage.setItem("sessionClasses",JSON.stringify(classes));
+        dbGetProducts(callback);
+        // callback(sessionStorage.getItem("sessionClasses"));
+        }) 
+              
+}
+
 function dbAddClass(pcname, pcordernro,callback){
     // First get new categoryId
     var pcordernroInt = 0;
