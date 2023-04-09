@@ -673,6 +673,88 @@ function uiLoadClasses(){
  
 }
 
+
+/*******************************************Ateriat ****************************************/
+/**********************************************************************************************/
+
+/****************** Luokan lisäys footerissa ********/
+const addMealButton = document.querySelector('#addMealBtn');
+const inputMeal = document.querySelector('#mealinput');
+if (addMealButton != null){
+  addMealButton.addEventListener('click',evt => {
+      let mealname=mealinput.value;
+      let ordernro=orderinput.value;
+        evt.preventDefault();
+        dbAddMeal(mealname, ordernro, uiLoadMeals);
+        mealinput.value=""; //TODO vasta jos meni ok?
+        orderinput.value=null; //TODO vasta jos meni ok?
+    })
+}
+
+const mealList = document.querySelector('.mealList');
+function uiLoadMeals(){
+  mealList.innerHTML ="";
+  //dbGetClasses(uiRenderClassList);
+  dbGetMeals(uiRenderMealList);
+  //dbGetClasses(dbGetProducts(uiRenderClassList));
+  console.log("uiLoadMeals");
+}
+
+function uiRenderMealList(meals) {
+
+    var html =``;
+    let meal = null;
+  
+    let mealsParsed= JSON.parse(meals);
+    var mealsSorted = mealsParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+    
+
+    for (let i=0; i< mealsSorted.length; i++){
+        meal=mealsSorted[i];
+        
+        starthtml  =`
+            <li class="active">
+              <div class="collapsible-header row" data-id="${meal.id}">
+                <div class ="col s11">${meal.name} </div>
+                <div class ="col s1">
+                  <i class="material-icons">expand_more</i>
+                </div>
+              </div> 
+              <div class="collapsible-body">
+          `;
+
+          endhtml =`
+          </div>
+            </li>
+          `;
+
+          ingrediesntshtml ="";
+          ingredientshtml = "Tähän tulee sisältöä ";
+          /*
+          for (let j=0; j< prodInClass.length; j++){
+            product = prodInClass[j];
+            phaseHtml = uiRenderPhaseHtml(product);
+
+              prodhtml +=`
+                <div>${phaseHtml} ${product.name}</div>
+                `;
+          }
+          */
+
+          mealList.innerHTML += starthtml + ingredientshtml + endhtml ;
+    }
+
+
+    //voisi laittaa myös renderöinnin loppuun, varsinkin jos eri tavalla käyttäytyviä collapsiblejä
+    var collElems = document.querySelectorAll('.collapsible');
+    //var collInstances = M.Collapsible.init(collElems, "accordion");
+    var collInstances = M.Collapsible.init(collElems, {
+      accordion: false
+    });
+    
+ 
+}
+
 /**********************************************************************************************/
 /********************************** Ostoslista ************************************************/
 const productListToShop = document.querySelector('.productsToShop');

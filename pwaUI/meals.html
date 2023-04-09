@@ -73,12 +73,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     <div id="side-menu" class="sidenav side-menu"></div>
  
     <!-- --------------------------------------MEALSLIST--------------------------------------------------------------------- -->
-    <!-- productClasses -->
+    <!-- Meals -->
     <div class="meals container green lighten-5" id="meallistcontainer">
-        <!--
-        <ul class="collapsible productClasses container green lighten-5"></ul>
-        -->
-        <ul class="collapsible expandable productClasses container green lighten-5"></ul>
+        <ul class="collapsible expandable mealList container green lighten-5"></ul>
     </div>
      
 
@@ -90,14 +87,14 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
     <div class="container">
       <div class="row lowrow">
                 <div class="col s8 nospaceright">
-                    <input placeholder="Uusi luokitus" id="classinput" type="text" class="validate low">
+                    <input placeholder="Uusi ateria" id="mealinput" type="text" class="validate low">
                 </div>
                 <div class="col s2 nospaceright">
                   <input placeholder="nro" id="orderinput" type="number" class="validate low">
               </div>
 
                 <div class="col s2 nospaceleft">
-                    <a class="btn-small add-btn" id="addClassBtn" data-target="side-form">
+                    <a class="btn-small add-btn" id="addMealBtn" data-target="side-form">
                         <i class="material-icons">add</i>
                     </a>
                 </div>
@@ -118,7 +115,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
     <script>
       const db = new Localbase('helperdb');
-      uiLoadClasses();//Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
+      uiLoadMeals();//Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
     </script>
 
 </body>

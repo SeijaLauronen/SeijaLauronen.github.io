@@ -92,6 +92,32 @@ function dbSetClassId(clid) {
     })
 } 
 
+function dbInitMealId() {
+    console.log('initMealId')
+    db.collection('dbsettings').add(
+        {
+            skey: 'mealId',
+            value: 1
+        }
+    )
+    .catch(error => {
+        console.log('There was an init error (mealId), do something else.', error)
+    })
+} 
+
+function dbSetMealId(mid) {
+    db.collection('dbsettings').doc({skey : 'mealId'}).set(
+        {
+            skey: 'mealId',
+            value: mid
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.')
+        alert ("Ei onnistu dbsettings mealId laitto")
+    })
+}
+
 /**********************************************************************************************/
 /************************************ category ************************************************/
 /**********************************************************************************************/
@@ -420,6 +446,62 @@ function dbAddClass(pcname, pcordernro,callback){
     }) 
     .catch( e =>
             console.log("AddBtn Virhe productclass lisäyksessä",e)
+    );
+}
+
+
+
+/**********************************************************************************************/
+/********************************** Meals ***************************************************/
+/**********************************************************************************************/
+function dbGetMeals(callback){
+    db.collection('meal').orderBy('ordernro', 'asc').get().then(meals => {        
+        callback(JSON.stringify(meals)); // Onko JSON.stringify turha, kun sitten vastaanotava pää kuitenkin joutuu parsimaan?
+        })        
+}
+
+function dbAddMeal(mname, ordernro, callback){
+    // First get new categoryId
+    var ordernroInt = 0;
+    if (ordernro !="") {
+        ordernroInt = parseInt(ordernro);
+    }
+
+    db.collection('dbsettings').doc({ skey: 'mealId' }).get().then(setting => {
+        let mid = 1;
+        if(setting != null) {
+            mid = setting.value + 1;
+        }
+
+        if (mname == "") {
+            mname ='Uusi ateria ' + mid.toString();
+        }
+        
+        const meal = {
+            id:mid,
+            name:mname,
+            ordernro:ordernroInt
+        }
+        //Then add new category
+        db.collection('meal')
+            .add(meal)
+            .then( reload => {
+                callback();
+            })
+            .then( updnextMId =>
+                {  
+                    if(setting == null){
+                        dbInitMealId();
+                    } else {
+                        dbSetMealId(productclass.id);
+                    }
+                }
+            )
+            .catch(err =>console.log(err));
+            // inputCategory.value = ""; // viittaa UI:hin
+    }) 
+    .catch( e =>
+            console.log("AddBtn Virhe aterian (meal) lisäyksessä",e)
     );
 }
 
