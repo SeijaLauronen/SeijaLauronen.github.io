@@ -250,7 +250,7 @@ function uiRenderPhaseHtml(product){
 
   if (product.phase1 != null && product.phase1 == true) 
   { 
-    v1Color="yellow";
+    v1Color="amber";
     v1Visible ="";
     phases = true;
   } 

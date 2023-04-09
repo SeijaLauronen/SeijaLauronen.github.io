@@ -520,3 +520,24 @@ input[type="checkbox"] {
   margin-bottom: 2px!important;
 }
 
+/* meals */
+.meals.weekdays.container {
+  height:60px!important;
+  margin: 60px 25px 5px 10px;
+  padding: 2px 15px 2px 5px;
+
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  width: 95%;
+  left: 0;
+}
+#meallistcontainer {
+  margin-top:120px!important;
+
+  margin-bottom: 150px;
+  margin-left: 10px;
+  margin-right: 10px; /* tällä ei vaikutusta*/
+  width: 95%;
+  background-color: rgb(76, 70, 153)!important;
+}
