@@ -105,16 +105,11 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
 
 
-
-
-
-
     <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
     <div id="side-menu" class="sidenav side-menu"></div>
 
 
    
-
  
     <!-- --------------------------------------CLASSLIST--------------------------------------------------------------------- -->
     <!-- productClasses -->
@@ -127,8 +122,56 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
      
 
 
+<!-- -------------------------------------- FORM  --------------------------------------------------------------------- -->
+    <!-- add category side nav form -->
+    
+    <div id="side-form-productclass" class="sidenav side-form">
 
+      <form id="productclassForm">
+        <div class="row form-header">
+          <div class="col s10">
+            <h6>Luokan tiedot</h6>
+          </div>
+          <div class="col s2 formclose">
+            <i class="material-icons">close</i>
+          </div>
+        </div>
 
+        <div class="edit-class container section">          
+          <div> ID                 
+            <input id="classId" type="number" disabled>  
+          </div>  
+
+          <div>Järjestysnumero               
+            <input placeholder="Järjestysnumero" id="inputClassOrdernro" type="number" class="validate">  
+          </div>
+
+          <div class="input-field input1">
+            <input placeholder="Luokan nimi" id="input1" type="text" class="validate">
+          </div>
+          
+          <div class="center">
+
+            <button class="btn-small left default-button-handler" type="submit" id="defaultActionClass" >
+              <i class="material-icons">check</i>
+            </button>
+
+            <button class="btn-large del-btn red left" type="submit" id="delClass" >
+              <i class="material-icons">delete</i>
+            </button>
+
+            <button class="btn-large right" type="submit" id="updateClass" >
+              <i class="material-icons">check</i>
+            </button>
+            
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+
+<!-- -------------------------------------- FOOTER  --------------------------------------------------------------------- -->
 
   <footer class="footer page-footer green lighten-5">
     <div class="container">

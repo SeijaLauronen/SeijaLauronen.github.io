@@ -243,7 +243,7 @@ function dbAddCategory(cname, callback){
 /**********************************************************************************************/
 
 /********************************** events from product list **********************************/
-// zzz: tulkitsee ekakerralla jostain että halutaan doc, eikä collection!?
+// TODO tulkitsee ekakerralla jostain että halutaan doc, eikä collection!?
 //localebase.min.js kohdassa 
         //var n = u.default.call(this);
         // return "collection" == n ? this.getCollection() : "doc" == n ? this.getDocument() : void 
@@ -403,6 +403,16 @@ function dbGetClassesAndProducts(callback){
               
 }
 
+function dbGetClass(pcid, callback) {
+    db.collection('productclass').doc({id : pcid}).get()
+    .then(productclass=> callback(productclass))
+    .catch(error => {
+        console.log('There was an error getting productclass, do something else.', error);
+        //alert ("Ei onnistu luokan haku ");
+        //throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
 function dbAddClass(pcname, pcordernro,callback){
     // First get new categoryId
     var pcordernroInt = 0;
@@ -449,6 +459,45 @@ function dbAddClass(pcname, pcordernro,callback){
     );
 }
 
+function dbDelClass(classId, page, callback) {
+    var toastTxt ="";
+    db.collection('productclass')
+    .doc({ id: classId })
+    .delete()
+    .then(response => {
+        console.log(response);
+        console.log('Deleting productclass successful, now do something.');
+        callback(page, toastTxt);
+    })
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        //alert ("Ei onnistu delete prod sumbitterillä", error);
+        //throw(error); // onnistuisko näin
+        toastTxt ="Ei onnistu delete prod sumbitterillä";
+        callback(page, toastTxt);
+    })
+}
+
+function dbUpdateClass(classId,className,classOrdernro,page,callback) {
+    let toastTxt ="";
+    let pcordernro = classId; // laitetaan id järjestysnumeroksi, jos sitä ei ole annettu
+    if (classOrdernro != "")
+    {
+        pcordernro = parseInt(classOrdernro);
+    }
+    db.collection('productclass').doc({id : classId}).set(
+        {
+            id: classId,
+            name: className,
+            ordernro: pcordernro
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        toastTxt = "Ei onnistu luokan muuttaminen";
+    })
+    callback(page, toastTxt);
+}
 
 
 /**********************************************************************************************/

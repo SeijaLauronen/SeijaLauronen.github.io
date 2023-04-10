@@ -614,6 +614,26 @@ if (addClassButton != null){
     })
 }
 
+/* edit klikkaa formin auki */
+const classlistcontainer = document.querySelector('#classlistcontainer');
+if (classlistcontainer != null){
+  classlistcontainer.addEventListener('click',evt => {
+    evt.preventDefault();
+    if (evt.target.innerText == 'edit') {
+      console.log(evt);
+      const classId = parseInt(evt.target.getAttribute('class-id'));      
+      dbGetClass(classId,fillClassForm)
+    }
+  })
+}
+
+function fillClassForm(productclass) {
+  productclassForm.input1.value=productclass.name;
+  productclassForm.classId.value = productclass.id;
+  productclassForm.inputClassOrdernro.value = productclass.ordernro;
+}
+
+
 /* Tuotteiden suodatus luokittelussa */
 const classFilter = document.querySelector('#classFilter');
 const v1 = document.querySelector('#productFilterPh1');
@@ -678,7 +698,12 @@ function uiRenderClassList(products) {
         starthtml  =`
             <li class="active">
               <div class="collapsible-header row" data-id="${pclass.id}">
-                <div class ="col s11">${pclass.name} </div>
+
+                <div class="col s2 class-edit sidenav-trigger" data-target="side-form-productclass">
+                  <i class="material-icons" class-id="${pclass.id}">edit</i>
+                </div>
+
+                <div class ="col s9">${pclass.name} </div>
                 <div class ="col s1">
                   <i class="material-icons">expand_more</i>
                 </div>
@@ -716,6 +741,29 @@ function uiRenderClassList(products) {
     });   
 }
 
+
+/*********************************** Luokitteluformin eventit ********************/ 
+const productclassForm = document.querySelector('#productclassForm');
+  if (productclassForm != null) {
+    productclassForm.addEventListener('submit', evt => {
+      evt.preventDefault(); //Ei suljeta submitilla
+      console.log(evt.submitter.id);
+      console.log.evt;
+  
+      const classId = parseInt(productclassForm.classId.value);
+      const className = productclassForm.input1.value;
+      const classOrdernro = productclassForm.inputClassOrdernro.value;
+
+      if (evt.submitter.id == "delClass") {
+        dbDelClass(classId,"productclass.html", closeFormReturnToPage);
+      }
+
+      if (evt.submitter.id == "updateClass" || evt.submitter.id == "defaultActionClass") {
+        dbUpdateClass(classId,className,classOrdernro,"productclass.html", closeFormReturnToPage);
+      }
+
+    });
+}
 
 /*******************************************Ateriat ****************************************/
 /**********************************************************************************************/
