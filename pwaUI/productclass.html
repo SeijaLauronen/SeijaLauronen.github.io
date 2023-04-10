@@ -64,16 +64,87 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       </div>
     </nav>
 
+    <!-- ------------------------------------ TOP Filter --------------------------------------- -->
+
+
+    <div class=" container green lighten-5">
+ 
+         
+        
+            
+
+           
+                <div class="stay-top container red lighten-5" id="classFilter">
+                 
+      
+                    <div class="subheader">Suodata</div>
+              
+                    <div class="row lowrow">
+                        <div class="col s2 yellow black-text">V1</div>
+                        <div class="col s2 green black-text">V2</div>
+                        <div class="col s2 red black-text">V3</div>
+                        <div class="col s1 "></div>
+                        <div class="col s5">Kielletty</div>
+                    </div>
+                  
+                    <div class="row lowrow">
+                        <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh1"/></div>
+                        <div class="col s2"><input type="checkbox" class="filled-in" id="productInputPh2"/></div>
+                        <div class="col s3"><input type="checkbox" class="filled-in" id="productInputPh3"/></div>
+                        <div class="col s5"><input type="checkbox" class="filled-in" id="productInputForbidden"/></div>
+                    </div>
+                                       
+
+                </div>
+
+                <!-- ------------------------------------ TOP Add Class --------------------------------------- -->
+
+                <div class="stay-top container green lighten-5 " id="classAdding">      
+                  <div class="row lowrow">
+                      <div class="col s8 nospaceright">
+                          <input placeholder="Uusi luokitus" id="classinput" type="text" class="validate low">
+                      </div>
+                      <div class="col s2 nospaceright">
+                        <input placeholder="nro" id="orderinput" type="number" class="validate low">
+                      </div>
+
+                      <div class="col s2 nospaceleft">
+                          <a class="btn-small add-btn" id="addClassBtn" data-target="side-form">
+                              <i class="material-icons">add</i>
+                          </a>
+                      </div>
+                  </div>
+                </div>
+         
+
+       
+
+        
+        
+
+
+  </div>
+
+
+
+
+
+
+
     <!-- -------------------------------------- SIDEMENU --------------------------------------------------------------------- -->
     <div id="side-menu" class="sidenav side-menu"></div>
+
+
+   
+
  
     <!-- --------------------------------------CLASSLIST--------------------------------------------------------------------- -->
     <!-- productClasses -->
-    <div class="producclasses container green lighten-5" id="classlistcontainer">
-    <!--
-    <ul class="collapsible productClasses container green lighten-5"></ul>
-    -->
-    <ul class="collapsible expandable productClasses container green lighten-5"></ul>
+    <div class="productclasses container green lighten-5" id="classlistcontainer">
+        <!--
+        <ul class="collapsible productClasses container green lighten-5"></ul>
+        -->
+        <ul class="collapsible expandable productClasses container green lighten-5"></ul>
     </div>
      
 
@@ -84,6 +155,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
   <footer class="footer page-footer green lighten-5">
     <div class="container">
       <div class="row lowrow">
+        <!--
                 <div class="col s8 nospaceright">
                     <input placeholder="Uusi luokitus" id="classinput" type="text" class="validate low">
                 </div>
@@ -96,6 +168,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
                         <i class="material-icons">add</i>
                     </a>
                 </div>
+        -->
       </div>
       <!-- common for all pages: -->
       <div id="footernav" class="footernavigation"></div>
