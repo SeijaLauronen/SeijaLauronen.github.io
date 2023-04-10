@@ -509,6 +509,16 @@ function dbGetMeals(callback){
         })        
 }
 
+function dbGetMeal(mid, callback) {
+    db.collection('meal').doc({id : mid}).get()
+    .then(meal=> callback(meal))
+    .catch(error => {
+        console.log('There was an error getting meal, do something else.', error);
+        //alert ("Ei onnistu luokan haku ");
+        //throw(error); // onnistuisko näin TODO toastilla callbackin kanssa
+    })
+}
+
 function dbAddMeal(mname, ordernro, callback){
     // First get new categoryId
     var ordernroInt = 0;
@@ -542,7 +552,7 @@ function dbAddMeal(mname, ordernro, callback){
                     if(setting == null){
                         dbInitMealId();
                     } else {
-                        dbSetMealId(productclass.id);
+                        dbSetMealId(meal.id);
                     }
                 }
             )
@@ -552,6 +562,47 @@ function dbAddMeal(mname, ordernro, callback){
     .catch( e =>
             console.log("AddBtn Virhe aterian (meal) lisäyksessä",e)
     );
+}
+
+
+function dbDelMeal(mealId, page, callback) {
+    var toastTxt ="";
+    db.collection('meal')
+    .doc({ id: mealId })
+    .delete()
+    .then(response => {
+        console.log(response);
+        console.log('Deleting meal successful, now do something.');
+        callback(page, toastTxt);
+    })
+    .catch(error => {
+        console.log('There was an error (meal), do something else.', error);
+        //alert ("Ei onnistu delete prod sumbitterillä", error);
+        //throw(error); // onnistuisko näin
+        toastTxt ="Ei onnistu delete meal sumbitterillä";
+        callback(page, toastTxt);
+    })
+}
+
+function dbUpdateMeal(mealId,mealName,mealOrdernro,page,callback) {
+    let toastTxt ="";
+    let mordernro = mealId; // laitetaan id järjestysnumeroksi, jos sitä ei ole annettu
+    if (mealOrdernro != "")
+    {
+        mordernro = parseInt(mealOrdernro);
+    }
+    db.collection('meal').doc({id : mealId}).set(
+        {
+            id: mealId,
+            name: mealName,
+            ordernro: mordernro
+        }
+    )
+    .catch(error => {
+        console.log('There was an error, do something else.', error);
+        toastTxt = "Ei onnistu aterian muuttaminen";
+    })
+    callback(page, toastTxt);
 }
 
 /**********************************************************************************************/
@@ -602,6 +653,15 @@ function deleteProductclass() {
            { 
             console.log("productclass deleted");
             //emptyClasses();
+           }
+    );
+}
+
+function deleteCollection(collection) {
+    db.collection(collection).delete()
+        .then( x=>
+           { 
+            console.log(collection + " deleted");
            }
     );
 }

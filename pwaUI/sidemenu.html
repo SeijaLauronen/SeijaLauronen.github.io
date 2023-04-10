@@ -19,6 +19,7 @@
   <li><a> <button class="btn-small red" id="deletecategory">Poista kategoriat</button> </a></li>
   <li><a> <button class="btn-small red" id="deleteproduct">Poista tuotteet</button> </a></li>
   <li><a> <button class="btn-small red" id="deleteproductclass">Poista luokittelut</button> </a></li>
+  <li><a> <button class="btn-small red" id="deletemeal">Poista ateriat</button> </a></li>
   <li><a> <button class="btn-small red" id="deletedb">Poista kaikki tiedot</button> </a></li>
 
   <li><div class="divider"></div></li>
@@ -58,6 +59,13 @@
         evt.preventDefault();
         deleteProductclass();
     });
+
+    const deletemealButton = document.querySelector('#deletemeal');
+    deletemealButton.addEventListener('click', evt => {
+        evt.preventDefault();
+        deleteCollection('meal');
+    });
+
 
 
   /*

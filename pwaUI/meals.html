@@ -78,9 +78,72 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
         <ul class="collapsible expandable mealList container green lighten-5"></ul>
     </div>
      
+<!-- -------------------------------------- FORM  --------------------------------------------------------------------- -->
+    <!-- add category side nav form -->
+    
+    <div id="side-form-meal" class="sidenav side-form">
+
+      <form id="mealForm">
+        <div class="row form-header">
+          <div class="col s10">
+            <h6>Aterian tiedot</h6>
+          </div>
+          <div class="col s2 formclose">
+            <i class="material-icons">close</i>
+          </div>
+        </div>
+
+        <div class="edit-class container section">          
+          <div> ID                 
+            <input id="mealId" type="number" disabled>  
+          </div>  
+
+          <div>Järjestysnumero               
+            <input placeholder="Järjestysnumero" id="inputMealOrdernro" type="number" class="validate">  
+          </div>
+
+          <div class="input-field input1">
+            <input placeholder="Ateriatyypin nimi" id="input1" type="text" class="validate">
+          </div>
 
 
+          <!-- Vaihevalinta-->
+          <div class="row">
+            <div class="phasecol col s2 amber black-text">V1 <input type="checkbox" class="filled-in filtercheckbox" id="Ph1"/></div>
+            <div class="phasecol col s2 green black-text">V2 <input type="checkbox" class="filled-in filtercheckbox" id="Ph2"/></div>
+            <div class="phasecol col s2 red black-text">V3 <input type="checkbox" class="filled-in filtercheckbox" id="Ph3"/></div>                        
+            <div class="phasecol col s4 blue lighten-4">Muu <input type="checkbox" class="filled-in filtercheckbox" id="other"/></div>
+          </div>
 
+
+          
+          <!-- valintalista luokitukselle -->
+          <div  class="productClassCheckboxSelect">
+          </div>
+
+          <!-- BUTTONS-->
+          <div class="center">            
+
+            <button class="btn-small left default-button-handler" type="submit" id="defaultActionClass" >
+              <i class="material-icons">check</i>
+            </button>
+
+            <button class="btn-large del-btn red left" type="submit" id="delMeal" >
+              <i class="material-icons">delete</i>
+            </button>
+
+            <button class="btn-large right" type="submit" id="updateMeal" >
+              <i class="material-icons">check</i>
+            </button>
+            
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+
+<!-- -------------------------------------- FOOTER  --------------------------------------------------------------------- -->
 
 
   <footer class="footer page-footer green lighten-5">

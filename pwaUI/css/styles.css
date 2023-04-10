@@ -574,3 +574,7 @@ input[type="checkbox"] {
   display: inline!important;
   margin: 7px 2px 0px 7px;
 }
+/* mealsForm*/
+.productClassCheckboxSelect{
+  height: auto;
+}

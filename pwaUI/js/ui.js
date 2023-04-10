@@ -508,6 +508,35 @@ const renderProductClassDropDown = (productClassId) => {
 }
 
 
+const productClassCheckboxSelect = document.querySelector('.productClassCheckboxSelect');
+const renderProductClassCheckboxList = (productClassIdArray) => {
+  //TODO tutki array, laita checked sen mukaan
+      let prodClasses = sessionStorage.getItem("sessionClasses");
+      let classesParsed= JSON.parse(prodClasses);
+      var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+      let classId =0;
+      let html =``;
+      productClassCheckboxSelect.innerHTML = html;
+      for (let i=0; i < classesSorted.length; i++){   
+        classId=classesSorted[i].id;
+        classname=classesSorted[i].name;
+          
+            html =`
+            <div class="row productclass checkbox">
+              <div class="col s2">
+                    <input type="checkbox" class="filled-in my-collected" productclasschecked-id="${classId}" />
+              </div>
+              <div class="col s8">
+                ${classname}
+              </div>
+            </div>
+            `
+            ;
+          
+          productClassCheckboxSelect.innerHTML += html;
+      }      
+}
+
 
 function fillProductForm(product){
   const productinfo = document.querySelector('#productinfo');
@@ -782,6 +811,29 @@ if (addMealButton != null){
     })
 }
 
+
+/* edit klikkaa formin auki */
+const meallistcontainer = document.querySelector('#meallistcontainer');
+if (meallistcontainer != null){
+  meallistcontainer.addEventListener('click',evt => {
+    evt.preventDefault();
+    if (evt.target.innerText == 'edit') {
+      console.log(evt);
+      const mealId = parseInt(evt.target.getAttribute('meal-id'));      
+      dbGetMeal(mealId,fillMealForm)
+    }
+  })
+}
+
+function fillMealForm(meal) {
+  mealForm.input1.value=meal.name;
+  mealForm.mealId.value = meal.id;
+  mealForm.inputMealOrdernro.value = meal.ordernro;
+  mealclassArray =[]; //TODO
+  renderProductClassCheckboxList(mealclassArray);
+}
+
+
 const mealList = document.querySelector('.mealList');
 function uiLoadMeals(){
   mealList.innerHTML ="";
@@ -804,12 +856,18 @@ function uiRenderMealList(meals) {
         meal=mealsSorted[i];
         
         starthtml  =`
-            <li class="active">
+            <li class="active">                
+
               <div class="collapsible-header row" data-id="${meal.id}">
-                <div class ="col s11">${meal.name} </div>
-                <div class ="col s1">
-                  <i class="material-icons">expand_more</i>
-                </div>
+                
+                  <div class="col s2 meal-edit sidenav-trigger" data-target="side-form-meal">
+                    <i class="material-icons" meal-id="${meal.id}">edit</i>
+                  </div>
+
+                  <div class ="col s11">${meal.name} </div>
+                  <div class ="col s1">
+                    <i class="material-icons">expand_more</i>
+                  </div>
               </div> 
               <div class="collapsible-body">
           `;
@@ -844,6 +902,28 @@ function uiRenderMealList(meals) {
     });
     
  
+}
+
+/*********************************** Luokitteluformin eventit ********************/ 
+const mealForm = document.querySelector('#mealForm');
+  if (mealForm != null) {
+    mealForm.addEventListener('submit', evt => {
+      evt.preventDefault(); //Ei suljeta submitilla
+      console.log(evt.submitter.id);
+      console.log.evt;
+  
+      const mealId = parseInt(mealForm.mealId.value);
+      const mealName = mealForm.input1.value;
+      const mealOrdernro = mealForm.inputMealOrdernro.value;
+
+      if (evt.submitter.id == "delMeal") {
+        dbDelMeal(mealId,"meals.html", closeFormReturnToPage);
+      }
+
+      if (evt.submitter.id == "updateMeal" || evt.submitter.id == "defaultActionClass") {
+        dbUpdateMeal(mealId,mealName,mealOrdernro,"meals.html", closeFormReturnToPage);
+      }
+    });
 }
 
 /**********************************************************************************************/
