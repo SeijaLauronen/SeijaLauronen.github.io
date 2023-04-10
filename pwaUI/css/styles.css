@@ -551,7 +551,7 @@ input[type="checkbox"] {
 
 /* classes */
 #classAdding {
-  margin-top: 156px!important;
+  margin-top: 56px!important;
   margin-bottom: 15px;
   margin-left: 10px;
   margin-right: 10px; /* tällä ei vaikutusta*/
@@ -561,7 +561,16 @@ input[type="checkbox"] {
 }
 
 #classFilter {
-  margin-top: 56px!important;
-  height:100px;
+  margin-top: 100px!important;
+  height: 80px;
+  padding: 5px;
+}
 
+.phasecol {
+  padding: 2px 2px 2px 7px!important;
+}
+.filtercheckbox {
+  transform: scale(1)!important;
+  display: inline!important;
+  margin: 7px 2px 0px 7px;
 }

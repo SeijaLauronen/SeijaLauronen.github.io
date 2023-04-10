@@ -64,38 +64,12 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       </div>
     </nav>
 
-    <!-- ------------------------------------ TOP Filter --------------------------------------- -->
-
+    <!-- ------------------------------------ TOP Add and Filter --------------------------------------- -->
 
     <div class=" container green lighten-5">
- 
-         
-        
-            
+                
 
-           
-                <div class="stay-top container red lighten-5" id="classFilter">
-              
-                    <div class="row lowrow">
-                        <div class="col s2 yellow black-text">V1</div>
-                        <div class="col s2 green black-text">V2</div>
-                        <div class="col s2 red black-text">V3</div>                        
-                        <div class="col s3">Kielletty</div>
-                        <div class="col s3 ">Kaikki</div>
-                    </div>
-                  
-                    <div class="row lowrow">
-                        <div class="col s2"><input type="checkbox" class="filled-in" id="productFilterPh1"/></div>
-                        <div class="col s2"><input type="checkbox" class="filled-in" id="productFilterPh2"/></div>
-                        <div class="col s2"><input type="checkbox" class="filled-in" id="productFilterPh3"/></div>
-                        <div class="col s3"><input type="checkbox" class="filled-in" id="productFilterForbidden"/></div>
-                        <div class="col s3"><input type="checkbox" class="filled-in" id="productFilterAll" checked/></div>
-                    </div>
-                       
-
-                </div>
-
-                <!-- ------------------------------------ TOP Add Class --------------------------------------- -->
+                <!-- --------------------------- TOP Add Class --------------------------------------- -->
 
                 <div class="stay-top container green lighten-5 " id="classAdding">      
                   <div class="row lowrow">
@@ -112,14 +86,20 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
                           </a>
                       </div>
                   </div>
-                </div>
-         
+                </div>  
 
-       
+                <!-- ------------------------- TOP Filter --------------------------------------- -->
+                <div class="stay-top container yellow lighten-4" id="classFilter">
+              
+                  <div class="row">
+                      <div class="phasecol col s2 amber black-text">V1 <input type="checkbox" class="filled-in filtercheckbox" id="productFilterPh1"/></div>
+                      <div class="phasecol col s2 green black-text">V2 <input type="checkbox" class="filled-in filtercheckbox" id="productFilterPh2"/></div>
+                      <div class="phasecol col s2 red black-text">V3 <input type="checkbox" class="filled-in filtercheckbox" id="productFilterPh3"/></div>                        
+                      <div class="phasecol col s3 grey">Kielletty <input type="checkbox" class="filled-in filtercheckbox" id="productFilterForbidden"/></div>
+                      <div class="phasecol col s3 yellow lighten-5 ">Kaikki <input type="checkbox" class="filled-in filtercheckbox" id="productFilterAll" checked/></div>
+                  </div>
 
-        
-        
-
+              </div>
 
   </div>
 
