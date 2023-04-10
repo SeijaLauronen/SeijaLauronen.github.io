@@ -226,6 +226,27 @@ function uiLoadProducts(){
   dbGetProducts(uiRenderProductList);
 }
 
+function uiRenderPhaseClasslist(product){
+  let classList ="";
+  if (product.phase1 != null && product.phase1 == true) 
+  { 
+    classList = "phase1 ";
+  } 
+  if (product.phase2 != null && product.phase2 == true) 
+  { 
+    classList += "phase2 ";
+  } 
+  if (product.phase3 != null && product.phase3 == true) 
+  { 
+    classList += "phase3 ";
+  } 
+  if (product.forbidden != null && product.forbidden == true) 
+  { 
+    classList = "forbidden ";
+  } 
+  return classList;
+}
+
 function uiRenderPhaseHtml(product){
   let html =``;
 
@@ -579,7 +600,7 @@ if (productForm != null) {
 /*******************************************Luokittelu ****************************************/
 /**********************************************************************************************/
 
-/****************** Luokan lisäys footerissa ********/
+/****************** Luokan lisäys  ********/
 const addClassButton = document.querySelector('#addClassBtn');
 const inputCategory = document.querySelector('#classinput');
 if (addClassButton != null){
@@ -593,6 +614,42 @@ if (addClassButton != null){
     })
 }
 
+/* Tuotteiden suodatus luokittelussa */
+const classFilter = document.querySelector('#classFilter');
+const v1 = document.querySelector('#productFilterPh1');
+const v2 = document.querySelector('#productFilterPh2');
+const v3 = document.querySelector('#productFilterPh3');
+const fb = document.querySelector('#productFilterForbidden');
+const all = document.querySelector('#productFilterAll');
+if (classFilter != null){
+    classFilter.addEventListener('click',evt => {
+
+      if (evt.target.type == 'checkbox') {
+
+        $(".filter").hide();
+        
+        if (all.checked == true) {
+          $(".filter").show();
+        } else {
+
+          if (v1.checked == true) {
+            $('.phase1').show();
+          }
+          if (v2.checked == true) {
+            $('.phase2').show();
+          }
+          if (v3.checked == true) {
+            $('.phase3').show();
+          }
+          if (fb.checked == true) {
+            $('.forbidden').show();
+          }
+        }
+
+      }   
+    })
+}
+
 const classList = document.querySelector('.productClasses');
 function uiLoadClasses(){
   classList.innerHTML ="";
@@ -602,11 +659,11 @@ function uiLoadClasses(){
   console.log("uiLoadClasses");
 }
 
-//function uiRenderClassList(productclasses) {
-  function uiRenderClassList(products) {
+function uiRenderClassList(products) {
 
     var html =``;
     let pclass = null;
+    let classlist ="";
     //let classesParsed= JSON.parse(productclasses);
     let classesParsed= JSON.parse(sessionStorage.getItem("sessionClasses"));
     var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
@@ -635,30 +692,18 @@ function uiLoadClasses(){
           `;
 
           prodhtml ="";
+          classlist ="";
           for (let j=0; j< prodInClass.length; j++){
             product = prodInClass[j];
+            classlist = (uiRenderPhaseClasslist(product));
+
             phaseHtml = uiRenderPhaseHtml(product);
 
               prodhtml +=`
-                <div>${phaseHtml} ${product.name}</div>
+                <div class="filter ${classlist}">${phaseHtml} ${product.name}</div>
                 `;
           }
 
-/*
-          html =`
-            <li class="active">
-              <div class="collapsible-header row" data-id="${pclass.id}">
-                <div class ="col s11">${pclass.name} </div>
-                <div class ="col s1">
-                  <i class="material-icons">expand_more</i>
-                </div>
-              </div> 
-              <div class="collapsible-body"><span>Tässä sitten jotain</span></div>
-            </li>
-          `;
-          */
-
-          //classList.innerHTML += html;
           classList.innerHTML += starthtml + prodhtml + endhtml ;
     }
 
@@ -668,9 +713,7 @@ function uiLoadClasses(){
     //var collInstances = M.Collapsible.init(collElems, "accordion");
     var collInstances = M.Collapsible.init(collElems, {
       accordion: false
-    });
-    
- 
+    });   
 }
 
 
