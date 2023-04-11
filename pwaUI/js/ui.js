@@ -805,6 +805,7 @@ if (addMealButton != null){
       let mealname=mealinput.value;
       let ordernro=orderinput.value;
         evt.preventDefault();
+        
         dbAddMeal(mealname, ordernro, uiLoadMeals);
         mealinput.value=""; //TODO vasta jos meni ok?
         orderinput.value=null; //TODO vasta jos meni ok?
@@ -829,6 +830,12 @@ function fillMealForm(meal) {
   mealForm.input1.value=meal.name;
   mealForm.mealId.value = meal.id;
   mealForm.inputMealOrdernro.value = meal.ordernro;
+  mealForm.Ph1.checked = meal.phase1;
+  mealForm.Ph2.checked = meal.phase2;
+  mealForm.Ph3.checked = meal.phase3;
+  mealForm.other.checked = meal.othertype;
+ 
+  
   mealclassArray =[]; //TODO
   renderProductClassCheckboxList(mealclassArray);
 }
@@ -904,27 +911,53 @@ function uiRenderMealList(meals) {
  
 }
 
-/*********************************** Luokitteluformin eventit ********************/ 
+/************************** Ateriaformin eventit ********************/ 
 const mealForm = document.querySelector('#mealForm');
   if (mealForm != null) {
     mealForm.addEventListener('submit', evt => {
       evt.preventDefault(); //Ei suljeta submitilla
       console.log(evt.submitter.id);
       console.log.evt;
-  
+      
       const mealId = parseInt(mealForm.mealId.value);
       const mealName = mealForm.input1.value;
       const mealOrdernro = mealForm.inputMealOrdernro.value;
+
+      const ph1 = document.querySelector('#Ph1');
+      const ph2 = document.querySelector('#Ph2');
+      const ph3 = document.querySelector('#Ph3');
+      const other = document.querySelector('#other');
+  
+      let mealPhase1 = false;
+      let mealPhase2 = false;
+      let mealPhase3 = false;
+      let mealOthertype = false;
+      if (ph1.checked == true) mealPhase1 = true;
+      if (ph2.checked == true) mealPhase2 = true;
+      if (ph3.checked == true) mealPhase3 = true;
+      if (other.checked == true)  mealOthertype = true;
+
+
+      const meal = {
+        id:mealId,
+        name:mealName,
+        ordernro:mealOrdernro,
+        phase1:mealPhase1,
+        phase2:mealPhase2,
+        phase3:mealPhase3,
+        othertype:mealOthertype
+      }
 
       if (evt.submitter.id == "delMeal") {
         dbDelMeal(mealId,"meals.html", closeFormReturnToPage);
       }
 
       if (evt.submitter.id == "updateMeal" || evt.submitter.id == "defaultActionClass") {
-        dbUpdateMeal(mealId,mealName,mealOrdernro,"meals.html", closeFormReturnToPage);
+        dbUpdateMeal(meal,"meals.html", closeFormReturnToPage);
       }
     });
 }
+
 
 /**********************************************************************************************/
 /********************************** Ostoslista ************************************************/

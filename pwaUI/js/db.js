@@ -584,19 +584,17 @@ function dbDelMeal(mealId, page, callback) {
     })
 }
 
-function dbUpdateMeal(mealId,mealName,mealOrdernro,page,callback) {
+function dbUpdateMeal(meal,page,callback) {
     let toastTxt ="";
-    let mordernro = mealId; // laitetaan id järjestysnumeroksi, jos sitä ei ole annettu
-    if (mealOrdernro != "")
+    let mordernro = meal.id; // laitetaan id järjestysnumeroksi, jos sitä ei ole annettu
+    if (meal.ordernro != "")
     {
-        mordernro = parseInt(mealOrdernro);
+        mordernro = parseInt(meal.ordernro);
+        meal.ordernro = mordernro;
     }
-    db.collection('meal').doc({id : mealId}).set(
-        {
-            id: mealId,
-            name: mealName,
-            ordernro: mordernro
-        }
+
+    db.collection('meal').doc({id : meal.id}).set(
+            meal
     )
     .catch(error => {
         console.log('There was an error, do something else.', error);
