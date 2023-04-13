@@ -508,36 +508,6 @@ const renderProductClassDropDown = (productClassId) => {
 }
 
 
-const productClassCheckboxSelect = document.querySelector('.productClassCheckboxSelect');
-const renderProductClassCheckboxList = (productClassIdArray) => {
-  //TODO tutki array, laita checked sen mukaan
-      let prodClasses = sessionStorage.getItem("sessionClasses");
-      let classesParsed= JSON.parse(prodClasses);
-      var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
-      let classId =0;
-      let html =``;
-      productClassCheckboxSelect.innerHTML = html;
-      for (let i=0; i < classesSorted.length; i++){   
-        classId=classesSorted[i].id;
-        classname=classesSorted[i].name;
-          
-            html =`
-            <div class="row productclass checkbox">
-              <div class="col s2">
-                    <input type="checkbox" class="filled-in my-collected" productclasschecked-id="${classId}" />
-              </div>
-              <div class="col s8">
-                ${classname}
-              </div>
-            </div>
-            `
-            ;
-          
-          productClassCheckboxSelect.innerHTML += html;
-      }      
-}
-
-
 function fillProductForm(product){
   const productinfo = document.querySelector('#productinfo');
   productForm.prodInput1.value = product.name;
@@ -834,12 +804,51 @@ function fillMealForm(meal) {
   mealForm.Ph2.checked = meal.phase2;
   mealForm.Ph3.checked = meal.phase3;
   mealForm.other.checked = meal.othertype;
- 
-  
-  mealclassArray =[]; //TODO
-  renderProductClassCheckboxList(mealclassArray);
+   
+  renderProductClassCheckboxList(meal);
 }
 
+const productClassCheckboxSelect = document.querySelector('.productClassCheckboxSelect');
+const renderProductClassCheckboxList = (meal) => {
+  //TODO tutki array, laita checked sen mukaan
+
+    let prodClasses = sessionStorage.getItem("sessionClasses");
+
+    let classesParsed= JSON.parse(prodClasses);
+    var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
+    let classId =0;
+    let html =``;
+    productClassCheckboxSelect.innerHTML = html;
+
+    for (let i=0; i < classesSorted.length; i++){   
+
+      classId=classesSorted[i].id;
+      classname=classesSorted[i].name;
+
+     
+      let tmp=[];
+      if (meal.mealclasses != null) {
+        tmp = meal.mealclasses.filter(record=>record.classId == classId);
+      }
+      checkedText = "";
+      if (tmp.length > 0)  checkedText = "checked=true";
+        
+          html =`
+          <div class="row meal-class-row class-id="${classId}">
+            <div class="col s2">
+                  <input type="checkbox" class="filled-in meal-class" productclasschecked-id="${classId}" ${checkedText}/>
+            </div>
+            <div class="col s8">
+              ${classname}
+            </div>
+          </div>
+          `
+          ;
+        
+        productClassCheckboxSelect.innerHTML += html;
+    }      
+    
+}
 
 const mealList = document.querySelector('.mealList');
 function uiLoadMeals(){
@@ -920,6 +929,7 @@ const mealForm = document.querySelector('#mealForm');
       console.log.evt;
       
       const mealId = parseInt(mealForm.mealId.value);
+
       const mealName = mealForm.input1.value;
       const mealOrdernro = mealForm.inputMealOrdernro.value;
 
@@ -949,10 +959,23 @@ const mealForm = document.querySelector('#mealForm');
       }
 
       if (evt.submitter.id == "delMeal") {
+        //Turhaa ifoa kerätty tähän asti, TODO paremmin
         dbDelMeal(mealId,"meals.html", closeFormReturnToPage);
       }
 
       if (evt.submitter.id == "updateMeal" || evt.submitter.id == "defaultActionClass") {
+        //let arraymealClasses = document.querySelectorAll(".meal-class:checked[productclasschecked-id].value");
+        let arraymealClasses = document.querySelectorAll(".meal-class:checked");
+        mealclasses=[];
+        for (let i=0; i< arraymealClasses.length; i++){
+          cId = parseInt(arraymealClasses[i].getAttribute("productclasschecked-id"));
+          classobj ={
+            classId:cId,
+            classinfo:"tmp"
+          }
+          mealclasses.push(classobj);
+        }
+        meal.mealclasses = mealclasses;
         dbUpdateMeal(meal,"meals.html", closeFormReturnToPage);
       }
     });

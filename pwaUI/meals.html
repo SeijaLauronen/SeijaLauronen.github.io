@@ -178,6 +178,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
 
     <script>
       const db = new Localbase('helperdb');
+      if (sessionStorage.getItem("sessionClasses") == null) {
+        dbGetClassesAndProducts();
+      }
       uiLoadMeals();//Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
     </script>
 
