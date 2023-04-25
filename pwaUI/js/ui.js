@@ -817,7 +817,19 @@ const renderProductClassCheckboxList = (meal) => {
     let classesParsed= JSON.parse(prodClasses);
     var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
     let classId =0;
-    let html =``;
+   
+    let html =`
+    <div class="row meal-class-row ">
+       <div class="col s2">
+          P  
+        </div>
+        <div class="col s2">
+          (V)
+        </div>
+        <div class="col s8">
+        </div>
+    </div>
+        `;
     productClassCheckboxSelect.innerHTML = html;
 
     for (let i=0; i < classesSorted.length; i++){   
@@ -827,23 +839,37 @@ const renderProductClassCheckboxList = (meal) => {
 
      
       let tmp=[];
+      checkedText = "";
+      checkedTextOptional ="";
       if (meal.mealclasses != null) {
         tmp = meal.mealclasses.filter(record=>record.classId == classId);
+        if (tmp.length > 0) {
+          checkedText = "checked=true";
+          if (tmp[0].optional != null && tmp[0].optional == true) {
+            checkedText ="";
+            checkedTextOptional = "checked=true";
+          }
+          if (tmp[0].obligator != null && tmp[0].obligator == true) {
+            checkedTextOptional =""
+            checkedText = "checked=true"
+          }
+        }
       }
-      checkedText = "";
-      if (tmp.length > 0)  checkedText = "checked=true";
         
-          html =`
-          <div class="row meal-class-row class-id="${classId}">
-            <div class="col s2">
-                  <input type="checkbox" class="filled-in meal-class" productclasschecked-id="${classId}" ${checkedText}/>
-            </div>
-            <div class="col s8">
-              ${classname}
-            </div>
-          </div>
-          `
-          ;
+      html =`
+      <div class="row meal-class-row class-id="${classId}">
+        <div class="col s2">
+              <input type="checkbox" class="filled-in meal-class obligator" productclasschecked-id="${classId}" ${checkedText}/>
+        </div>
+        <div class="col s2">
+            <input type="checkbox" class="filled-in meal-class optional" productclasschecked-id="${classId}" ${checkedTextOptional}/>
+        </div>
+        <div class="col s8">
+          ${classname}
+        </div>
+      </div>
+      `
+      ;
         
         productClassCheckboxSelect.innerHTML += html;
     }      
@@ -965,7 +991,7 @@ const mealForm = document.querySelector('#mealForm');
 
       if (evt.submitter.id == "updateMeal" || evt.submitter.id == "defaultActionClass") {
         //let arraymealClasses = document.querySelectorAll(".meal-class:checked[productclasschecked-id].value");
-        let arraymealClasses = document.querySelectorAll(".meal-class:checked");
+        let arraymealClasses = document.querySelectorAll(".meal-class:checked"); //TODO kukin luokka vain yhteen kertaan, jos molemmat ruksattu
         mealclasses=[];
         for (let i=0; i< arraymealClasses.length; i++){
           cId = parseInt(arraymealClasses[i].getAttribute("productclasschecked-id"));
@@ -973,6 +999,13 @@ const mealForm = document.querySelector('#mealForm');
             classId:cId,
             classinfo:"tmp"
           }
+          if (arraymealClasses[i].classList.contains("obligator")){
+            classobj.obligator =true;
+          }
+          if (arraymealClasses[i].classList.contains("optional")){
+            classobj.optional =true;
+          }
+          
           mealclasses.push(classobj);
         }
         meal.mealclasses = mealclasses;
