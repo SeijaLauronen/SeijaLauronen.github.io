@@ -578,3 +578,11 @@ input[type="checkbox"] {
 .productClassCheckboxSelect{
   height: auto;
 }
+.formbuttons {
+  margin-bottom: 70px;
+}
+.meal-class-row {
+  margin-bottom: 8px;
+  margin-right: 8px;
+  margin-left: 4px;
+}
