@@ -891,8 +891,9 @@ function uiRenderMealList(meals) {
     let meal = null;
   
     let mealsParsed= JSON.parse(meals);
-    var mealsSorted = mealsParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
-    
+    var mealsSorted = mealsParsed.sort(({ordernro:a}, {ordernro:b}) => a-b);
+    let classesArray = JSON.parse(sessionStorage.getItem("sessionClasses"));
+    let  ingredientshtml ="";
 
     for (let i=0; i< mealsSorted.length; i++){
         meal=mealsSorted[i];
@@ -919,8 +920,8 @@ function uiRenderMealList(meals) {
             </li>
           `;
 
-          ingrediesntshtml ="";
-          ingredientshtml = "Tähän tulee sisältöä ";
+          ingredientshtml ="";
+         // ingredientshtml = "Tähän tulee sisältöä ";
           /*
           for (let j=0; j< prodInClass.length; j++){
             product = prodInClass[j];
@@ -932,7 +933,36 @@ function uiRenderMealList(meals) {
           }
           */
 
-          mealList.innerHTML += starthtml + ingredientshtml + endhtml ;
+          let prefix = "";
+          let suffix = "";
+          if (meal.mealclasses != null) {
+              for (let j=0; j< meal.mealclasses.length; j++){
+                prefix = "";
+                suffix = "";
+                mealclass = meal.mealclasses[j];
+                classIdForMeal = mealclass.classId;
+                classObj = classesArray.find(record => record.id == classIdForMeal);
+                classNameForMeal = classObj.name;
+                if (mealclass.optional == true) {
+                  prefix = "(";
+                  suffix = ")";
+                }
+                /* overwrite, if both are true, obligator is stronger */
+                if (mealclass.obligator == true) {
+                  prefix = "";
+                  suffix = "";
+                }
+
+                if (mealclass.optional == true || mealclass.obligator == true) {
+                ingredientshtml +=`
+                    <div>${prefix}${classNameForMeal}${suffix}</div>
+                    `;
+                }
+              }
+          }
+
+
+        mealList.innerHTML += starthtml + ingredientshtml + endhtml ;
     }
 
 
