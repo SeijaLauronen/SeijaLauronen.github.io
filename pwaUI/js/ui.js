@@ -894,12 +894,18 @@ function uiRenderMealList(meals) {
     var mealsSorted = mealsParsed.sort(({ordernro:a}, {ordernro:b}) => a-b);
     let classesArray = JSON.parse(sessionStorage.getItem("sessionClasses"));
     let  ingredientshtml ="";
+    let filterText ="";
 
     for (let i=0; i< mealsSorted.length; i++){
         meal=mealsSorted[i];
-        
+        filterText =" filter";
+        if (meal.phase1 == true) {filterText += " phase1"}
+        if (meal.phase2 == true) {filterText += " phase2"}
+        if (meal.phase3 == true) {filterText += " phase3"}
+        if (meal.othertype == true) {filterText += " other"}
+
         starthtml  =`
-            <li class="active">                
+            <li class="active${filterText}">                
 
               <div class="collapsible-header row" data-id="${meal.id}">
                 
@@ -974,6 +980,42 @@ function uiRenderMealList(meals) {
     });
     
  
+}
+
+/* Aterioiden suodatus luokittelussa */
+const mealFilter = document.querySelector('#mealFilter');
+const mv1 = document.querySelector('#mealFilterPh1');
+const mv2 = document.querySelector('#mealFilterPh2');
+const mv3 = document.querySelector('#mealFilterPh3');
+const mot = document.querySelector('#mealFilterOther');
+const mall = document.querySelector('#mealFilterAll');
+if (mealFilter != null){
+  mealFilter.addEventListener('click',evt => {
+
+      if (evt.target.type == 'checkbox') {
+
+        $(".filter").hide();
+        
+        if (mall.checked == true) {
+          $(".filter").show();
+        } else {
+
+          if (mv1.checked == true) {
+            $('.phase1').show();
+          }
+          if (mv2.checked == true) {
+            $('.phase2').show();
+          }
+          if (mv3.checked == true) {
+            $('.phase3').show();
+          }
+          if (mot.checked == true) {
+            $('.other').show();
+          }
+        }
+
+      }   
+    })
 }
 
 /************************** Ateriaformin eventit ********************/ 
