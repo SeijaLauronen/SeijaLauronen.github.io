@@ -33,7 +33,7 @@
   <script type="text/javascript">
   $(document).ready(function () {
   // scrollTop after rendering list, not here
-      if (sessionStorage.getItem("selectedCategoryId") == null) {
+      if (localStorage.getItem("selectedCategoryId") == null) {
           $(window).on("scroll", function() {
               localStorage.setItem("helper-product-quote-scroll", $(window).scrollTop());
           });
@@ -205,18 +205,18 @@
 
 <script>
     const db = new Localbase('helperdb');
-    const categoryId = sessionStorage.getItem("selectedCategoryId");
-    const categoryName = sessionStorage.getItem("selectedCategoryName");
+    const categoryId = localStorage.getItem("selectedCategoryId");
+    const categoryName = localStorage.getItem("selectedCategoryName");
     if (categoryName != null) {
       document.querySelector(".pageheader").innerHTML=categoryName.substring(0,30);
       document.querySelector(".pageheader-categoryID").innerHTML=categoryId;
     }
     //TODO tämä järkevämmin
-    if (sessionStorage.getItem("sessionClasses") == null) {
+    if (localStorage.getItem("localStorageClasses") == null) {
       dbGetClasses(uiLoadProducts);
     }
 
-    if (sessionStorage.getItem("sessionCategories") == null) {
+    if (localStorage.getItem("localStorageCategories") == null) {
       dbGetCategories(uiLoadProducts);
     } else {
       uiLoadProducts();

@@ -87,11 +87,11 @@ function getBrowserName(userAgent) {
 
 const footerNavigation = document.querySelector('.footernavigation');
 footerNavigation.addEventListener('click', evt =>{
-sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
-sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
+localStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
+localStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
 });
 
-  
+
 /**********************************************************************************************/
 /************************************  Kategoriasivu  *****************************************/ 
 /**********************************************************************************************/
@@ -138,8 +138,8 @@ sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavali
     // listCategories();
     dbGetCategories(uiRenderCategoryList);
     console.log("uiLoadCategories");
-    sessionStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
-    sessionStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
+    localStorage.removeItem("selectedCategoryId"); // tyhjätään kategoriavalinta
+    localStorage.removeItem("selectedCategoryName"); // tyhjätään kategoriavalinta
   }
 
   function emptyCategories(){
@@ -189,8 +189,8 @@ if (categoryContainer != null) {
           } else if(evt.target.tagName === 'I' && evt.target.innerText === 'arrow_forward') {
               const categoryId = parseInt(evt.target.getAttribute('data-id'));
               const categoryName = evt.target.getAttribute('categoryname');
-              sessionStorage.setItem("selectedCategoryId",categoryId);
-              sessionStorage.setItem("selectedCategoryName",categoryName);
+              localStorage.setItem("selectedCategoryId",categoryId);
+              localStorage.setItem("selectedCategoryName",categoryName);
               localStorage.setItem("helper-product-quote-scroll", 0); //Nollataa tuotesivun skrollauskohta
               // window.location.replace("http://www.w3schools.com");
               //window.location.href = "http://www.w3schools.com"
@@ -318,9 +318,9 @@ function uiRenderPhaseHtml(product){
 }
 
 function uiRenderProductList(products){
-      let selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
-      let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
-      let classesArray = JSON.parse(sessionStorage.getItem("sessionClasses"));
+      let selectedCategoryId = localStorage.getItem("selectedCategoryId");
+      let categoryArray = JSON.parse(localStorage.getItem("localStorageCategories"));
+      let classesArray = JSON.parse(localStorage.getItem("localStorageClasses"));
       let productsParsed= JSON.parse(products);
       let catObj = null;
       let catname = "";
@@ -407,7 +407,7 @@ function uiRenderProductList(products){
       }
 
       // Skrollataan samaan kohtaan vain ei olla valitussa kategoriassa.. Voi olla tarpeellista muuttaa
-      if (sessionStorage.getItem("selectedCategoryId") == null && localStorage.getItem("helper-product-quote-scroll") != null) {
+      if (localStorage.getItem("selectedCategoryId") == null && localStorage.getItem("helper-product-quote-scroll") != null) {
         $(window).scrollTop(localStorage.getItem("helper-product-quote-scroll")); 
       }
 
@@ -461,7 +461,7 @@ if (productContainer != null) {
 /********** dropdown lista kategorioista formille */
 const categorySelection = document.querySelector('.categorySelect');
 const renderCategoryDropDown = (productCategory) => {
-      let categories = sessionStorage.getItem("sessionCategories");
+      let categories = localStorage.getItem("localStorageCategories");
       let objCat= JSON.parse(categories);
       let catId ="";
       let html =``;
@@ -484,7 +484,7 @@ const renderCategoryDropDown = (productCategory) => {
 
 const productClassSelection = document.querySelector('.productClassSelect');
 const renderProductClassDropDown = (productClassId) => {
-      let prodClasses = sessionStorage.getItem("sessionClasses");
+      let prodClasses = localStorage.getItem("localStorageClasses");
       let classesParsed= JSON.parse(prodClasses);
       var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
       let classId =0;
@@ -684,7 +684,7 @@ function uiRenderClassList(products) {
     let pclass = null;
     let classlist ="";
     //let classesParsed= JSON.parse(productclasses);
-    let classesParsed= JSON.parse(sessionStorage.getItem("sessionClasses"));
+    let classesParsed= JSON.parse(localStorage.getItem("localStorageClasses"));
     var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
     let productsParsed = JSON.parse(products);
 
@@ -812,7 +812,7 @@ const productClassCheckboxSelect = document.querySelector('.productClassCheckbox
 const renderProductClassCheckboxList = (meal) => {
   //TODO tutki array, laita checked sen mukaan
 
-    let prodClasses = sessionStorage.getItem("sessionClasses");
+    let prodClasses = localStorage.getItem("localStorageClasses");
 
     let classesParsed= JSON.parse(prodClasses);
     var classesSorted = classesParsed.sort(({ordernro:a}, {ordernro:b}) => a-b)
@@ -892,7 +892,7 @@ function uiRenderMealList(meals) {
   
     let mealsParsed= JSON.parse(meals);
     var mealsSorted = mealsParsed.sort(({ordernro:a}, {ordernro:b}) => a-b);
-    let classesArray = JSON.parse(sessionStorage.getItem("sessionClasses"));
+    let classesArray = JSON.parse(localStorage.getItem("localStorageClasses"));
     let  ingredientshtml ="";
     let filterText ="";
 
@@ -1099,7 +1099,7 @@ function uiLoadProductsToShop(){
 
 function uiRenderProductListToShop(products){
     
-  let categoryArray = JSON.parse(sessionStorage.getItem("sessionCategories"));
+  let categoryArray = JSON.parse(localStorage.getItem("localStorageCategories"));
   var categoryArraySorted = categoryArray.sort(({ordernro:a}, {ordernro:b}) => a-b)
   let productsParsed= JSON.parse(products);
 

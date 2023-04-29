@@ -123,10 +123,10 @@ function dbSetMealId(mid) {
 /**********************************************************************************************/
 function dbGetCategories(callback){
     db.collection('category').orderBy('name', 'asc').get().then(categories => {
-        sessionStorage.setItem("sessionCategories",JSON.stringify(categories));
+        localStorage.setItem("localStorageCategories",JSON.stringify(categories));
         })
-        .then(x=>{
-           callback(sessionStorage.getItem("sessionCategories"));
+        .then(x=>{           
+           callback(localStorage.getItem("localStorageCategories"));           
         })
 }
 
@@ -388,17 +388,16 @@ function dbUpdateProductToCollected(pid, checked) {
 /**********************************************************************************************/
 function dbGetClasses(callback){
     db.collection('productclass').orderBy('ordernro', 'asc').get().then(classes => {
-        sessionStorage.setItem("sessionClasses",JSON.stringify(classes));
-        callback(sessionStorage.getItem("sessionClasses"));
+        localStorage.setItem("localStorageClasses",JSON.stringify(classes));
+        callback(localStorage.getItem("localStorageClasses"));
         })        
 }
 
 function dbGetClassesAndProducts(callback){
     db.collection('productclass').orderBy('ordernro', 'asc').get()
     .then(classes => {
-        sessionStorage.setItem("sessionClasses",JSON.stringify(classes));
+        localStorage.setItem("localStorageClasses",JSON.stringify(classes));
         dbGetProducts(callback);
-        // callback(sessionStorage.getItem("sessionClasses"));
         }) 
               
 }
