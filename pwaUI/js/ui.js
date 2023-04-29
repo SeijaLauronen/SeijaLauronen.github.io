@@ -927,17 +927,6 @@ function uiRenderMealList(meals) {
           `;
 
           ingredientshtml ="";
-         // ingredientshtml = "Tähän tulee sisältöä ";
-          /*
-          for (let j=0; j< prodInClass.length; j++){
-            product = prodInClass[j];
-            phaseHtml = uiRenderPhaseHtml(product);
-
-              prodhtml +=`
-                <div>${phaseHtml} ${product.name}</div>
-                `;
-          }
-          */
 
           let prefix = "";
           let suffix = "";
@@ -969,6 +958,7 @@ function uiRenderMealList(meals) {
 
 
         mealList.innerHTML += starthtml + ingredientshtml + endhtml ;
+        filterMeals(false);
     }
 
 
@@ -989,33 +979,96 @@ const mv2 = document.querySelector('#mealFilterPh2');
 const mv3 = document.querySelector('#mealFilterPh3');
 const mot = document.querySelector('#mealFilterOther');
 const mall = document.querySelector('#mealFilterAll');
+var mealfilterArray = [];
 if (mealFilter != null){
   mealFilter.addEventListener('click',evt => {
 
       if (evt.target.type == 'checkbox') {
 
-        $(".filter").hide();
-        
-        if (mall.checked == true) {
-          $(".filter").show();
-        } else {
+          filterMeals(true);
+/*
+            mealfilterArray = [];
+            localStorage.removeItem("mealFilter");
 
-          if (mv1.checked == true) {
-            $('.phase1').show();
-          }
-          if (mv2.checked == true) {
-            $('.phase2').show();
-          }
-          if (mv3.checked == true) {
-            $('.phase3').show();
-          }
-          if (mot.checked == true) {
-            $('.other').show();
-          }
-        }
+            $(".filter").hide();
+            
+            if (mall.checked == true) {
+              $(".filter").show();
+              mealfilterArray.push("mealFilterAll");
+            } else {
 
+              if (mv1.checked == true) {
+                $('.phase1').show();
+                mealfilterArray.push("mealFilterPh1");
+              }
+              if (mv2.checked == true) {
+                $('.phase2').show();
+                mealfilterArray.push("mealFilterPh2");
+              }
+              if (mv3.checked == true) {
+                $('.phase3').show();
+                mealfilterArray.push("mealFilterPh3");
+              }
+              if (mot.checked == true) {
+                $('.other').show();
+                mealfilterArray.push("mealFilterOther");
+              }
+            }
+            localStorage.setItem("mealFilter", mealfilterArray);
+            */
       }   
+      
     })
+}
+
+function filterMeals(updateLocalStore) {
+
+            mealfilterArray = [];
+            if (updateLocalStore) {
+              localStorage.removeItem("mealFilter");
+            }
+
+            $(".filter").hide();
+            
+            if (mall.checked == true) {
+              $(".filter").show();
+              mealfilterArray.push("mealFilterAll");
+            } else {
+
+              if (mv1.checked == true) {
+                $('.phase1').show();
+                mealfilterArray.push("mealFilterPh1");
+              }
+              if (mv2.checked == true) {
+                $('.phase2').show();
+                mealfilterArray.push("mealFilterPh2");
+              }
+              if (mv3.checked == true) {
+                $('.phase3').show();
+                mealfilterArray.push("mealFilterPh3");
+              }
+              if (mot.checked == true) {
+                $('.other').show();
+                mealfilterArray.push("mealFilterOther");
+              }
+            }
+            if (updateLocalStore) {
+              localStorage.setItem("mealFilter", mealfilterArray);
+            }
+}
+
+function setMealFilterChecked() {
+
+    let arrayMealFilter = localStorage.getItem("mealFilter");
+    let arrayMealFilterUI = $(".filtercheckbox");
+
+    for (let k=0; k < arrayMealFilterUI.length; k++)  {
+        if (arrayMealFilter.includes(arrayMealFilterUI[k].id)) {
+          arrayMealFilterUI[k].checked = true;
+        } else {
+          arrayMealFilterUI[k].checked = false;
+        }
+    }    
 }
 
 /************************** Ateriaformin eventit ********************/ 

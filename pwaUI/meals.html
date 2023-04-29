@@ -197,6 +197,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/versionchange_event
       if (localStorage.getItem("localStorageClasses") == null) {
         dbGetClassesAndProducts();
       }
+      setMealFilterChecked(); // Mitä on ollut valittuna aterioiden filtteröintiin
       uiLoadMeals();//Huom! tämä jo luo taulun, kun kysellään taulun sisältöä!
     </script>
 
