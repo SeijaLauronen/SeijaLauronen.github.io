@@ -68,12 +68,18 @@
             <textarea id ="datatext" class="materialize-textarea" placeholder="Data"></textarea>
           </div>
         </div>
-  </section>
-    <a href="index.html" class="btn-small orange z-depth-0">Kotisivulle...</a>
+    </section>
+    
   </div>
 
 <!-- -------------------------------------- FOOTER  --------------------------------------------------------------------- -->
 <footer class="footer page-footer green lighten-5">
+
+  <div class="col s2 nospaceleft">
+    <a class="btn-small get-btn" id="getBtn">
+        Hae Data
+    </a>
+  </div>
   <div class="container">   
     <!-- common for all pages: -->
     <div id="footernav" class="footernavigation"></div>
@@ -84,7 +90,11 @@
 <script src="js/main.js"></script>
 <script src="js/ui.js"></script>
 
+<!-- tämä tuo suoraan näytön tekstikenttään -->
 <script src="js/dbexport.js"></script>
+
+<script src="js/idb-backup-and-restore.js"></script>
+<script src="js/ui-idb-exportimport.js"></script>
 
 </body>
 
