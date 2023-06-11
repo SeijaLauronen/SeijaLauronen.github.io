@@ -76,10 +76,17 @@
 <footer class="footer page-footer green lighten-5">
 
   <div class="col s2 nospaceleft">
-    <a class="btn-small get-btn" id="getBtn">
-        Hae Data
+    <a class="btn-small" id="getBtn">
+        Hae data
     </a>
   </div>
+
+  <div class="col s2 nospaceleft">
+    <a class="btn-small" id="importBtn">
+        Korvaa data
+    </a>
+  </div>
+
   <div class="container">   
     <!-- common for all pages: -->
     <div id="footernav" class="footernavigation"></div>
@@ -95,6 +102,17 @@
 
 <script src="js/idb-backup-and-restore.js"></script>
 <script src="js/ui-idb-exportimport.js"></script>
+
+<script>
+if (navigator.storage && navigator.storage.persist)
+  navigator.storage.persist().then(function(persistent) {
+    if (persistent)
+      alert("Storage will not be cleared except by explicit user action");
+    else
+      alert("Storage may be cleared by the UA under storage pressure.");
+  });
+</script>
+
 
 </body>
 

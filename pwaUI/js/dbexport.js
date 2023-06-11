@@ -35,6 +35,8 @@ function exportDB(){
       request.onsuccess = () => resolve(request.result)
     })
 
+
+
     var json = await new Promise((resolve, reject) => {
       const exportObject = {}
       if (idbDatabase.objectStoreNames.length === 0) {
@@ -75,18 +77,96 @@ function exportDB(){
       }
     })
 
+
+
     console.log(' ')
     console.log('Database has been exported:')
     console.log(' ')
     console.log(json)
     console.log(' ')
     // data näytölle, tämä ei hyvä tässä, pitäisi siirtää parempaan paikkaan, ui-kerrokseen
-    datatext.value=json
+    datatext.value=json //TODO tämä parmmin
 
   } catch(error) {
     console.error(error)
   }
   
-  })()
+  })() //async
+
   return json //mihin tämä pitäisi laittaa
 }
+
+
+function importDBFromJson() {
+
+  var dbName = 'helperdb';
+  var json = datatext.value; //TODO tämä parmmin
+
+  (async () => {
+  try {
+    
+    var dbExists = await new Promise(resolve => {
+      var request = window.indexedDB.open(dbName)
+      request.onupgradeneeded = e => {
+        e.target.transaction.abort()
+        resolve(false)
+      }
+      request.onerror = () => resolve(true)
+      request.onsuccess = () => resolve(true)
+    })
+    
+
+    if (!dbExists) {
+      throw new Error('Database does not exist')
+    }
+
+    var idbDatabase = await new Promise((resolve, reject) => {
+      var request = window.indexedDB.open(dbName)
+      request.onerror = () => reject('Could not open the database')
+      request.onsuccess = () => resolve(request.result)
+    })
+
+
+
+  return await new Promise((resolve, reject) => {
+    const transaction = idbDatabase.transaction(
+      idbDatabase.objectStoreNames,
+      'readwrite'
+    )
+    transaction.addEventListener('error', reject)
+
+    var importObject = JSON.parse(json)
+    for (const storeName of idbDatabase.objectStoreNames) {
+      let count = 0
+      let key=1
+      for (const toAdd of importObject[storeName]) {
+        key++
+        //const request = transaction.objectStore(storeName).add(toAdd) //tästä tulee virhe: Failed to execute 'add' on 'IDBObjectStore': The object store uses out-of-line keys and has no key generator and the key parameter was not provided.
+        const request = transaction.objectStore(storeName).add(toAdd,key) // pitää antaa myös avain
+        request.addEventListener('success', () => {
+          count++
+          if (count === importObject[storeName].length) {
+            // Added all objects for this store
+            delete importObject[storeName]
+            if (Object.keys(importObject).length === 0) {
+              // Added all object stores
+              resolve()
+            }
+          }
+        })
+      }
+    }
+  })
+
+} catch(error) {
+  console.error(error)
+}
+
+
+})() //async
+
+
+
+
+}
+

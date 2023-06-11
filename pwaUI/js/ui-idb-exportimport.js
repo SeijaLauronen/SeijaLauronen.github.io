@@ -78,3 +78,11 @@ if (getDBDataButton != null){
 
     })
 }
+
+const importDBDataButton = document.querySelector('#importBtn');
+// const inputCategory = document.querySelector('#classinput');
+if (importDBDataButton != null){
+    importDBDataButton.addEventListener('click',evt => {
+        importDBFromJson();
+    })
+}
