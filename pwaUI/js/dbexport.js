@@ -138,7 +138,7 @@ function importDBFromJson() {
     var importObject = JSON.parse(json)
     for (const storeName of idbDatabase.objectStoreNames) {
       let count = 0
-      let key=1
+      let key=0
       for (const toAdd of importObject[storeName]) {
         key++
         //const request = transaction.objectStore(storeName).add(toAdd) //tästä tulee virhe: Failed to execute 'add' on 'IDBObjectStore': The object store uses out-of-line keys and has no key generator and the key parameter was not provided.

@@ -1062,13 +1062,15 @@ function setMealFilterChecked() {
     let arrayMealFilter = localStorage.getItem("mealFilter");
     let arrayMealFilterUI = $(".filtercheckbox");
 
-    for (let k=0; k < arrayMealFilterUI.length; k++)  {
-        if (arrayMealFilter.includes(arrayMealFilterUI[k].id)) {
-          arrayMealFilterUI[k].checked = true;
-        } else {
-          arrayMealFilterUI[k].checked = false;
-        }
-    }    
+    if (arrayMealFilter != null) { //6.11.2023 lisätty tämä
+      for (let k=0; k < arrayMealFilterUI.length; k++)  {
+          if (arrayMealFilter.includes(arrayMealFilterUI[k].id)) {
+            arrayMealFilterUI[k].checked = true;
+          } else {
+            arrayMealFilterUI[k].checked = false;
+          }
+      }    
+    }
 }
 
 /************************** Ateriaformin eventit ********************/ 
