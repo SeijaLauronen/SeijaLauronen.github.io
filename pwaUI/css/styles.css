@@ -586,7 +586,8 @@ input[type="checkbox"] {
   margin-right: 8px;
   margin-left: 4px;
 }
+/* data page */
 #datatext {
-  height: auto;
-  min-height: 50px;
+  height: 500px;
+  scroll-behavior: auto;
 }
