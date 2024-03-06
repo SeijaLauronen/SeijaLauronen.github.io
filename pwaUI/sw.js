@@ -1,6 +1,6 @@
-const programVersion = '2024-01-127: 976';
-const staticCacheName = 'pwaui-static-976'; 
-const dynamicCacheName = 'pwaui-dynamic-976'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
+const programVersion = '2024-03-061: 977';
+const staticCacheName = 'pwaui-static-977'; 
+const dynamicCacheName = 'pwaui-dynamic-977'; // tämäkin joutaisi pois, mutta jätetään toistaiseksi..
 // nämä on kutsuja, siksi tuo / on se yksi kutsu... ei siis taida viitata hakemistoon?!
 // Add napista tuli offline tilassa page not found, siinä urlissa oli perässä kyssäri, niin laitoin myös sen tähän.
 // myös kun laittoi dynaamisen cahen, niin jos oli käynyt painamassa online tilassa Addnappi, niin se toimi

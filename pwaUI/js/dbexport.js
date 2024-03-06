@@ -105,6 +105,9 @@ function importDBFromJson() {
   (async () => {
   try {
     
+
+    alert("Korvataan dataa...")
+
     var dbExists = await new Promise(resolve => {
       var request = window.indexedDB.open(dbName)
       request.onupgradeneeded = e => {
@@ -159,6 +162,7 @@ function importDBFromJson() {
   })
 
 } catch(error) {
+  alert(error)
   console.error(error)
 }
 
