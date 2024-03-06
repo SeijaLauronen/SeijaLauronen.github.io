@@ -1297,4 +1297,16 @@ async function updateCollected() {
 
  
 
+/*********************************************************************************** */
+/******************************* DATA ********************************************* */
 
+function uiLoadTables(){
+  
+  dbGetTables(uiTablesLoaded);
+  //dbGetCategories
+}
+
+function uiTablesLoaded(){
+  alert ("ladattu");
+
+}

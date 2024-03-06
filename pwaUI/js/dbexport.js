@@ -140,24 +140,26 @@ function importDBFromJson() {
 
     var importObject = JSON.parse(json)
     for (const storeName of idbDatabase.objectStoreNames) {
-      let count = 0
-      let key=0
-      for (const toAdd of importObject[storeName]) {
-        key++
-        //const request = transaction.objectStore(storeName).add(toAdd) //tästä tulee virhe: Failed to execute 'add' on 'IDBObjectStore': The object store uses out-of-line keys and has no key generator and the key parameter was not provided.
-        const request = transaction.objectStore(storeName).add(toAdd,key) // pitää antaa myös avain
-        request.addEventListener('success', () => {
-          count++
-          if (count === importObject[storeName].length) {
-            // Added all objects for this store
-            delete importObject[storeName]
-            if (Object.keys(importObject).length === 0) {
-              // Added all object stores
-              resolve()
+
+        let count = 0
+        let key=0
+        for (const toAdd of importObject[storeName]) {
+          key++
+          //const request = transaction.objectStore(storeName).add(toAdd) //tästä tulee virhe: Failed to execute 'add' on 'IDBObjectStore': The object store uses out-of-line keys and has no key generator and the key parameter was not provided.
+          const request = transaction.objectStore(storeName).add(toAdd,key) // pitää antaa myös avain
+          request.addEventListener('success', () => {
+            count++
+            if (count === importObject[storeName].length) {
+              // Added all objects for this store
+              delete importObject[storeName]
+              if (Object.keys(importObject).length === 0) {
+                // Added all object stores
+                resolve()
+              }
             }
-          }
-        })
-      }
+          })
+        }
+      
     }
   })
 

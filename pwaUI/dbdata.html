@@ -103,6 +103,15 @@
 <script src="js/idb-backup-and-restore.js"></script>
 <script src="js/ui-idb-exportimport.js"></script>
 
+
+
+
+
+<!-- 6.3.2024 nämä tuota alla olevaa loadia varten -->
+<script src="js/db.js"></script>
+<script src="https://unpkg.com/localbase/dist/localbase.min.js"></script>
+<!-- 6.3.2024  -->
+
 <script>
   /*
 if (navigator.storage && navigator.storage.persist)
@@ -113,6 +122,13 @@ if (navigator.storage && navigator.storage.persist)
       alert("Storage may be cleared by the UA under storage pressure.");
   });
   */
+
+
+  //6.3.2024 Load tables first, that creates them if they do not exist
+    const db = new Localbase('helperdb');
+    uiLoadTables();
+  
+
 </script>
 
 

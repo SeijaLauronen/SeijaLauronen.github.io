@@ -41,15 +41,53 @@ function dbSetCategoryId(kid) {
 
 function dbInitProductId() {
     console.log('initProductId')
-    db.collection('dbsettings').add(
-        {
-            skey: 'productId',
-            value: 1
-        }
-    )
-    .catch(error => {
-        console.log('There was an init error (productId), do something else.', error)
-    })
+
+    //TODO 6.3.2024 pitääkö tehdä async
+    //Mutta pitäisihän se dbsettings taulunkin olla mukana insertissä...
+    /*
+    const prods = db.collection('product').orderBy('id', 'desc').get() ;
+    let newVal =1;
+
+    if (prods != null)
+    {
+        newVal = prods[0].id;
+    }
+     */
+    //alert (newVal);
+
+    let newVal = 1;
+   /*
+        db.collection('product').orderBy('id', 'desc').get()
+        .then(products => {
+
+            newVal = 1;
+            if (products != null)
+            {
+
+                products.forEach(prod => {
+                    if ( (parseInt(prod.id) ) > newVal) {
+                        newVal =parseInt(prod.id);
+                    }
+                });
+                
+            }
+*/
+
+
+            db.collection('dbsettings').add(
+                {
+                    skey: 'productId',
+                    value: newVal
+                }
+            )
+            .catch(error => {
+                console.log('There was an init error (productId), do something else.', error)
+            })
+
+/*
+            
+        })    
+*/
 } 
 
 function dbSetProductId(pid) {
@@ -665,4 +703,25 @@ function deleteCollection(collection) {
   
 /**********************************************************************************************/
 
-
+function dbGetTables(callback){
+    db.collection('productclass').get()
+    .then(classes => {
+            db.collection('product').get()
+            .then(prods => {
+                    db.collection('dbsettings').get()
+                    .then(settings => {
+                        db.collection('productclass').get()
+                        .then(meals => {
+                            db.collection('meal').get()     
+                            .then(categorys => {
+                                db.collection('category').get()                        
+                            })                   
+                        })
+                    
+                    })
+                
+            })
+        //dbGetProducts(callback);
+        }) 
+              
+}
