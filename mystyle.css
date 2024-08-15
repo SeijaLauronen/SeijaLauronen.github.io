@@ -1,162 +1,63 @@
-
-    body, html {
-    height: 100%;
-    margin: 5px;
-    font-size: larger;
+/* 20240815*/
+.container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+body,
+html {
+    height: 100%;
+    margin: 5px;
+    overflow: auto;
+}
 
+.container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 50px;
+    /* Jätä tilaa alhaalla */
+}
+
+a {
+    color: yellow;
+    font-style: italic;
+    text-decoration: underline;
+}
 
 h3 {
     /*background: lightgreen;*/
-    margin-left:10px; 
-    margin-right:10px;
+    margin-left: 10px;
+    margin-right: 10px;
     width: 100%;
 }
-#tanssibody {
-    background-image:url("kuvat/helmat.jpg");
+
+#tanssibody,
+#koodausbody {
+    background-image: url("kuvat/helmat.jpg");
     /*background-repeat: no-repeat;*/
     background-repeat: repeat-y;
-    background-size: cover; 
+    background-size: cover;
     background-position: center center;
 }
 
 .intro {
-
     color: rgb(238, 238, 229);
 }
 
-.otsikko{
+.otsikko {
     width: 100%;
 }
-
-
-
-.r1, .r3, .r5, .r7, .r9 {
-    
-    background-color:rgb(205, 248, 207);
- 
-}
-
-.r2, .r4, .r6, .r8 {
-    background-color:rgb(186, 235, 247);
-    /*color: white;*/
-}
-
-li {
-    display: inline;
-  }
 
 .dnav {
     background-color: black;
 }
-.current {
-    color: yellow;
-}
 
-.last {
-    height:50px; /* ei tehoa */
-    color:rgb(205, 248, 207); /* Keinotekoisesti näin  */
-}
 
-ulX {
-    list-style: none;
-}
-sectionX {
-    background: lightblue;
-    margin-top: 60px;
-    height: 100%;
-}
-header {
-    background: yellow;
-    height: 60px;
-    z-index: 99;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    left: 0;
-    margin-left: 120px;
-    text-align: center;
-}
-.containerX {
-    text-align: center;
-    margin-left: 120px;
-    min-height: 100%;
-    position: relative;
-    left: 0;
-}
-figureX {
-    margin: 0;
-}
-imgX {
-    height: 60px;
-    width: 100%;
-}
 
 .dancenavigation-up {
-    font-style:italic;
-}
-.videolink {
-    text-align: center;
-}
-
-/* https://www.w3schools.com/css/css3_mediaqueries.asp */
-@media screen and (max-width: 480px) {
-    .dancenavigation {
-      font-size:40%;
-      margin-right: 2px;
-    }
-    .pari {
-        /*display:none;*/
-    }
-  }
-
-  @media screen and (min-width: 480px) {
-    .dancenavigation {
-      font-size:50%;
-    }
-    .pari {
-        display:block;
-    }
-    
-  }
-
-
-
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-    .dancenavigation {
-    font-size: xx-small;
-
-    }
- }
-
- @media screen and (max-width: 576px) {
-    .dancenavigation {
-      font-size:40%;
-
-    }
-    .pari {
-        /*display:none;*/
-    }
-  }
-
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
-    .dancenavigation {
-        font-size:small;
-        color: deepskyblue;
-    }
-
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-
- }
-
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
-
+    font-style: italic;
 }
