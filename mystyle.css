@@ -1,16 +1,12 @@
 /* 20240815*/
-.container-fluid {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
 body,
 html {
     height: 100%;
     margin: 5px;
     overflow: auto;
+    font-size: large;
+    text-align: center;
 }
 
 .container-fluid {
@@ -20,6 +16,11 @@ html {
     justify-content: flex-start;
     padding-bottom: 50px;
     /* Jätä tilaa alhaalla */
+}
+
+#languageSwitcher {
+ width: auto;   
+ background: lightskyblue;
 }
 
 a {
@@ -55,8 +56,6 @@ h3 {
 .dnav {
     background-color: black;
 }
-
-
 
 .dancenavigation-up {
     font-style: italic;
