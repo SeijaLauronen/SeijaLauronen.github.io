@@ -18,9 +18,20 @@ html {
     /* Jätä tilaa alhaalla */
 }
 
+#language {
+    justify-content: center;
+    text-align: right;
+}
+
 #languageSwitcher {
- width: auto;   
- background: lightskyblue;
+    width: auto;
+    background: lightskyblue;
+    margin-left: 10px;
+}
+
+.text-no-spacing {
+    margin: 0;            /* Poistaa ylimääräisen marginaalin */
+    line-height: 1;     /* Asettaa rivivälin pienemmäksi */
 }
 
 a {
@@ -57,6 +68,18 @@ h3 {
     background-color: black;
 }
 
+.navbar {
+    justify-content: center;
+}
+
+.fixed-bottom {
+    justify-content: center;
+    /* Tämä keskittää lapsielementit vaakasuunnassa */
+    align-items: center;
+    /* Tämä keskittää lapsielementit pystysuunnassa */
+}
+
 .dancenavigation-up {
     font-style: italic;
+    text-align: center;
 }

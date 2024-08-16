@@ -40,19 +40,32 @@
   <a id="top"></a>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="#"></a>
-    
-    <!-- Kielivalikko -->
-    <select id="languageSwitcher" class="form-control">
-      <option value="fi">Suomeksi</option>
-      <option value="en">In English</option>
-    </select>
+
+
+    <div id="language" class="d-flex">
+      <!-- Tekstit vasemmalla -->
+      <div class="text-white">
+        <p class="mb-0 text-no-spacing">
+          Valitse kieli:<br />
+          Choose language:
+        </p>
+      </div>
+
+      <!-- Kielivalikko oikealla -->
+      <div>
+        <select id="languageSwitcher" class="form-control">
+          <option value="fi">Suomeksi</option>
+          <option value="en">In English</option>
+        </select>
+      </div>
 
     </div>
+
   </nav>
 
   <div class="container-fluid" style="margin-top:30px">
 
-  
+
     <div class="intro" background>
       <div class="row">
         <div class="col-sm-12 header h1">
@@ -70,16 +83,16 @@
               Olen full stack koodari ja monenmoista tekniikkaa on vuosien saatossa tullut käytettyä.
             </p>
             <p>
-              Tilanteen niin salliessa opettelen uusia tekniikoita ja koodailen omia projekteja, tällä hetkellä
+              Tilanteen niin salliessa opettelen uusia tekniikoita ja koodailen omia projekteja. Tällä hetkellä
               koodauksen
               alla on:
             </p>
             <h3>"Ostokseni" -sovellus</h3>
             <p>Sovellus toimii ilman nettiyhteyttä. Se on suunniteltu käytettäväksi kännykällä, mutta
               toimii myös
-              pöytäkoneella ja tabletilla.Voit käyttää sitä suoraan seuraavasta osoitteesta:
+              pöytäkoneella ja tabletilla. Voit käyttää sitä suoraan seuraavasta osoitteesta:
               https://seijalauronen.github.io/ostokseni/
-              <br /> tai avaamalla linkistä: 
+              <br /> tai avaamalla linkistä:
               <br />
               <a href="https://seijalauronen.github.io/ostokseni/" target="new">Ostokseni sovellus</a>
             </p>
@@ -106,10 +119,10 @@
 
           <div>
             <p data-lang="fi">
-              Lyhyt esittelyvideo:
+              5 minuutin esittelyvideo (22.7.2024):
             </p>
             <p data-lang="en" style="display:none;">
-              Short introduction video (in Finnish):
+              5 minutes introduction video (in Finnish, 22.7.2024):
             </p>
           </div>
 
@@ -186,23 +199,25 @@
               <a href="https://github.com/SeijaLauronen/ostokseni" target="new">Ostokseni sovelluksen koodit</a>
             </p>
             <p>Sovellus on vielä keskeneräinen, mutta sitä voi jo käyttää. Periaatteessa tiedot säilyvät selaimen
-              muistissa,
+              muistissa (IndexedDB),
               mutta kannattaa käyttää varmuuskopiointi ominaisuutta, koska kaikkia tilanteita ei vielä ole otettu
-              huomioon, esimerkiksi quotan ylittymistä, jolloin tiedot saattavat hävitä yllättäen (tuli sekin kokeiltua toisen sovelluksen kehityksessä).</p>
+              huomioon, esimerkiksi quotan ylittymistä, jolloin tiedot saattavat hävitä yllättäen (tuli sekin kokeiltua
+              toisen sovelluksen kehityksessä).</p>
           </div>
 
           <div data-lang="en" style="display:none;">
             <h4>About the Technology</h4>
             <p>The application is coded with React using artificial intelligence and is a PWA (Progressive Web
               Application).
-              The code can be found at https://github.com/SeijaLauronen/ostokseni                
+              The code can be found at https://github.com/SeijaLauronen/ostokseni
               <br /> and the link:<br />
               <a href="https://github.com/SeijaLauronen/ostokseni" target="new">Code for the Ostokseni application</a>
             </p>
             <p>The application is still a work in progress, but it is already usable. In principle, data is retained in
-              the browser's memory,
+              the browser's memory (IndexedDB),
               but it's a good idea to use the backup feature, as not all situations have been accounted for yet,
-              such as quota limits, where data may unexpectedly disappear (I also experienced that during the development of another application).</p>
+              such as quota limits, where data may unexpectedly disappear (I also experienced that during the
+              development of another application).</p>
           </div>
 
         </div>
