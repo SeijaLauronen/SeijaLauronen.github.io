@@ -24,7 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="mystyle.css">
 
 
@@ -38,30 +38,37 @@
 
 <body id="koodausbody">
   <a id="top"></a>
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
+  <nav class="navbar bg-dark navbar-dark">
     <a class="navbar-brand" href="#"></a>
 
-
-    <div id="language" class="d-flex">
-      <!-- Tekstit vasemmalla -->
-      <div class="text-white">
-        <p class="mb-0 text-no-spacing">
+    <div class="d-flex w-100 justify-content-between align-items-center">
+      <!-- Tekstit vasemmalla, kielivalinta keskellä -->
+      <div class="d-flex align-items-center mx-auto">
+        <p class="mb-0 text-white mr-2">
           Valitse kieli:<br />
           Choose language:
         </p>
-      </div>
-
-      <!-- Kielivalikko oikealla -->
-      <div>
         <select id="languageSwitcher" class="form-control">
           <option value="fi">Suomeksi</option>
           <option value="en">In English</option>
         </select>
       </div>
 
+      <!-- CV oikealla -->
+      <div>
+        <ul class="navbar-nav ml-auto">
+          <li data-lang="fi" class="nav-item">
+            <a id="cvLink" href="cv.html?lang=fi">CV FIN <i class="fas fa-arrow-right"></i></a>
+          </li>
+          <li data-lang="en" style="display:none;" class="nav-item">
+            <a id="cvLink" href="cv.html?lang=en">CV EN <i class="fas fa-arrow-right"></i></a>
+          </li>
+        </ul>
+      </div>
     </div>
-
   </nav>
+
 
   <div class="container-fluid" style="margin-top:30px">
 
@@ -155,7 +162,7 @@
               style="text-align: left; vertical-align:bottom; background-color: #21177a;">
 
               <span data-lang="fi">
-                <br/>
+                <br />
                 <ul>
                   <li>Tuotteet voidaan luokitella kategorioihin ja kategoriat järjestää siihen järjestykseen, jossa
                     tuotteet kaupassa halutaan kerätä.</li>
@@ -163,7 +170,7 @@
                     poistaa ostoslistalta, mutta ovat valittavissa taas uudestaan tuotelistalta.</li>
                   <li>Sovellus voi toimia dieettiapurina: lisäpiirteenä voidaan ottaa käyttöön värikoodit, joilla
                     jokainen tuote voidaan merkata 1 - 4 värillä. Värille voi kukin antaa oman merkityksensä ja värien
-                    perusteella voidaan tuotteita suodattaa näkyviin.</li>                    
+                    perusteella voidaan tuotteita suodattaa näkyviin.</li>
                 </ul>
               </span>
 
@@ -222,14 +229,15 @@
             <div class="col-lg-1 col-md-1 col-sm-12">
             </div>
             <div class="col-lg-5 col-md-5 col-sm-12 d-flex align-items-center" style="background-color: #9592d6;">
-              <div style="text-align:center; margin-top: 15px;"> 
-                <img src="kuvat/varikoodit.jpg" alt="Värikoodit esimerkki" style="max-width: 100%; height: auto;"> <p>Värikoodit esimerkki.</p> 
+              <div style="text-align:center; margin-top: 15px;">
+                <img src="kuvat/varikoodit.jpg" alt="Värikoodit esimerkki" style="max-width: 100%; height: auto;">
+                <p>Värikoodit esimerkki.</p>
               </div>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-12" style="text-align: left;">
 
               <span data-lang="fi">
-                Uusia piirteitä putkahtelee sitä mukaa kun koodaus edistyy, joten videolla ei ole niitä kaikkia. 
+                Uusia piirteitä putkahtelee sitä mukaa kun koodaus edistyy, joten videolla ei ole niitä kaikkia.
                 Erityisesti eri ruokavalioiden noudattamiseen on tarkoitus kehittää lisäpiirteitä.
                 Ohjelmaa voi käyttää asentamattakin, suoraan linkistä, mutta jos haluat asentaa sen, tässä siitä
                 ohjevideo (Chromelle):
@@ -333,14 +341,55 @@
 
 
 </html>
+
 <script>
-  <!-- JavaScript -->
+  
   document.getElementById('languageSwitcher').addEventListener('change', function () {
     var selectedLang = this.value;
-
     // Päivitä kaikki data-lang elementit
     document.querySelectorAll('[data-lang]').forEach(function (el) {
       el.style.display = el.getAttribute('data-lang') === selectedLang ? 'block' : 'none';
     });
   });
+  
+</script>
+
+<script>
+  // TODO, en saanut vielä toimimaan, helpoin olisi varmaan laittaa kielivalinta talteen local storageen
+  // Hae URL-parametri "lang"
+  /*
+  const urlParams = new URLSearchParams(window.location.search);
+  let lang = urlParams.get('lang') || 'fi'; // Oletuksena 'fi', jos parametriä ei ole
+
+  // Aseta valikkovalinta URL-parametrin perusteella
+  document.getElementById('languageSwitcher').value = lang;
+
+  document.getElementById('languageSwitcher').addEventListener('change', function () {
+    var selectedLang = this.value;
+
+
+    // Päivitä kielivalinta linkkiin, ei toimi tämä, käytetään tuota samaa data-langia siinäkin
+    document.getElementById('cvLink').href = `cv.html?lang=${selectedLang}`;
+
+    // Piilota ja näytä elementtejä kielivalinnan perusteella
+    function updateLanguageDisplay(selectedLang) {
+      document.querySelectorAll('[data-lang]').forEach(function (el) {
+        el.style.display = el.getAttribute('data-lang') === selectedLang ? 'block' : 'none';
+      });
+    }
+  });
+
+  // Alustava kielivalinta
+  updateLanguageDisplay(lang);
+
+  document.getElementById('languageSwitcher').addEventListener('change', function () {
+    var selectedLang = this.value;
+
+    // Päivitä kielivalinta linkkiin
+    window.location.href = `index.html?lang=${selectedLang}`; // Uudelleenohjaa valitun kielen mukaan
+
+    // Päivitä kielivalinta elementit
+    updateLanguageDisplay(selectedLang);
+  });
+*/
 </script>

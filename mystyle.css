@@ -48,7 +48,8 @@ h3 {
 }
 
 #tanssibody,
-#koodausbody {
+#koodausbody,
+#cvbody {
     background-image: url("kuvat/helmat.jpg");
     /*background-repeat: no-repeat;*/
     background-repeat: repeat-y;

@@ -17,29 +17,75 @@
 <html lang="en">
 
 <head>
-  <title>Seija koodaa</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Seija, CV</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="mystyle.css">
 
 
-  <style>
-    .fakeimg {
-      height: 200px;
-      background: #aaa;
-    }
-  </style>
+    <style>
+        .fakeimg {
+            height: 200px;
+            background: #aaa;
+        }
+    </style>
 </head>
 
 <body id="cvbody">
-    <iframe src="/docs/tiedosto.pdf" width="100%" height="600px"></iframe>
-    <a href="/docs/tiedosto.pdf">Lataa PDF</a>
-    <hr/>
-    <iframe src="https://github.com/seijalauronen/SeijaLauronen.github.io/raw/main/docs/tiedosto.pdf" width="100%" height="600px"></iframe>
-    <a href="https://github.com/seijalauronen/SeijaLauronen.github.io/raw/branchNimi/docs/tiedosto.pdf">Lataa PDF</a>
+
+
+    <nav class="navbar bg-dark navbar-dark">
+        <a class="navbar-brand" href="#"></a>
+
+        <div class="d-flex w-100 justify-content-between align-items-center">
+
+            <!-- CV vasemmalla -->
+            <div>
+                <ul class="navbar-nav ">
+                    <li data-lang="fi" class="nav-item">
+                        <a id="cvLink" href="index.html?lang=fi"><i class="fas fa-arrow-left"></i> Etusivu </a>
+                    </li>
+                    <li data-lang="en" style="display:none;" class="nav-item">
+                        <a id="cvLink" href="index.html?lang=en"><i class="fas fa-arrow-left"></i> Home page</i></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="text-white mx-auto text-center">
+                <h1 data-lang="fi">Seijan CV</h1>
+                <h1 data-lang="en" style="display:none;">Seija, CV</h1>
+            </div>
+            
+        </div>
+    </nav>
+
+
+    <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
+
+    <object data="./docs/cv_seija_fin.pdf" width="95%" height="95%" type='application/pdf'></object>
+
 </body>
+
+</html>
+
+<script>
+    // Hae URL-parametri "lang"
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fi'; // Oletuksena 'fi', jos parametriä ei ole
+
+    // Päivitä PDF-tiedosto kielen mukaan
+    const pdfPath = lang === 'en' ? './docs/cv_seija_en.pdf' : './docs/cv_seija_fin.pdf';
+    document.querySelector('object').data = pdfPath;
+
+    // Päivitä kaikki data-lang elementit
+    document.querySelectorAll('[data-lang]').forEach(function (el) {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+    });
+
+</script>
