@@ -175,13 +175,15 @@
               </span>
 
               <span data-lang="en" style="display:none;">
-                <li>Products can be categorized, and the categories can be arranged in the order that items are
-                  collected in the store.</li>
-                <li>Products only need to be saved in the application once. After gathering the shopping items, they
-                  can be removed from the list but are available for selection again from the product list.</li>
-                <li>The app can also serve as a diet helper: as an additional feature, color codes can be used to mark
-                  each product with 1 to 4 colors. Each user can assign their own meaning to the colors, and products
-                  can be filtered based on them.</li>
+                <ul>
+                  <li>Products can be categorized, and the categories can be arranged in the order that items are
+                    collected in the store.</li>
+                  <li>Products only need to be saved in the application once. After gathering the shopping items, they
+                    can be removed from the list but are available for selection again from the product list.</li>
+                  <li>The app can also serve as a diet helper: as an additional feature, color codes can be used to mark
+                    each product with 1 to 4 colors. Each user can assign their own meaning to the colors, and products
+                    can be filtered based on them.</li>
+                </ul>
               </span>
             </div>
 
@@ -344,7 +346,7 @@
 </html>
 
 <script>
-  
+
   document.getElementById('languageSwitcher').addEventListener('change', function () {
     var selectedLang = this.value;
     // Päivitä kaikki data-lang elementit
@@ -352,7 +354,7 @@
       el.style.display = el.getAttribute('data-lang') === selectedLang ? 'block' : 'none';
     });
   });
-  
+
 </script>
 
 <script>
