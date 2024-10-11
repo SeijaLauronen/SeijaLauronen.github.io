@@ -16,12 +16,30 @@
 
 </head>
 
+<style>
+    /* Otsikon koon pienentäminen mobiililaitteilla */
+    @media (max-width: 576px) {
+        h2 {
+            font-size: 1.0rem;
+        }    
+    }
+    .pdfalt {
+            margin-top: 0; 
+            margin-bottom: 0px;
+            padding-top: 0px; /* Pienennä sisäistä tilaa */
+            padding-bottom: 0px;
+        }
+    .navbar {
+        padding: 0.25rem 1rem; /* Pienennä yläpalkin paddingia */
+    }
+</style>
+
 <body id="cvbody">
     <a id="cvtop"></a>
 
 
     <nav class="navbar bg-dark navbar-dark">
-        <a class="navbar-brand" href="#"></a>
+        <!--<a class="navbar-brand" href="#"></a> -->
 
         <div class="d-flex w-100 justify-content-between align-items-center">
 
@@ -41,16 +59,6 @@
                 <h2 data-lang="fi">Seijan CV</h2>
                 <h2 data-lang="en" style="display:none;">Seija, CV</h2>
             </div>
-            <!-- objektin sisälle olisi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
-     mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
-            <div class="text-white mx-auto text-center">
-                <p data-lang="fi">Jos laitteesi ei tue PDF-tiedoston esikatselua,
-                    <a href="./docs/cv_seija_fin.pdf"> voit ladata PDF:n tästä.</a>
-                </p>
-                <p data-lang="en" style="display:none;">If Your device does not support PDF preview
-                    <a href="./docs/cv_seija_en.pdf"> you can download PDF here.</a>
-                </p>
-            </div>
 
         </div>
     </nav>
@@ -59,12 +67,28 @@
 
         <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
 
-        <object data="./docs/cv_seija_fin.pdf"  type='application/pdf'>
+        <object data="./docs/cv_seija_fin.pdf" type='application/pdf'>
         </object>
 
     </div>
 
+
+    <!-- objektin sisälle olisi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
+     mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
+    <div class="text-white bg-dark text-center pdfalt">
+        <p data-lang="fi"> Jos laitteesi ei tue PDF-tiedoston esikatselua
+            <a href="./docs/cv_seija_fin.pdf" target="_blank"> voit ladata PDF:n tästä.</a>
+        </p>
+        <p data-lang="en" style="display:none;">If Your device does not support PDF preview
+            <a href="./docs/cv_seija_en.pdf" target="_blank"> you can load PDF here.</a>
+        </p>
+    </div>
+
+
+
 </body>
+
+
 
 </html>
 

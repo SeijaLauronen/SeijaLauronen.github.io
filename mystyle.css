@@ -76,7 +76,7 @@ h3 {
 
 object{
     width:95%;
-    height: 95%;
+    height: 99%;
 }
 
 .intro {
@@ -105,4 +105,20 @@ object{
 .dancenavigation-up {
     font-style: italic;
     text-align: center;
+}
+
+@media (max-width: 576px) {
+
+    .pdfalt,
+    .navbar-nav {
+        font-size: 0.6rem;
+    }
+
+    .navbar-nav .nav-item a i {
+        font-size: 0.5rem;
+        /* Pienennä nuolen kokoa */
+    }   
+    #langselection{
+        font-size: 0.6rem;
+    }    
 }
