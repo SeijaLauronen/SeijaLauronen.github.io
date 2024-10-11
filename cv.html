@@ -17,6 +17,7 @@
 </head>
 
 <body id="cvbody">
+    <a id="cvtop"></a>
 
 
     <nav class="navbar bg-dark navbar-dark">
@@ -37,24 +38,30 @@
             </div>
 
             <div class="text-white mx-auto text-center">
-                <h1 data-lang="fi">Seijan CV</h1>
-                <h1 data-lang="en" style="display:none;">Seija, CV</h1>
+                <h2 data-lang="fi">Seijan CV</h2>
+                <h2 data-lang="en" style="display:none;">Seija, CV</h2>
+            </div>
+            <!-- objektin sisälle olisi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
+     mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
+            <div class="text-white mx-auto text-center">
+                <p data-lang="fi">Jos laitteesi ei tue PDF-tiedoston esikatselua,
+                    <a href="./docs/cv_seija_fin.pdf"> voit ladata PDF:n tästä.</a>
+                </p>
+                <p data-lang="en" style="display:none;">If Your device does not support PDF preview
+                    <a href="./docs/cv_seija_en.pdf"> you can download PDF here.</a>
+                </p>
             </div>
 
         </div>
     </nav>
 
+    <div class="cvcontent">
 
-    <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
-    <object data="./docs/cv_seija_fin.pdf" width="95%" height="95%" type='application/pdf'>
-    </object>
-    <!-- objektin sisälle olsi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
-     mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
-    <div class="text-white mx-auto text-center">
-        <p data-lang="fi">Jos laitteesi ei tue PDF-tiedoston esikatselua, 
-            <a href="./docs/cv_seija_fin.pdf"> voit ladata PDF:n tästä.</a></p>
-        <p data-lang="en" style="display:none;">If Your device does not support PDF preview 
-            <a href="./docs/cv_seija_en.pdf"> you can download PDF here.</a></p>
+        <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
+
+        <object data="./docs/cv_seija_fin.pdf"  type='application/pdf'>
+        </object>
+
     </div>
 
 </body>

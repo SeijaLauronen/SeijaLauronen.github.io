@@ -30,8 +30,10 @@ html {
 }
 
 .text-no-spacing {
-    margin: 0;            /* Poistaa ylimääräisen marginaalin */
-    line-height: 1;     /* Asettaa rivivälin pienemmäksi */
+    margin: 0;
+    /* Poistaa ylimääräisen marginaalin */
+    line-height: 1;
+    /* Asettaa rivivälin pienemmäksi */
 }
 
 a {
@@ -55,6 +57,26 @@ h3 {
     background-repeat: repeat-y;
     background-size: cover;
     background-position: center center;
+}
+
+#cvbody {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cvcontent {
+    flex: 1; /* Makes the content take the remaining height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0px; /* Space for the footer */
+}
+
+object{
+    width:95%;
+    height: 95%;
 }
 
 .intro {
