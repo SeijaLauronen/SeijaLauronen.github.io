@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 
-<!--
-  https://www.youtube.com/watch?v=ithPwGcbX6M
-
-  How to Embed Video from Google Drive
-
-    Upload the video to Google Drive.
-    Double-click the video to launch a preview window.
-    Go to menu, select Open in new window.
-    Go to menu again, select Embed item…
-    Copy the embed code. ...
-    Paste and run the code on an HTML viewer to see the result.
--->
-
-
 <html lang="en">
 
 <head>
@@ -28,13 +14,6 @@
 
     <link rel="stylesheet" href="mystyle.css">
 
-
-    <style>
-        .fakeimg {
-            height: 200px;
-            background: #aaa;
-        }
-    </style>
 </head>
 
 <body id="cvbody">
@@ -45,14 +24,14 @@
 
         <div class="d-flex w-100 justify-content-between align-items-center">
 
-            <!-- CV vasemmalla -->
+            <!-- etusivulinkki vasemmalla -->
             <div>
                 <ul class="navbar-nav ">
                     <li data-lang="fi" class="nav-item">
-                        <a id="cvLink" href="index.html?lang=fi"><i class="fas fa-arrow-left"></i> Etusivu </a>
+                        <a href="index.html?lang=fi"><i class="fas fa-arrow-left"></i> Etusivu </a>
                     </li>
                     <li data-lang="en" style="display:none;" class="nav-item">
-                        <a id="cvLink" href="index.html?lang=en"><i class="fas fa-arrow-left"></i> Home page</i></a>
+                        <a href="index.html?lang=en"><i class="fas fa-arrow-left"></i> Home page </a>
                     </li>
                 </ul>
             </div>
@@ -61,18 +40,24 @@
                 <h1 data-lang="fi">Seijan CV</h1>
                 <h1 data-lang="en" style="display:none;">Seija, CV</h1>
             </div>
-            
+
         </div>
     </nav>
 
 
     <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
 
-    <object data="./docs/cv_seija_fin.pdf" width="95%" height="95%" type='application/pdf'></object>
+    <object data="./docs/cv_seija_fin.pdf" width="95%" height="95%" type='application/pdf'>
+        <p data-lang="fi">Laitteesi ei tue PDF-tiedoston esikatselua. <a
+                href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf">Lataa PDF tästä.</a></p>
+        <p data-lang="en" style="display:none;">Your device does not support PDF preview. <a
+                href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf">Download PDF here.</a></p>
+    </object>
 
 </body>
 
 </html>
+
 
 <script>
     // Hae URL-parametri "lang"
@@ -89,3 +74,4 @@
     });
 
 </script>
+
