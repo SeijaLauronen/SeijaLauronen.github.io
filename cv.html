@@ -46,13 +46,17 @@
 
 
     <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
-
     <object data="./docs/cv_seija_fin.pdf" width="95%" height="95%" type='application/pdf'>
-        <p data-lang="fi">Laitteesi ei tue PDF-tiedoston esikatselua. <a
-                href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf">Lataa PDF tästä.</a></p>
-        <p data-lang="en" style="display:none;">Your device does not support PDF preview. <a
-                href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf">Download PDF here.</a></p>
     </object>
+    <!-- objekti sisälle laitettuna seuraava olisi estänyt kännykän useimmissa selaimessa näkymästä automaattista latauspainiketta -->
+    <div class="text-white mx-auto text-center">
+        <p data-lang="fi">Jos laitteesi ei tue PDF-tiedoston esikatselua, 
+            <a href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf"> voit ladata PDF:n tästä.</a></p>
+        <p data-lang="en" style="display:none;">If Your device does not support PDF preview 
+            <a href="https://github.com/SeijaLauronen/SeijaLauronen.github.io/blob/main/docs/cv_seija_fin.pdf"> you can download PDF here.</a></p>
+
+        <p>Väliaikainen testi mobiiliaitteelle:  <a href="./docs/cv_seija_fin.pdf"> lataustesti</a></p>
+    </div>
 
 </body>
 
@@ -74,4 +78,3 @@
     });
 
 </script>
-
