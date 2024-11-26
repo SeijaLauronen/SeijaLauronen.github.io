@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fi">
+<!-- Tekoälyllä tehty, vähän muokattu -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puheentunnistus Testi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        select {
+            margin-bottom: 20px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html?lang=fi" id="home-page"> Etusivu </a>
+
+    <h1 id="title">Puheentunnistuksen Testaus</h1>
+    <label for="language-select" id="language-label">Valitse kieli:</label>
+    <select id="language-select">
+        <option value="fi-FI">Suomi</option>
+        <option value="en-US">Englanti</option>
+    </select>
+    <button id="start-btn">Aloita puheentunnistus</button>
+    <p id="transcript">Tunnistettu teksti tulee näkyviin tähän.</p>
+
+    <script>
+        const startButton = document.getElementById('start-btn');
+        const transcriptDisplay = document.getElementById('transcript');
+        const languageSelect = document.getElementById('language-select');
+        const title = document.getElementById('title');
+        const languageLabel = document.getElementById('language-label');
+        const homeaddress = document.getElementById('home-page');
+
+        // Tekstit eri kielille
+        const texts = {
+            'fi-FI': {
+                title: "Puheentunnistuksen Testaus",
+                languageLabel: "Valitse kieli:",
+                startButton: "Aloita puheentunnistus",
+                defaultMessage: "Tunnistettu teksti tulee näkyviin tähän.",
+                unsupported: "Selain ei tue puheentunnistusta. Kokeile toista selainta.",
+                homepage:"<< Etusivulle"
+            },
+            'en-US': {
+                title: "Speech Recognition Test",
+                languageLabel: "Select language:",
+                startButton: "Start Speech Recognition",
+                defaultMessage: "Recognized text will appear here.",
+                unsupported: "Your browser does not support speech recognition. Try some other browser.",
+                homepage:"<< Home page"
+            }
+        };
+
+        // Hae URL-parametri tai käytä oletuskieltä
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialLang = urlParams.get('lang') || 'fi-FI';
+        languageSelect.value = initialLang;
+
+        // Aseta sivun tekstit valitun kielen mukaan
+        const setLanguageTexts = (lang) => {
+            const langTexts = texts[lang] || texts['fi-FI']; // Oletuskieli
+            title.textContent = langTexts.title;
+            languageLabel.textContent = langTexts.languageLabel;
+            startButton.textContent = langTexts.startButton;
+            transcriptDisplay.textContent = langTexts.defaultMessage;
+            homeaddress.textContent = langTexts.homepage;
+
+
+            if (startButton.style.display == 'none') { // puheentunnistus ei tuettu, jos painike piilotettu
+                transcriptDisplay.textContent = texts[lang].unsupported;
+            }
+
+        };
+
+        // Päivitä tekstit alkuperäisellä kielellä
+        setLanguageTexts(initialLang);
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            let secondaryRecognition = new SpeechRecognition();
+            recognition.lang = initialLang;
+            recognition.interimResults = false;
+
+            secondaryRecognition.lang = languageSelect.value === 'fi-FI' ? 'en-US' : 'fi-FI';
+            secondaryRecognition.interimResults = false;
+
+            recognition.onstart = () => {                
+                transcriptDisplay.textContent = recognition.lang === 'fi-FI'
+                    ? "Kuunnellaan..."
+                    : "Listening...";
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                transcriptDisplay.textContent = `Tunnistettu: "${transcript}"`;
+            };
+
+            recognition.onerror = (event) => {
+                //transcriptDisplay.textContent = `Virhe: ${event.error}`;
+
+                recognition.onerror = (event) => {
+                    if (event.error === 'no-speech' || event.error === 'network') {
+                        // Kokeile toissijaista kieltä
+                        transcriptDisplay.textContent = "Ei tunnistettu. Kokeillaan toista kieltä...";
+                        startRecognition(secondaryRecognition);
+                    } else {
+                        transcriptDisplay.textContent = `Virhe: ${event.error}`;
+                    }
+                };
+
+            };
+
+            secondaryRecognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                transcriptDisplay.textContent = `Toisella kielellä tunnistettu: "${transcript}"`;
+            };
+
+            secondaryRecognition.onerror = (event) => {
+                transcriptDisplay.textContent = `Virhe toissijaisessa tunnistuksessa: ${event.error}`;
+            };
+
+            recognition.onend = () => {
+                transcriptDisplay.textContent += recognition.lang === 'fi-FI'
+                    ? " (Lopetettu)"
+                    : " (Ended)";
+            };
+
+            startButton.addEventListener('click', () => {
+                recognition.lang = languageSelect.value;                
+                    recognition.start();
+            });
+        } else {
+            startButton.style.display = 'none'; // Piilota painike
+            transcriptDisplay.textContent = texts[initialLang].unsupported;
+        }
+
+        
+
+        // Päivitä sivun tekstit, kun kieli vaihdetaan
+        languageSelect.addEventListener('change', (event) => {
+            const selectedLang = event.target.value;
+            setLanguageTexts(selectedLang);
+            
+        });
+    </script>
+</body>
+
+</html>
