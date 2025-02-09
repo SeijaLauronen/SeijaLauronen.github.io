@@ -126,5 +126,7 @@ object{
 /* 9.2.2025 */
 
 .videolink {
-    /*font-size: 0.6rem;*/
+    display: block;
+    padding-right: 15px;
+    word-wrap: break-word;    
 }
