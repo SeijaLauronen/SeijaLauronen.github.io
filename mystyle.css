@@ -130,3 +130,14 @@ object{
     padding-right: 15px;
     word-wrap: break-word;    
 }
+
+.pictext {
+    font-size: 0.6rem;
+    padding-bottom: 5px;
+}
+
+@media (max-width: 576px) { /* Pienille näytöille, kuten puhelimille */
+    .pictext {
+        font-size: 1rem;
+    }
+}
