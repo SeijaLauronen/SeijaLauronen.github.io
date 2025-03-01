@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fi">
+<!-- Sanelun osalta tämä toimii jo suht hyvin, ja jos käyttäjä muuttaa tekstiä, käyttäjän kirjoittama tekstikin pysyy.
+Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai, niin edellinen teksti monistuu.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanelukone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        .buttons {
+            margin-top: 10px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #startStopBtn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #newParagraphBtn {
+            background-color: #ffa500;
+            color: white;
+        }
+
+        #copyBtn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #clearBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #instructions {
+            margin-top: 20px;
+            max-width: 600px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html?lang=fi" id="home-page"> Etusivulle / Homepage</a>
+    <a href="puheentunnistus.html?lang=fi" id="dictation-page"> Takaisin puheentunnistussivulle / Back to speech recognition </a>
+
+    <h1>Sanelukone</h1>
+    <textarea id="textArea" placeholder="Sanele tai kirjoita..."></textarea>
+    <div class="buttons">
+        <button id="startStopBtn">Aloita sanelu</button>
+        <button id="newParagraphBtn">Uusi kappale</button>
+        <button id="copyBtn">Kopioi</button>
+        <button id="clearBtn">Tyhjennä</button>
+    </div>
+    <p id="instructions">Ohje: Paina "Uusi kappale" lisätäksesi uuden kappaleen. Pidä puheessa pieni tauko ennen painikkeen painamista. Voit myös editoida tekstiä.</p>
+    <script>
+        const textArea = document.getElementById("textArea");
+        const startStopBtn = document.getElementById("startStopBtn");
+        const newParagraphBtn = document.getElementById("newParagraphBtn");
+        const copyBtn = document.getElementById("copyBtn");
+        const clearBtn = document.getElementById("clearBtn");
+
+        let recognition;
+        let isListening = false;
+        let recognizedText = ""; // Säilyttää kaiken hyväksytyn tekstin
+        let lastFinalText = ""; // Viimeisin tunnistettu teksti
+
+        if ("webkitSpeechRecognition" in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "fi-FI";
+
+            recognition.onresult = (event) => {
+                let interimTranscript = "";
+                let finalTranscript = "";
+
+                for (let i = 0; i < event.results.length; i++) {
+                    let sentence = event.results[i][0].transcript.trim();
+                    sentence = formatText(sentence);
+
+                    if (event.results[i].isFinal) {
+                        finalTranscript += sentence + " ";
+                    } else {
+                        interimTranscript += sentence + " ";
+                    }
+                }
+
+                // Lisää vain uusi teksti aiemmin tallennetun jatkoksi
+                if (finalTranscript !== lastFinalText) {
+                    recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
+                    lastFinalText = finalTranscript;
+                }
+
+                // Näytetään textarea:ssa käyttäjän kirjoittama + puheentunnistus
+                textArea.value = recognizedText + interimTranscript;
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Virhe sanelussa: ", event.error);
+            };
+        } else {
+            alert("Selaimesi ei tue puheentunnistusta.");
+        }
+
+        // Muotoilee puheen automaattisesti
+        function formatText(text) {
+            text = text.replace(/,? ja /g, ", ja ")
+                .replace(/,? että /g, ", että ")
+                .replace(/,? mutta /g, ", mutta ")
+                .replace(/\s*([.!?])\s*/g, "$1 ")
+                .replace(/(^|[.!?]\s+)([a-zåäö])/g, (match, p1, p2) => p1 + p2.toUpperCase());
+            if (!/[.!?]$/.test(text)) {
+                text += ".";
+            }
+            return text;
+        }
+
+        // Aloita/lopeta puheentunnistus
+        startStopBtn.addEventListener("click", () => {
+            if (isListening) {
+                recognition.stop();
+                startStopBtn.textContent = "Aloita sanelu";
+                isListening = false;
+            } else {
+                recognition.start();
+                startStopBtn.textContent = "Lopeta sanelu";
+                isListening = true;
+                lastFinalText = ""; // Nollataan, jotta uusi sanelu jatkuu oikein
+            }
+        });
+
+        // Lisää kappaleenvaihdon
+
+        newParagraphBtn.addEventListener("click", () => {
+            if (textArea.value.trim() !== "") {
+                textArea.value += "\n\n"; // Lisätään uusi kappale
+                recognizedText = textArea.value; // Päivitetään tallennettu teksti
+            }
+        });
+
+
+        // Päivitä tallennettu teksti, kun käyttäjä kirjoittaa itse
+        textArea.addEventListener("input", () => {
+            recognizedText = textArea.value;
+        });
+
+        // Kopioi teksti leikepöydälle
+        copyBtn.addEventListener("click", () => {
+            textArea.select();
+            document.execCommand("copy");
+            alert("Teksti kopioitu leikepöydälle");
+        });
+
+        // Tyhjennä teksti
+        clearBtn.addEventListener("click", () => {
+            recognizedText = "";
+            lastFinalText = "";
+            textArea.value = "";
+        });
+
+    </script>
+</body>
+
+</html>

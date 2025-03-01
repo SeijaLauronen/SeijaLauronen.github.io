@@ -33,6 +33,7 @@
 
 <body>
     <a href="index.html?lang=fi" id="home-page"> Etusivu </a>
+    <a href="sanelukone.html?lang=fi" id="dictation-page"> Sanelukone </a>
 
     <h1 id="title">Puheentunnistuksen Testaus</h1>
     <label for="language-select" id="language-label">Valitse kieli:</label>
@@ -50,6 +51,7 @@
         const title = document.getElementById('title');
         const languageLabel = document.getElementById('language-label');
         const homeaddress = document.getElementById('home-page');
+        const dictationaddress = document.getElementById('dictation-page');
 
         // Tekstit eri kielille
         const texts = {
@@ -59,7 +61,8 @@
                 startButton: "Aloita puheentunnistus",
                 defaultMessage: "Tunnistettu teksti tulee näkyviin tähän.",
                 unsupported: "Selain ei tue puheentunnistusta. Kokeile toista selainta.",
-                homepage:"<< Etusivulle"
+                homepage:"<< Etusivulle",
+                dictationpage:" Sanelukonesivulle >>"
             },
             'en-US': {
                 title: "Speech Recognition Test",
@@ -67,7 +70,8 @@
                 startButton: "Start Speech Recognition",
                 defaultMessage: "Recognized text will appear here.",
                 unsupported: "Your browser does not support speech recognition. Try some other browser.",
-                homepage:"<< Home page"
+                homepage:"<< Home page",
+                dictationpage:" Dictation page >>"
             }
         };
 
@@ -84,6 +88,7 @@
             startButton.textContent = langTexts.startButton;
             transcriptDisplay.textContent = langTexts.defaultMessage;
             homeaddress.textContent = langTexts.homepage;
+            dictationaddress.textContent = langTexts.dictationpage;
 
 
             if (startButton.style.display == 'none') { // puheentunnistus ei tuettu, jos painike piilotettu
