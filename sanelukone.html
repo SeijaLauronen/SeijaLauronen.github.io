@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="fi">
-<!-- Sanelun osalta tämä toimii jo suht hyvin, ja jos käyttäjä muuttaa tekstiä, käyttäjän kirjoittama tekstikin pysyy.
-Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai, niin edellinen teksti monistuu.
--->
 
 <head>
     <meta charset="UTF-8">
@@ -89,6 +86,7 @@ Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai
         <button id="clearBtn">Tyhjennä</button>
     </div>
     <p id="instructions">Ohje: Paina "Uusi kappale" lisätäksesi uuden kappaleen. Pidä puheessa pieni tauko ennen painikkeen painamista. Voit myös editoida tekstiä.</p>
+
     <script>
         const textArea = document.getElementById("textArea");
         const startStopBtn = document.getElementById("startStopBtn");
@@ -100,6 +98,8 @@ Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai
         let isListening = false;
         let recognizedText = ""; // Säilyttää kaiken hyväksytyn tekstin
         let lastFinalText = ""; // Viimeisin tunnistettu teksti
+
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent); // Tunnistetaan mobiililaite
 
         if ("webkitSpeechRecognition" in window) {
             recognition = new webkitSpeechRecognition();
@@ -167,14 +167,12 @@ Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai
         });
 
         // Lisää kappaleenvaihdon
-
         newParagraphBtn.addEventListener("click", () => {
             if (textArea.value.trim() !== "") {
                 textArea.value += "\n\n"; // Lisätään uusi kappale
                 recognizedText = textArea.value; // Päivitetään tallennettu teksti
             }
         });
-
 
         // Päivitä tallennettu teksti, kun käyttäjä kirjoittaa itse
         textArea.addEventListener("input", () => {
@@ -194,6 +192,12 @@ Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai
             lastFinalText = "";
             textArea.value = "";
         });
+
+        // Jos on mobiililaite, voidaan muokata sanelutoimintoa tai tehdä muita erityisiä säätöjä
+        if (isMobile) {
+            console.log("Mobiililaite tunnistettu - säädetään toimintoja");
+            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt mobiililaitteelle erikseen
+        }
 
     </script>
 </body>
