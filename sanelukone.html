@@ -77,7 +77,7 @@
     <a href="puheentunnistus.html?lang=fi" id="dictation-page"> Takaisin puheentunnistussivulle / Back to speech recognition </a>
 
     <h1>Sanelukone</h1>
-    <h2>Tietsikalla tuntuu toimivan, kännykällä ei toimi niinkuin pitäisi, monistaa tekstiä</h2>
+    <h2>Tietsikalla tuntuu pääosin toimivan, kännykällä ei toimi niinkuin pitäisi, monistaa tekstiä</h2>
     <p id="ismobile"></p>
     <textarea id="textArea" placeholder="Sanele tai kirjoita..."></textarea>
     <div class="buttons">
@@ -102,6 +102,15 @@
 
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent); // Tunnistetaan mobiililaite
 
+        // Debounce-funktio, joka rajoittaa päivitysten tiheyttä
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
         // Alusta puheentunnistus
         function initializeRecognition() {
             if ("webkitSpeechRecognition" in window) {
@@ -125,7 +134,7 @@
                         }
                     }
 
-                    // MOBIILILAITTEILLE: Estetään tekstin toistuminen
+                    // MOBIILILAITTEILLE: Käytetään debouncea estämään tekstin toistuminen
                     if (isMobile) {
                         if (finalTranscript && finalTranscript !== lastFinalText) {
                             recognizedText += finalTranscript;
@@ -139,8 +148,8 @@
                         }
                     }
 
-                    // Päivitä textarea
-                    textArea.value = recognizedText + interimTranscript;
+                    // Päivitä textarea debounce-funktiolla
+                    updateTextArea(recognizedText + interimTranscript);
                 };
 
                 recognition.onerror = (event) => {
@@ -172,6 +181,11 @@
             }
             return text;
         }
+
+        // Päivitä textarea debounce-funktiolla
+        const updateTextArea = debounce((text) => {
+            textArea.value = text;
+        }, 300); // Päivitä textarea enintään kerran 300 ms:ssa
 
         // Aloita/lopeta puheentunnistus
         startStopBtn.addEventListener("click", () => {
@@ -217,10 +231,10 @@
 
         // Ilmoita, onko mobiililaite vai tietokone
         if (isMobile) {
-            ismobile.innerHTML = "Mobiililaite tunnistettu...";
+            ismobile.innerHTML = "Mobiililaite tunnistettu";
             console.log("Mobiililaite tunnistettu - säädetään toimintoja");
         } else {
-            ismobile.innerHTML = "Tietokone tunnistettu...";
+            ismobile.innerHTML = "Tietokone tunnistettu";
             console.log("Tietokone tunnistettu");
         }
     </script>
