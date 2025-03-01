@@ -78,6 +78,7 @@
 
     <h1>Sanelukone</h1>
     <h2>Tietsikalla tuntuu toimivan, kännykällä ei toimi niinkuin pitäisi, monistaa tekstiä</h2>
+    <p id="ismobile"></p>
     <textarea id="textArea" placeholder="Sanele tai kirjoita..."></textarea>
     <div class="buttons">
         <button id="startStopBtn">Aloita sanelu</button>
@@ -195,8 +196,14 @@
 
         // Jos on mobiililaite, voidaan muokata sanelutoimintoa tai tehdä muita erityisiä säätöjä
         if (isMobile) {
+            ismobile.innerHTML = "Mobiililaite tunnistettu";
             console.log("Mobiililaite tunnistettu - säädetään toimintoja");
             // Esimerkiksi, voit tehdä puheentunnistuksen säädöt mobiililaitteelle erikseen
+        } else {        
+            ismobile.innerHTML = "Tietokone tunnistettu";
+            console.log("Tietokone tunnistettu ");
+            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt tietokoneelle erikseen
+
         }
 
     </script>
