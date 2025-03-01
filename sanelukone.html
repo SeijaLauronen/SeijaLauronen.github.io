@@ -102,42 +102,62 @@
 
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent); // Tunnistetaan mobiililaite
 
-        if ("webkitSpeechRecognition" in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-            recognition.lang = "fi-FI";
+        // Alusta puheentunnistus
+        function initializeRecognition() {
+            if ("webkitSpeechRecognition" in window) {
+                recognition = new webkitSpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = "fi-FI";
 
-            recognition.onresult = (event) => {
-                let interimTranscript = "";
-                let finalTranscript = "";
+                recognition.onresult = (event) => {
+                    let interimTranscript = "";
+                    let finalTranscript = "";
 
-                for (let i = 0; i < event.results.length; i++) {
-                    let sentence = event.results[i][0].transcript.trim();
-                    sentence = formatText(sentence);
+                    for (let i = 0; i < event.results.length; i++) {
+                        let sentence = event.results[i][0].transcript.trim();
+                        sentence = formatText(sentence);
 
-                    if (event.results[i].isFinal) {
-                        finalTranscript += sentence + " ";
-                    } else {
-                        interimTranscript += sentence + " ";
+                        if (event.results[i].isFinal) {
+                            finalTranscript += sentence + " ";
+                        } else {
+                            interimTranscript += sentence + " ";
+                        }
                     }
-                }
 
-                // Lisää vain uusi teksti aiemmin tallennetun jatkoksi
-                if (finalTranscript !== lastFinalText) {
-                    recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
-                    lastFinalText = finalTranscript;
-                }
+                    // MOBIILILAITTEILLE: Lisää vain uusi teksti, jos se eroaa edellisestä
+                    if (isMobile) {
+                        if (finalTranscript && finalTranscript !== lastFinalText) {
+                            recognizedText += finalTranscript + " ";
+                            lastFinalText = finalTranscript;
+                        }
+                    } else {
+                        // TIETOKONEILLE: Käytä alkuperäistä logiikkaa
+                        if (finalTranscript !== lastFinalText) {
+                            recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
+                            lastFinalText = finalTranscript;
+                        }
+                    }
 
-                // Näytetään textarea:ssa käyttäjän kirjoittama + puheentunnistus
-                textArea.value = recognizedText + interimTranscript;
-            };
+                    // Päivitä textarea
+                    textArea.value = recognizedText + interimTranscript;
+                };
 
-            recognition.onerror = (event) => {
-                console.error("Virhe sanelussa: ", event.error);
-            };
-        } else {
-            alert("Selaimesi ei tue puheentunnistusta.");
+                recognition.onerror = (event) => {
+                    console.error("Virhe sanelussa: ", event.error);
+                    recognition.stop();
+                    isListening = false;
+                    startStopBtn.textContent = "Aloita sanelu";
+                };
+
+                recognition.onend = () => {
+                    if (isListening) {
+                        recognition.start(); // Käynnistä uudelleen, jos sanelu on käynnissä
+                    }
+                };
+            } else {
+                alert("Selaimesi ei tue puheentunnistusta.");
+            }
         }
 
         // Muotoilee puheen automaattisesti
@@ -160,6 +180,7 @@
                 startStopBtn.textContent = "Aloita sanelu";
                 isListening = false;
             } else {
+                initializeRecognition(); // Alusta puheentunnistus uudelleen
                 recognition.start();
                 startStopBtn.textContent = "Lopeta sanelu";
                 isListening = true;
@@ -194,18 +215,14 @@
             textArea.value = "";
         });
 
-        // Jos on mobiililaite, voidaan muokata sanelutoimintoa tai tehdä muita erityisiä säätöjä
+        // Ilmoita, onko mobiililaite vai tietokone
         if (isMobile) {
-            ismobile.innerHTML = "Mobiililaite tunnistettu";
+            ismobile.innerHTML = "...mobiililaite tunnistettu";
             console.log("Mobiililaite tunnistettu - säädetään toimintoja");
-            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt mobiililaitteelle erikseen
-        } else {        
-            ismobile.innerHTML = "Tietokone tunnistettu";
-            console.log("Tietokone tunnistettu ");
-            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt tietokoneelle erikseen
-
+        } else {
+            ismobile.innerHTML = "...tietokone tunnistettu";
+            console.log("Tietokone tunnistettu");
         }
-
     </script>
 </body>
 
