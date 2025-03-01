@@ -125,14 +125,14 @@
                         }
                     }
 
-                    // MOBIILILAITTEILLE: Lisää vain uusi teksti, jos se eroaa edellisestä
+                    // MOBIILILAITTEILLE: Estetään tekstin toistuminen
                     if (isMobile) {
                         if (finalTranscript && finalTranscript !== lastFinalText) {
-                            recognizedText += finalTranscript + " ";
+                            recognizedText += finalTranscript;
                             lastFinalText = finalTranscript;
                         }
                     } else {
-                        // TIETOKONEILLE: Käytä alkuperäistä logiikkaa
+                        // TIETOKONEILLE: Käytetään alkuperäistä logiikkaa
                         if (finalTranscript !== lastFinalText) {
                             recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
                             lastFinalText = finalTranscript;
@@ -217,10 +217,10 @@
 
         // Ilmoita, onko mobiililaite vai tietokone
         if (isMobile) {
-            ismobile.innerHTML = "...mobiililaite tunnistettu";
+            ismobile.innerHTML = "Mobiililaite tunnistettu...";
             console.log("Mobiililaite tunnistettu - säädetään toimintoja");
         } else {
-            ismobile.innerHTML = "...tietokone tunnistettu";
+            ismobile.innerHTML = "Tietokone tunnistettu...";
             console.log("Tietokone tunnistettu");
         }
     </script>
