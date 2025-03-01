@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="fi">
+<!-- Sanelun osalta tämä toimii jo suht hyvin, ja jos käyttäjä muuttaa tekstiä, käyttäjän kirjoittama tekstikin pysyy.
+Ongelma on vielä, että jos käyttäjä painaa uusi kappale painiketta nopestai, niin edellinen teksti monistuu.
+-->
 
 <head>
     <meta charset="UTF-8">
@@ -73,12 +76,14 @@
 </head>
 
 <body>
-    <a href="index.html?lang=fi" id="home-page"> Etusivulle / Homepage</a>
-    <a href="puheentunnistus.html?lang=fi" id="dictation-page"> Takaisin puheentunnistussivulle / Back to speech recognition </a>
+    <a href="index.html?lang=fi" id="home-page"> &lt;&lt; Etusivulle / Homepage</a>
+    <a href="puheentunnistus.html?lang=fi" id="dictation-page">&lt;&lt; Puheentunnistussivulle /Speech recognition </a>
 
     <h1>Sanelukone</h1>
-    <h2>Tietsikalla tuntuu pääosin toimivan, kännykällä ei toimi niinkuin pitäisi, monistaa tekstiä</h2>
+    <h2>Tietsikalla tuntuu toimivan, kännykällä ei toimi niinkuin pitäisi, monistaa tekstiä</h2>
     <p id="ismobile"></p>
+    <a href="sanelukonem.html?lang=fi"> Mobiiliversioon &gt; &gt; </a>
+
     <textarea id="textArea" placeholder="Sanele tai kirjoita..."></textarea>
     <div class="buttons">
         <button id="startStopBtn">Aloita sanelu</button>
@@ -87,7 +92,6 @@
         <button id="clearBtn">Tyhjennä</button>
     </div>
     <p id="instructions">Ohje: Paina "Uusi kappale" lisätäksesi uuden kappaleen. Pidä puheessa pieni tauko ennen painikkeen painamista. Voit myös editoida tekstiä.</p>
-
     <script>
         const textArea = document.getElementById("textArea");
         const startStopBtn = document.getElementById("startStopBtn");
@@ -102,71 +106,42 @@
 
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent); // Tunnistetaan mobiililaite
 
-        // Debounce-funktio, joka rajoittaa päivitysten tiheyttä
-        function debounce(func, wait) {
-            let timeout;
-            return function (...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
+        if ("webkitSpeechRecognition" in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "fi-FI";
 
-        // Alusta puheentunnistus
-        function initializeRecognition() {
-            if ("webkitSpeechRecognition" in window) {
-                recognition = new webkitSpeechRecognition();
-                recognition.continuous = true;
-                recognition.interimResults = true;
-                recognition.lang = "fi-FI";
+            recognition.onresult = (event) => {
+                let interimTranscript = "";
+                let finalTranscript = "";
 
-                recognition.onresult = (event) => {
-                    let interimTranscript = "";
-                    let finalTranscript = "";
+                for (let i = 0; i < event.results.length; i++) {
+                    let sentence = event.results[i][0].transcript.trim();
+                    sentence = formatText(sentence);
 
-                    for (let i = 0; i < event.results.length; i++) {
-                        let sentence = event.results[i][0].transcript.trim();
-                        sentence = formatText(sentence);
-
-                        if (event.results[i].isFinal) {
-                            finalTranscript += sentence + " ";
-                        } else {
-                            interimTranscript += sentence + " ";
-                        }
-                    }
-
-                    // MOBIILILAITTEILLE: Käytetään debouncea estämään tekstin toistuminen
-                    if (isMobile) {
-                        if (finalTranscript && finalTranscript !== lastFinalText) {
-                            recognizedText += finalTranscript;
-                            lastFinalText = finalTranscript;
-                        }
+                    if (event.results[i].isFinal) {
+                        finalTranscript += sentence + " ";
                     } else {
-                        // TIETOKONEILLE: Käytetään alkuperäistä logiikkaa
-                        if (finalTranscript !== lastFinalText) {
-                            recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
-                            lastFinalText = finalTranscript;
-                        }
+                        interimTranscript += sentence + " ";
                     }
+                }
 
-                    // Päivitä textarea debounce-funktiolla
-                    updateTextArea(recognizedText + interimTranscript);
-                };
+                // Lisää vain uusi teksti aiemmin tallennetun jatkoksi
+                if (finalTranscript !== lastFinalText) {
+                    recognizedText += finalTranscript.substring(lastFinalText.length).trim() + " ";
+                    lastFinalText = finalTranscript;
+                }
 
-                recognition.onerror = (event) => {
-                    console.error("Virhe sanelussa: ", event.error);
-                    recognition.stop();
-                    isListening = false;
-                    startStopBtn.textContent = "Aloita sanelu";
-                };
+                // Näytetään textarea:ssa käyttäjän kirjoittama + puheentunnistus
+                textArea.value = recognizedText + interimTranscript;
+            };
 
-                recognition.onend = () => {
-                    if (isListening) {
-                        recognition.start(); // Käynnistä uudelleen, jos sanelu on käynnissä
-                    }
-                };
-            } else {
-                alert("Selaimesi ei tue puheentunnistusta.");
-            }
+            recognition.onerror = (event) => {
+                console.error("Virhe sanelussa: ", event.error);
+            };
+        } else {
+            alert("Selaimesi ei tue puheentunnistusta.");
         }
 
         // Muotoilee puheen automaattisesti
@@ -182,11 +157,6 @@
             return text;
         }
 
-        // Päivitä textarea debounce-funktiolla
-        const updateTextArea = debounce((text) => {
-            textArea.value = text;
-        }, 300); // Päivitä textarea enintään kerran 300 ms:ssa
-
         // Aloita/lopeta puheentunnistus
         startStopBtn.addEventListener("click", () => {
             if (isListening) {
@@ -194,7 +164,6 @@
                 startStopBtn.textContent = "Aloita sanelu";
                 isListening = false;
             } else {
-                initializeRecognition(); // Alusta puheentunnistus uudelleen
                 recognition.start();
                 startStopBtn.textContent = "Lopeta sanelu";
                 isListening = true;
@@ -203,12 +172,14 @@
         });
 
         // Lisää kappaleenvaihdon
+
         newParagraphBtn.addEventListener("click", () => {
             if (textArea.value.trim() !== "") {
                 textArea.value += "\n\n"; // Lisätään uusi kappale
                 recognizedText = textArea.value; // Päivitetään tallennettu teksti
             }
         });
+
 
         // Päivitä tallennettu teksti, kun käyttäjä kirjoittaa itse
         textArea.addEventListener("input", () => {
@@ -229,14 +200,18 @@
             textArea.value = "";
         });
 
-        // Ilmoita, onko mobiililaite vai tietokone
+        // Jos on mobiililaite, voidaan muokata sanelutoimintoa tai tehdä muita erityisiä säätöjä
         if (isMobile) {
             ismobile.innerHTML = "Mobiililaite tunnistettu";
             console.log("Mobiililaite tunnistettu - säädetään toimintoja");
-        } else {
+            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt mobiililaitteelle erikseen
+        } else {        
             ismobile.innerHTML = "Tietokone tunnistettu";
-            console.log("Tietokone tunnistettu");
+            console.log("Tietokone tunnistettu ");
+            // Esimerkiksi, voit tehdä puheentunnistuksen säädöt tietokoneelle erikseen
+
         }
+
     </script>
 </body>
 
