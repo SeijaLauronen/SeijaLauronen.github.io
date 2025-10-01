@@ -80,6 +80,33 @@
         margin-right: 2px;
     }
 
+    @media (max-width: 576px) {
+        h2 {
+            font-size: 1rem;
+        }
+        .nav-item {
+            white-space: nowrap;
+        }
+
+        .btn-group .btn-sm {
+            padding: 0.15rem 0.4rem;
+            /* vähemmän tilaa pienissä */
+            font-size: 0.75rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h2 {
+            font-size: 0.5rem;
+        }
+        .btn-group .btn-sm {
+            padding: 0.15rem 0.4rem;
+            /* vähemmän tilaa pienissä */
+            font-size: 0.5rem;
+        }
+    }
+
+
 </style>
 
 <body id="cvbody">
@@ -92,6 +119,7 @@
         <div class="d-flex w-100 justify-content-between align-items-center">
 
             <!-- etusivulinkki vasemmalla -->
+
             <div>
                 <ul class="navbar-nav ">
                     <li data-lang="fi" class="nav-item">
@@ -102,6 +130,23 @@
                     </li>
                 </ul>
             </div>
+
+
+            <!--
+            <div  class="d-flex align-items-center">
+                <a href="index.html?lang=fi" data-lang="fi" class="text-white">
+                    <i class="fas fa-arrow-left mr-1"></i> Etusivu
+                </a>
+
+                <a href="index.html?lang=en" data-lang="en" class="text-white">
+                    <i class="fas fa-arrow-left mr-1"></i> Home page
+                </a>
+
+            </div>
+
+            -->
+
+
             <div class="text-white mx-auto text-center d-flex align-items-center">
                 <!--
                 <h2 data-lang="fi">Seijan CV</h2>
@@ -118,7 +163,7 @@
                     <label class="btn btn-outline-light btn-sm active">
                         <input type="radio" name="cvlen" value="long"> Pitkä versio
                     </label>
-                     
+
                 </div>
 
 
@@ -144,7 +189,7 @@
 
         <object data="./docs/cv_seija_1p_fin.pdf" type='application/pdf'>
         </object>
-        
+
         <!-- Suomenkielinen versio (näkyy vain kun lang=fi) 
         <div data-lang="fi">-->
         <!-- Tabit 
@@ -216,61 +261,61 @@
     // Hae URL-parametri "lang"
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || 'fi'; // Oletuksena 'fi', jos parametriä ei ole
-/*
-    // Päivitä PDF-tiedosto kielen mukaan
-    const pdfPath = lang === 'en' ? './docs/cv_seija_en.pdf' : './docs/cv_seija_1p_fin.pdf';
-    document.querySelector('object').data = pdfPath;
+    /*
+        // Päivitä PDF-tiedosto kielen mukaan
+        const pdfPath = lang === 'en' ? './docs/cv_seija_en.pdf' : './docs/cv_seija_1p_fin.pdf';
+        document.querySelector('object').data = pdfPath;
+    
+        // Päivitä kaikki data-lang elementit
+        document.querySelectorAll('[data-lang]').forEach(function (el) {
+            el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+        });
+    
+    
+        // oletuksena näytetään lyhyt versio cv:stä
+        let cvObject = document.querySelector(".cvcontent object");
+        document.querySelectorAll("input[name='cvlen']").forEach(radio => {
+            radio.addEventListener("change", function () {
+                if (this.value === "long") {
+                    cvObject.data = "./docs/cv_seija_fin.pdf";
+                } else {
+                    cvObject.data = "./docs/cv_seija_1p_fin.pdf";
+                }
+            });
+        });
+    
+    */
 
-    // Päivitä kaikki data-lang elementit
-    document.querySelectorAll('[data-lang]').forEach(function (el) {
-        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+
+    // Alusta PDF ja radio oletuksen mukaan
+    const cvObject = document.querySelector(".cvcontent object");
+    const radios = document.querySelectorAll("input[name='cvlen']");
+
+    function updatePDF(version) {
+        if (lang === "en") {
+            cvObject.data = "./docs/cv_seija_en.pdf";
+        } else {
+            cvObject.data = version === "long"
+                ? "./docs/cv_seija_fin.pdf"
+                : "./docs/cv_seija_1p_fin.pdf";
+        }
+    }
+
+    // päivitä tekstit kielen mukaan
+    document.querySelectorAll("[data-lang]").forEach(el => {
+        el.style.display = el.getAttribute("data-lang") === lang ? "block" : "none";
     });
 
+    // oletuksena lyhyt versio
+    updatePDF("short");
+    document.querySelector("input[name='cvlen'][value='short']").checked = true;
 
-    // oletuksena näytetään lyhyt versio cv:stä
-    let cvObject = document.querySelector(".cvcontent object");
-    document.querySelectorAll("input[name='cvlen']").forEach(radio => {
+    // kuuntele radiot
+    radios.forEach(radio => {
         radio.addEventListener("change", function () {
-            if (this.value === "long") {
-                cvObject.data = "./docs/cv_seija_fin.pdf";
-            } else {
-                cvObject.data = "./docs/cv_seija_1p_fin.pdf";
-            }
+            updatePDF(this.value);
         });
     });
-
-*/
-
-   
-  // Alusta PDF ja radio oletuksen mukaan
-  const cvObject = document.querySelector(".cvcontent object");
-  const radios = document.querySelectorAll("input[name='cvlen']");
-
-  function updatePDF(version) {
-    if (lang === "en") {
-      cvObject.data = "./docs/cv_seija_en.pdf";
-    } else {
-      cvObject.data = version === "long"
-        ? "./docs/cv_seija_fin.pdf"
-        : "./docs/cv_seija_1p_fin.pdf";
-    }
-  }
-
-  // päivitä tekstit kielen mukaan
-  document.querySelectorAll("[data-lang]").forEach(el => {
-    el.style.display = el.getAttribute("data-lang") === lang ? "block" : "none";
-  });
-
-  // oletuksena lyhyt versio
-  updatePDF("short");
-  document.querySelector("input[name='cvlen'][value='short']").checked = true;
-
-  // kuuntele radiot
-  radios.forEach(radio => {
-    radio.addEventListener("change", function () {
-      updatePDF(this.value);
-    });
-  });
 
 
 </script>
