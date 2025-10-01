@@ -22,17 +22,64 @@
     @media (max-width: 576px) {
         h2 {
             font-size: 1.0rem;
-        }    
-    }
-    .pdfalt {
-            margin-top: 0; 
-            margin-bottom: 0px;
-            padding-top: 0px; /* Pienennä sisäistä tilaa */
-            padding-bottom: 0px;
         }
-    .navbar {
-        padding: 0.25rem 1rem; /* Pienennä yläpalkin paddingia */
     }
+
+    .pdfalt {
+        margin-top: 0;
+        margin-bottom: 0px;
+        padding-top: 0px;
+        /* Pienennä sisäistä tilaa */
+        padding-bottom: 0px;
+    }
+
+    .navbar {
+        padding: 0.25rem 1rem;
+        /* Pienennä yläpalkin paddingia */
+    }
+
+    /* BEGIN TAB */
+    .cvcontentX objectX {
+        width: 100%;
+        height: 80vh;
+        /* esim. 80% selainikkunan korkeudesta */
+        border: none;
+    }
+
+    .nav-tabs {
+        margin-bottom: 0;
+        /* ettei tule turhaa rakoa tabien ja PDF:n väliin */
+    }
+
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1.5rem;
+        /* korkeampi + leveämpi nappi */
+        font-size: 1.1rem;
+        /* vähän isompi teksti */
+    }
+
+    .tab-content>.tab-pane {
+        width: 95vw;
+        /*margin-left: calc(-50vw + 50%);*/
+    }
+
+    /* END TAB */
+    /* Jos olisi radionapit: */
+    .cv-choice {
+        font-size: 0.9rem;
+    }
+
+    .cv-choice input {
+        margin-right: 4px;
+        margin-left: 4px;
+    }
+
+    /* Käytetäänkin painikkeita*/
+    .btn-group .btn {
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
 </style>
 
 <body id="cvbody">
@@ -54,10 +101,38 @@
                         <a href="index.html?lang=en"><i class="fas fa-arrow-left"></i> Home page </a>
                     </li>
                 </ul>
-            </div>            
-            <div class="text-white mx-auto text-center">
+            </div>
+            <div class="text-white mx-auto text-center d-flex align-items-center">
+                <!--
                 <h2 data-lang="fi">Seijan CV</h2>
                 <h2 data-lang="en" style="display:none;">Seija, CV</h2>
+                -->
+
+                <h2 data-lang="fi" class="mb-0 mr-3">Seijan CV</h2>
+                <h2 data-lang="en" style="display:none;" class="mb-0 mr-3">Seija, CV</h2>
+
+                <div data-lang="fi" class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-light btn-sm">
+                        <input type="radio" name="cvlen" value="short" checked> Lyhyt versio
+                    </label>
+                    <label class="btn btn-outline-light btn-sm active">
+                        <input type="radio" name="cvlen" value="long"> Pitkä versio
+                    </label>
+                     
+                </div>
+
+
+                <!--
+                <div class="cv-choice text-white d-flex">
+                    <label class="mr-2 mb-0">
+                        <input type="radio" name="cvlen" value="short" checked> Lyhyt
+                    </label>
+                    <label class="mb-0">
+                        <input type="radio" name="cvlen" value="long"> Pitkä
+                    </label>
+                </div>
+                -->
+
             </div>
 
         </div>
@@ -67,8 +142,52 @@
 
         <!-- https://www.reddit.com/r/github/comments/xkvubx/can_i_add_pdfs_to_a_githubpage_is_this_possible/ -->
 
-        <object data="./docs/cv_seija_fin.pdf" type='application/pdf'>
+        <object data="./docs/cv_seija_1p_fin.pdf" type='application/pdf'>
         </object>
+        
+        <!-- Suomenkielinen versio (näkyy vain kun lang=fi) 
+        <div data-lang="fi">-->
+        <!-- Tabit 
+            <ul class="nav nav-tabs" id="cvTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="short-tab" data-toggle="tab" href="#short" role="tab">Lyhyt
+                        versio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="long-tab" data-toggle="tab" href="#long" role="tab">Pitkä versio</a>
+                </li>
+            </ul>-->
+
+        <!-- Tabin sisältö 
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="short" role="tabpanel">
+                    <object data="./docs/cv_seija_1p_fin.pdf" type="application/pdf"></object>
+                    <p class="text-white bg-dark text-center pdfalt">
+                        Jos laitteesi ei tue PDF-tiedoston esikatselua
+                        <a href="./docs/cv_seija_1p_fin.pdf" target="_blank" rel="noopener noreferrer">voit ladata
+                            PDF:n tästä.</a>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="long" role="tabpanel">
+                    <object data="./docs/cv_seija_fin.pdf" type="application/pdf" width="100%" height="600px"></object>
+                    <p class="text-white bg-dark text-center pdfalt">
+                        Jos laitteesi ei tue PDF-tiedoston esikatselua
+                        <a href="./docs/cv_seija_fin.pdf" target="_blank" rel="noopener noreferrer">voit ladata
+                            PDF:n tästä.</a>
+                    </p>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- Englanninkielinen versio (vain yksi PDF) 
+        <div data-lang="en" style="display:none;">
+            <object data="./docs/cv_seija_en.pdf" type="application/pdf" width="100%" height="600px"></object>
+            <p class="text-white bg-dark text-center pdfalt">
+                If Your device does not support PDF preview
+                <a href="./docs/cv_seija_en.pdf" target="_blank" rel="noopener noreferrer"> you can load PDF here.</a>
+            </p>
+        </div>
+        -->
 
     </div>
 
@@ -76,14 +195,14 @@
     <!-- objektin sisälle olisi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
      mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
     <div class="text-white bg-dark text-center pdfalt">
-        <p data-lang="fi"> Jos laitteesi ei tue PDF-tiedoston esikatselua
-            <a href="./docs/cv_seija_fin.pdf" target="_blank" rel="noopener noreferrer"> voit ladata PDF:n tästä.</a>
+        <p data-lang="fi"> Jos laitteesi ei tue PDF-tiedoston esikatselua, voit ladata PDF:n tästä:
+            <a href="./docs/cv_seija_1p_fin.pdf" target="_blank" rel="noopener noreferrer"> Lyhyt versio</a>
+            <a href="./docs/cv_seija_fin.pdf" target="_blank" rel="noopener noreferrer"> Pitkä versio</a>
         </p>
         <p data-lang="en" style="display:none;">If Your device does not support PDF preview
             <a href="./docs/cv_seija_en.pdf" target="_blank" rel="noopener noreferrer"> you can load PDF here.</a>
         </p>
     </div>
-
 
 
 </body>
@@ -106,5 +225,19 @@
     document.querySelectorAll('[data-lang]').forEach(function (el) {
         el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
     });
+
+
+    // oletuksena näytetään lyhyt versio cv:stä
+    let cvObject = document.querySelector(".cvcontent object");
+    document.querySelectorAll("input[name='cvlen']").forEach(radio => {
+        radio.addEventListener("change", function () {
+            if (this.value === "long") {
+                cvObject.data = "./docs/cv_seija_fin.pdf";
+            } else {
+                cvObject.data = "./docs/cv_seija_1p_fin.pdf";
+            }
+        });
+    });
+
 
 </script>
