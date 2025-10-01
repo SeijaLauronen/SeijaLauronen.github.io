@@ -216,7 +216,7 @@
     // Hae URL-parametri "lang"
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || 'fi'; // Oletuksena 'fi', jos parametriä ei ole
-
+/*
     // Päivitä PDF-tiedosto kielen mukaan
     const pdfPath = lang === 'en' ? './docs/cv_seija_en.pdf' : './docs/cv_seija_1p_fin.pdf';
     document.querySelector('object').data = pdfPath;
@@ -238,6 +238,39 @@
             }
         });
     });
+
+*/
+
+   
+  // Alusta PDF ja radio oletuksen mukaan
+  const cvObject = document.querySelector(".cvcontent object");
+  const radios = document.querySelectorAll("input[name='cvlen']");
+
+  function updatePDF(version) {
+    if (lang === "en") {
+      cvObject.data = "./docs/cv_seija_en.pdf";
+    } else {
+      cvObject.data = version === "long"
+        ? "./docs/cv_seija_fin.pdf"
+        : "./docs/cv_seija_1p_fin.pdf";
+    }
+  }
+
+  // päivitä tekstit kielen mukaan
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    el.style.display = el.getAttribute("data-lang") === lang ? "block" : "none";
+  });
+
+  // oletuksena lyhyt versio
+  updatePDF("short");
+  document.querySelector("input[name='cvlen'][value='short']").checked = true;
+
+  // kuuntele radiot
+  radios.forEach(radio => {
+    radio.addEventListener("change", function () {
+      updatePDF(this.value);
+    });
+  });
 
 
 </script>
