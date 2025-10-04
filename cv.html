@@ -26,11 +26,12 @@
     }
 
     .pdfalt {
-        margin-top: 0;
+        margin-top: 0px;
         margin-bottom: 0px;
-        padding-top: 0px;
+        padding-top: 10px;
         /* Pienennä sisäistä tilaa */
         padding-bottom: 0px;
+        padding-right: 100px;
     }
 
     .navbar {
@@ -84,6 +85,7 @@
         h2 {
             font-size: 1rem;
         }
+
         .nav-item {
             white-space: nowrap;
         }
@@ -99,14 +101,13 @@
         h2 {
             font-size: 0.75rem;
         }
+
         .btn-group .btn-sm {
             padding: 0.15rem 0.4rem;
             /* vähemmän tilaa pienissä */
             font-size: 0.5rem;
         }
     }
-
-
 </style>
 
 <body id="cvbody">
@@ -160,6 +161,7 @@
                     <label class="btn btn-outline-light btn-sm">
                         <input type="radio" name="cvlen" value="short" checked> Lyhyt versio
                     </label>
+
                     <label class="btn btn-outline-light btn-sm active">
                         <input type="radio" name="cvlen" value="long"> Pitkä versio
                     </label>
@@ -247,6 +249,12 @@
         <p data-lang="en" style="display:none;">If Your device does not support PDF preview
             <a href="./docs/cv_seija_en.pdf" target="_blank" rel="noopener noreferrer"> you can load PDF here.</a>
         </p>
+    </div>
+
+    <div class="fixed-counter">
+        <a href="https://www.hitwebcounter.com/" target="_blank">
+            <img src="https://hitwebcounter.com/counter/counter.php?page=21443095&style=0038&nbdigits=6&type=page&initCount=1000"
+                title="Counters" Alt="Counters" border="0" /></a>
     </div>
 
 

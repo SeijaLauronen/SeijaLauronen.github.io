@@ -141,3 +141,15 @@ object{
         font-size: 1rem;
     }
 }
+
+.fixed-counter {
+  position: fixed;
+  bottom: 10px;   /* etäisyys alareunasta */
+  right: 10px;    /* etäisyys oikeasta reunasta */
+  background: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  z-index: 9999;  /* pysyy muiden päällä */
+}
