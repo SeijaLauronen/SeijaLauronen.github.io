@@ -31,7 +31,8 @@
         padding-top: 10px;
         /* Pienennä sisäistä tilaa */
         padding-bottom: 0px;
-        padding-right: 100px;
+        padding-right: 50px;
+        padding-left: 50px;
     }
 
     .navbar {
@@ -40,9 +41,9 @@
     }
 
     /* BEGIN TAB */
-    .cvcontentX objectX {
+    .cvcontent object {
         width: 100%;
-        height: 80vh;
+        height: 85vh;
         /* esim. 80% selainikkunan korkeudesta */
         border: none;
     }
@@ -239,22 +240,26 @@
     </div>
 
 
+
     <!-- objektin sisälle olisi voinut laittaa vaihtoehtoisen toiminnon, jos PDF:n näyttäminen ei onnistu, 
      mutta objektin sisälle laitettuna seuraava olisi estänyt automaattista latauspainiketta näkymästä kännykän useimmissa selaimessa  -->
     <div class="text-white bg-dark text-center pdfalt">
         <p data-lang="fi"> Jos laitteesi ei tue PDF-tiedoston esikatselua, voit ladata PDF:n tästä:
-            <a href="./docs/cv_seija_1p_fin.pdf" target="_blank" rel="noopener noreferrer"> Lyhyt versio</a>
-            <a href="./docs/cv_seija_fin.pdf" target="_blank" rel="noopener noreferrer"> Pitkä versio</a>
+            <a href="./docs/cv_seija_1p_fin.pdf" target="_blank" rel="noopener noreferrer" class="btn"> Lyhyt versio</a>
+            <a href="./docs/cv_seija_fin.pdf" target="_blank" rel="noopener noreferrer" class="btn"> Pitkä versio</a>
         </p>
         <p data-lang="en" style="display:none;">If Your device does not support PDF preview
-            <a href="./docs/cv_seija_en.pdf" target="_blank" rel="noopener noreferrer"> you can load PDF here.</a>
+            <a href="./docs/cv_seija_en.pdf" target="_blank" rel="noopener noreferrer" class="btn"> you can load PDF
+                here.</a>
         </p>
-    </div>
 
-    <div class="fixed-counter">
-        <a href="https://www.hitwebcounter.com/" target="_blank">
-            <img src="https://hitwebcounter.com/counter/counter.php?page=21443095&style=0038&nbdigits=6&type=page&initCount=1000"
-                title="Counters" Alt="Counters" border="0" /></a>
+        <div class="counter">
+            <span data-lang="fi">Kävijälaskuri: </span>
+            <span data-lang="en" style="display:none;">Visitor counter: </span>
+            <a href="https://www.hitwebcounter.com/" target="_blank">
+                <img src="https://hitwebcounter.com/counter/counter.php?page=21443095&style=0038&nbdigits=6&type=page&initCount=1000"
+                    title="Counters" Alt="Counters" border="0" /></a>
+        </div>
     </div>
 
 
@@ -310,8 +315,23 @@
     }
 
     // päivitä tekstit kielen mukaan
+    /*
     document.querySelectorAll("[data-lang]").forEach(el => {
         el.style.display = el.getAttribute("data-lang") === lang ? "block" : "none";
+    });
+    */
+
+    document.querySelectorAll("[data-lang]").forEach(el => {
+        if (el.getAttribute("data-lang") === lang) {
+            // jos on span, pysyy inline; muille block
+            if (el.tagName.toLowerCase() === "span") {
+                el.style.display = "inline";
+            } else {
+                el.style.display = "block";
+            }
+        } else {
+            el.style.display = "none";
+        }
     });
 
     // oletuksena lyhyt versio

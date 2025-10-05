@@ -570,6 +570,14 @@
       </div>
     </div>
 
+    <div class="counter">
+      <span data-lang="fi">Kävijälaskuri: </span>
+      <span data-lang="en" style="display:none;">Visitor counter: </span>
+      <a href="https://www.hitwebcounter.com/" target="_blank">
+        <img
+          src="https://hitwebcounter.com/counter/counter.php?page=21443094&style=0038&nbdigits=6&type=page&initCount=1000"
+          title="Counters" Alt="Counters" border="0" /></a>
+    </div>
 
     <!-- https://getbootstrap.com/docs/4.3/components/navbar/ -->
     <nav class="navbar fixed-bottom navbar-dark bg-dark">
@@ -579,13 +587,7 @@
       </a>
     </nav>
 
-    <div class="fixed-counter">
-      <a href="https://www.hitwebcounter.com/" target="_blank">
-        <img
-          src="https://hitwebcounter.com/counter/counter.php?page=21443094&style=0038&nbdigits=6&type=page&initCount=1000"
-          title="Counters" Alt="Counters" border="0" /></a>
 
-    </div>
 
 
     <!--
@@ -605,8 +607,22 @@
   document.getElementById('languageSwitcher').addEventListener('change', function () {
     var selectedLang = this.value;
     // Päivitä kaikki data-lang elementit
+    /*
     document.querySelectorAll('[data-lang]').forEach(function (el) {
       el.style.display = el.getAttribute('data-lang') === selectedLang ? 'block' : 'none';
+    });
+    */
+    document.querySelectorAll('[data-lang]').forEach(function (el) {
+      if (el.getAttribute("data-lang") === selectedLang) {
+        // jos on span, pysyy inline; muille block
+        if (el.tagName.toLowerCase() === "span") {
+          el.style.display = "inline";
+        } else {
+          el.style.display = "block";
+        }
+      } else {
+        el.style.display = "none";
+      }
     });
   });
 

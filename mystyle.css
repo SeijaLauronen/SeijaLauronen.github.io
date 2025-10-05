@@ -121,6 +121,9 @@ object{
     #langselection{
         font-size: 0.6rem;
     }    
+    .pictext {
+        font-size: 1rem;
+    }
 }
 
 /* 9.2.2025 */
@@ -136,11 +139,7 @@ object{
     padding-bottom: 5px;
 }
 
-@media (max-width: 576px) { /* Pienille näytöille, kuten puhelimille */
-    .pictext {
-        font-size: 1rem;
-    }
-}
+
 
 .fixed-counter {
   position: fixed;
@@ -152,4 +151,33 @@ object{
   border-radius: 5px;
   font-size: 0.9rem;
   z-index: 9999;  /* pysyy muiden päällä */
+}
+
+.counter {  
+  color:white;
+  text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;  
+    display: inline;  
+}
+
+.counter span {
+    color:grey;
+    margin-right: 10px;
+    display: inline;
+}
+.counter a {
+    display: inline;    
+}
+
+a.btn {
+    color: yellow;
+    font-style: normal;    
+    text-decoration: none;
+    border: 2px solid yellow;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
