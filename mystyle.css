@@ -156,7 +156,7 @@ object{
 .counter {  
   color:white;
   text-align: center;
-    padding: 5px;
+    padding: 5px;    
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -167,7 +167,7 @@ object{
 .counter span {
     color:grey;
     margin-right: 10px;
-    display: inline;
+    display: inline;    
 }
 .counter a {
     display: inline;    
